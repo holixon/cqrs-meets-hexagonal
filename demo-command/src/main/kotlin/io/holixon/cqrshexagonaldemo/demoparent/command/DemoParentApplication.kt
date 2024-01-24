@@ -1,4 +1,4 @@
-package io.holixon.cqrshexagonaldemo.demoparent
+package io.holixon.cqrshexagonaldemo.demoparent.command
 
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
