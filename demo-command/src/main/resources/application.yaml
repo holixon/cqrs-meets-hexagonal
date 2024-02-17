@@ -1,0 +1,53 @@
+cqrs-demo-command:
+  nasa-api-schema: https
+  nasa-api-hostname: images-api.nasa.gov
+  nasa-api-search-endpoint: /search
+  nasa-api-asset-endpoint: /asset
+  nasa-api-captions-endpoint: /captions
+  nasa-api-album-endpoint: /album
+  api-key: ${API_KEY}
+
+
+spring:
+  threads:
+    virtual:
+      enabled: true
+  mvc:
+    async:
+      request-timeout: 600000 # milliseconds applied to server sent events
+  application:
+    name: "demo-command"
+  profiles:
+    default: local
+  datasource:
+    type: com.zaxxer.hikari.HikariDataSource # full qualified connection pool name
+    hikari:
+      connection-timeout: 5000 # milliseconds a client will wait for a free connection from pool
+      maximum-pool-size: 3 # max pool size maintained by the cp
+      minimum-idle: 1 # minimum number of idle connections the cp will maintain
+      idle-timeout: 30000 # milliseconds a connection is allowed to sit idle in cp
+      max-lifetime: 120000 # max duration of a connection before it's been closed by cp
+      auto-commit: true #default
+    url: ${CQRS_DEMO_CONNECTION_STRING}
+    username: ${DB_USER}
+    password: ${DB_PASSWORD}
+  jpa:
+    show-sql: false
+    hibernate:
+      ddl-auto: none
+      generate_statistics: true
+    database-platform: org.hibernate.dialect.SQLServerDialect
+    properties:
+      hibernate:
+        default_schema: command
+  flyway:
+    enabled: true
+    user: ${FLYWAY_USER}
+    password: ${FLYWAY_PASSWORD}
+    url: ${FLYWAY_URL}
+    schemas:
+      - command
+      - query
+    locations:
+      - classpath:io/holixon/cqrshexagonaldemo/demoparent/command/adapter/out/flyway
+
