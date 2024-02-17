@@ -5,6 +5,7 @@ import io.holixon.cqrshexagonaldemo.demoparent.command.adapter.out.nasaapi.model
 import io.holixon.cqrshexagonaldemo.demoparent.command.adapter.out.nasaapi.model.SearchResultDto
 import io.holixon.cqrshexagonaldemo.demoparent.command.config.ReactiveProperties
 import mu.KLogging
+import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpHeaders
 import org.springframework.stereotype.Component
 import org.springframework.util.LinkedMultiValueMap
@@ -16,31 +17,20 @@ import java.net.URI
 import java.net.URISyntaxException
 import java.util.*
 import java.util.function.Consumer
-import java.util.function.Function
 
 @Component
-class ReactiveRestClient(webBuilder: WebClient.Builder, properties: ReactiveProperties) {
+class ReactiveRestClient @Autowired constructor(webBuilder: WebClient.Builder, var properties: ReactiveProperties) {
 
-    private final val webBuilder: WebClient.Builder
-
-    private final val properties: ReactiveProperties
-
-    private final val webClient: WebClient
+    private val webClient: WebClient = webBuilder.build()
 
     companion object : KLogging()
 
-    init {
-        this.webBuilder = webBuilder
-        this.properties = properties
-        webClient = WebClient.builder().build()
-    }
-
     fun getSearchResults(searchTerm: String?): Flux<ItemDto> {
         return getSearchResults(searchTerm, null, null)
-            .map<ItemDto>(Function<ItemDto, ItemDto> { item: ItemDto ->
-                check(!item.data.get(0).nasaId.contains("GS")) { "error" }
+            .map { item: ItemDto ->
+                check(!item.data[0].nasaId.contains("GS")) { "error" }
                 item
-            })
+            }
     }
 
     fun getSearchResults(searchTerm: String?, page: Long?, pageSize: Long?): Flux<ItemDto> {

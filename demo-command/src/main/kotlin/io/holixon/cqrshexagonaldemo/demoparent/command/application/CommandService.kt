@@ -16,15 +16,17 @@ class CommandService @Autowired constructor(val nasaApi: NasaApiOutPort) {
     @Async
     @EventListener
     fun init(applicationReadyEvent: ApplicationReadyEvent) {
-        callApi()
+        findItems()
     }
 
-    fun callApi() {
-
-        nasaApi.callNasaApi("Ceres")
-            .doOnNext { pictureData -> logger.info("nasaId: {} - title: {}", pictureData.nasaId, pictureData.title) }
-            .flatMapIterable { pictureData -> pictureData.uri }
-            .subscribe { uriString -> logger.info("uri {}", uriString) }
+    fun findItems() {
+        nasaApi.findItemsBySearchTerm("Ceres")
+            .doOnNext { item ->
+                val dataItem = item.data[0]
+                logger.info("nasaId: {} - title: {}", dataItem.nasaId, dataItem.title)
+            }
+            .flatMapIterable { item -> item.links }
+            .subscribe { link -> logger.info("uri {}", link.href) }
     };
 
 }

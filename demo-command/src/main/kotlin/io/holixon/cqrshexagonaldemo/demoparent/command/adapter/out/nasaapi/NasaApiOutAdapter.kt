@@ -1,10 +1,9 @@
 package io.holixon.cqrshexagonaldemo.demoparent.command.adapter.out.nasaapi
 
-import io.holixon.cqrshexagonaldemo.demoparent.command.adapter.out.nasaapi.model.ItemDto
+import io.holixon.cqrshexagonaldemo.demoparent.command.adapter.out.nasaapi.mapper.NasaApiMapper
 import io.holixon.cqrshexagonaldemo.demoparent.command.adapter.out.nasaapi.model.LinkDto
 import io.holixon.cqrshexagonaldemo.demoparent.command.application.port.out.nasaapi.NasaApiOutPort
-import io.holixon.cqrshexagonaldemo.demoparent.command.config.ReactiveProperties
-import io.holixon.cqrshexagonaldemo.demoparent.command.domain.NasaPictureData
+import io.holixon.cqrshexagonaldemo.demoparent.command.domain.Item
 import mu.KLogging
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
@@ -13,21 +12,19 @@ import java.util.function.Consumer
 
 @Service
 class NasaApiOutAdapter @Autowired constructor(
-    val restClient: ReactiveRestClient, val properties: ReactiveProperties
+    val restClient: ReactiveRestClient,
+    val mapper: NasaApiMapper
 ) : NasaApiOutPort {
 
     companion object : KLogging()
 
-
-    override fun callNasaApi(searchTerm: String): Flux<NasaPictureData> {
-        return restClient.getSearchResults(searchTerm).map { item -> buildDataItemEntity(item, searchTerm) };
-    }
-
-    protected fun buildDataItemEntity(item: ItemDto, searchTerm: String?): NasaPictureData {
-        val dataItem = item.data.get(0)
-        val uriList = item.links.stream().map(LinkDto::href).toList()
-        logSearchResults(uriList, searchTerm)
-        return NasaPictureData(dataItem.nasaId, dataItem.title, uriList)
+    override fun findItemsBySearchTerm(searchTerm: String): Flux<Item> {
+        return restClient.getSearchResults(searchTerm)
+            .map { item ->
+                val uriList = item.links.stream().map(LinkDto::href).toList()
+                logSearchResults(uriList, searchTerm)
+                mapper.toDomainObject(item)
+            };
     }
 
     protected fun logSearchResults(allLinks: Collection<String?>, searchTerm: String?) {

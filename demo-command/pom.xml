@@ -110,6 +110,13 @@
                             <goal>kapt</goal>
                         </goals>
                         <configuration>
+                            <args>
+                                <arg>-Xjsr305=strict</arg>
+                            </args>
+                            <compilerPlugins>
+                                <plugin>spring</plugin>
+                                <plugin>jpa</plugin>
+                            </compilerPlugins>
                             <sourceDirs>
                                 <sourceDir>src/main/kotlin</sourceDir>
                                 <sourceDir>src/main/java</sourceDir>
@@ -121,25 +128,14 @@
                                     <version>${org.mapstruct.version}</version>
                                 </annotationProcessorPath>
                             </annotationProcessorPaths>
+                            <annotationProcessorArgs>
+                                <annotationProcessorArg>
+                                    mapstruct.defaultComponentModel=spring
+                                </annotationProcessorArg>
+                            </annotationProcessorArgs>
                         </configuration>
                     </execution>
                 </executions>
-                <configuration>
-                    <args>
-                        <arg>-Xjsr305=strict</arg>
-                    </args>
-                    <compilerPlugins>
-                        <plugin>spring</plugin>
-                        <plugin>jpa</plugin>
-                    </compilerPlugins>
-                    <annotationProcessorPaths>
-                        <annotationProcessorPath>
-                            <groupId>org.mapstruct</groupId>
-                            <artifactId>mapstruct-processor</artifactId>
-                            <version>${org.mapstruct.version}</version>
-                        </annotationProcessorPath>
-                    </annotationProcessorPaths>
-                </configuration>
                 <dependencies>
                     <dependency>
                         <groupId>org.jetbrains.kotlin</groupId>
