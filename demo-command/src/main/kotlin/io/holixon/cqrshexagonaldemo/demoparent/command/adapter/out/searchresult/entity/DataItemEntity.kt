@@ -1,6 +1,6 @@
-package io.holixon.cqrshexagonaldemo.demoparent.command.adapter.out.searchresultdb.entity
+package io.holixon.cqrshexagonaldemo.demoparent.command.adapter.out.searchresult.entity
 
-import io.holixon.cqrshexagonaldemo.demoparent.command.adapter.out.searchresultdb.converter.StringListConverter
+import io.holixon.cqrshexagonaldemo.demoparent.command.adapter.out.searchresult.converter.StringListConverter
 import jakarta.persistence.*
 import java.time.Instant
 
@@ -30,6 +30,8 @@ class DataItemEntity(
     var title: String,
     @JoinColumn(nullable = false, name = "item_id", foreignKey = ForeignKey(name = "FK_DATA_ITEM_ITEM"))
     @ManyToOne(fetch = FetchType.LAZY)
-    var item: ItemEntity
+    var item: ItemEntity,
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "dataItem")
+    var links: Set<LinkEntity>
 ) {
 }

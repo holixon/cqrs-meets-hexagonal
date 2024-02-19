@@ -9,18 +9,18 @@ import org.springframework.scheduling.annotation.Async
 import org.springframework.stereotype.Service
 
 @Service
-class CommandService @Autowired constructor(val nasaApi: NasaApiOutPort) {
+open class CommandService @Autowired constructor(val nasaApi: NasaApiOutPort) {
 
     companion object : KLogging()
 
     @Async
     @EventListener
     fun init(applicationReadyEvent: ApplicationReadyEvent) {
-        findItems()
+        findItems("Ceres")
     }
 
-    fun findItems() {
-        nasaApi.findItemsBySearchTerm("Ceres")
+    fun findItems(searchTerm: String) {
+        nasaApi.findItemsBySearchTerm(searchTerm)
             .doOnNext { item ->
                 val dataItem = item.data[0]
                 logger.info("nasaId: {} - title: {}", dataItem.nasaId, dataItem.title)

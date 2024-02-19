@@ -1,4 +1,9 @@
 package io.holixon.cqrshexagonaldemo.demoparent.command.domain
 
-data class Link(val href: String, val rel: String, var render: String?)
+data class Link(
+    var id: Long,
+    var href: String,
+    var rel: String,
+    var render: String?,
+)
 

@@ -8,6 +8,7 @@ import io.holixon.cqrshexagonaldemo.demoparent.command.domain.DataItem
 import io.holixon.cqrshexagonaldemo.demoparent.command.domain.Item
 import io.holixon.cqrshexagonaldemo.demoparent.command.domain.Link
 import io.holixon.cqrshexagonaldemo.demoparent.command.domain.MetaData
+import org.mapstruct.Context
 import org.mapstruct.Mapper
 
 @Mapper
@@ -16,15 +17,15 @@ interface NasaApiMapper {
 
     fun toDto(domainObject: MetaData): MetaDataDto
 
-    fun toDomainObject(dto: DataItemDto): DataItem
+    fun toDomainObject(dto: DataItemDto, @Context cycleAvoidingMappingContext: CycleAvoidingMappingContext): DataItem
 
-    fun toDto(domainObject: DataItem): DataItemDto
+    fun toDto(domainObject: DataItem, @Context cycleAvoidingMappingContext: CycleAvoidingMappingContext): DataItemDto
 
-    fun toDomainObject(dto: ItemDto): Item
+    fun toDomainObject(dto: ItemDto, @Context cycleAvoidingMappingContext: CycleAvoidingMappingContext): Item
 
-    fun toDto(domainObject: Item): ItemDto
+    fun toDto(domainObject: Item, @Context cycleAvoidingMappingContext: CycleAvoidingMappingContext): ItemDto
 
-    fun toDomainObject(dto: LinkDto): Link
+    fun toDomainObject(dto: LinkDto, @Context cycleAvoidingMappingContext: CycleAvoidingMappingContext): Link
 
-    fun toDto(domainObject: Link): LinkDto
+    fun toDto(domainObject: Link, @Context cycleAvoidingMappingContext: CycleAvoidingMappingContext): LinkDto
 }

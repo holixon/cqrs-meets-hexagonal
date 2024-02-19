@@ -1,4 +1,4 @@
-package io.holixon.cqrshexagonaldemo.demoparent.command.adapter.out.searchresultdb.entity
+package io.holixon.cqrshexagonaldemo.demoparent.command.adapter.out.searchresult.entity
 
 import jakarta.persistence.*
 
@@ -18,8 +18,8 @@ class LinkEntity(
     var rel: String,
     @Column(nullable = true)
     var render: String?,
-    @JoinColumn(nullable = false, name = "item_id", foreignKey = ForeignKey(name = "FK_LINK_ITEM"))
+    @JoinColumn(nullable = false, name = "data_item_id", foreignKey = ForeignKey(name = "FK_LINK_DATA_ITEM"))
     @ManyToOne(fetch = FetchType.LAZY)
-    var item: ItemEntity
+    var dataItem: DataItemEntity
 ) : BaseEntity() {
 }

@@ -28,28 +28,6 @@ CREATE TABLE [command].item
 )
 GO
 -- ------------------------------------------------------------------------------#
-CREATE TABLE [command].link
-(
-    id         BIGINT       NOT NULL
-        DEFAULT (NEXT VALUE FOR [command].link_seq),
-    created    DATETIMEOFFSET(6),
-    updated    DATETIMEOFFSET(6),
-    created_by VARCHAR(255),
-    updated_by VARCHAR(255),
-
-    href       VARCHAR(255) NOT NULL,
-    rel        VARCHAR(255) NOT NULL,
-    render     VARCHAR(255) NOT NULL,
-    item_id    BIGINT       NOT NULL
-
-        CONSTRAINT PK_LINK_ID PRIMARY KEY (id)
-)
-GO
--- ------------------------------------------------------------------------------#
-ALTER TABLE [command].link
-    ADD CONSTRAINT FK_LINK_ITEM FOREIGN KEY (item_id) REFERENCES [command].item (id)
-GO
--- ------------------------------------------------------------------------------#
 CREATE TABLE [command].data_item
 (
     id           BIGINT       NOT NULL
@@ -72,7 +50,29 @@ CREATE TABLE [command].data_item
 )
 GO
 -- ------------------------------------------------------------------------------#
-ALTER TABLE [command].link
+ALTER TABLE [command].data_item
     ADD CONSTRAINT FK_DATA_ITEM_ITEM FOREIGN KEY (item_id) REFERENCES [command].item (id)
+GO
+-- ------------------------------------------------------------------------------#
+
+CREATE TABLE [command].link
+(
+    id           BIGINT       NOT NULL
+        DEFAULT (NEXT VALUE FOR [command].link_seq),
+    created      DATETIMEOFFSET(6),
+    updated      DATETIMEOFFSET(6),
+    created_by   VARCHAR(255),
+    updated_by   VARCHAR(255),
+
+    href         VARCHAR(255) NOT NULL,
+    rel          VARCHAR(255) NOT NULL,
+    render       VARCHAR(255) NOT NULL,
+    data_item_id BIGINT       NOT NULL
+        CONSTRAINT PK_LINK_ID PRIMARY KEY (id)
+)
+GO
+-- ------------------------------------------------------------------------------#
+ALTER TABLE [command].link
+    ADD CONSTRAINT FK_LINK_DATA_ITEM FOREIGN KEY (data_item_id) REFERENCES [command].data_item (id)
 GO
 -- ------------------------------------------------------------------------------#

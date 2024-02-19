@@ -1,5 +1,6 @@
 package io.holixon.cqrshexagonaldemo.demoparent.command.adapter.out.nasaapi
 
+import io.holixon.cqrshexagonaldemo.demoparent.command.adapter.out.nasaapi.mapper.CycleAvoidingMappingContext
 import io.holixon.cqrshexagonaldemo.demoparent.command.adapter.out.nasaapi.mapper.NasaApiMapper
 import io.holixon.cqrshexagonaldemo.demoparent.command.adapter.out.nasaapi.model.LinkDto
 import io.holixon.cqrshexagonaldemo.demoparent.command.application.port.out.nasaapi.NasaApiOutPort
@@ -21,9 +22,10 @@ class NasaApiOutAdapter @Autowired constructor(
     override fun findItemsBySearchTerm(searchTerm: String): Flux<Item> {
         return restClient.getSearchResults(searchTerm)
             .map { item ->
-                val uriList = item.links.stream().map(LinkDto::href).toList()
+                val links = item.links;
+                val uriList = links.stream().map(LinkDto::href).toList()
                 logSearchResults(uriList, searchTerm)
-                mapper.toDomainObject(item)
+                mapper.toDomainObject(item, CycleAvoidingMappingContext())
             };
     }
 

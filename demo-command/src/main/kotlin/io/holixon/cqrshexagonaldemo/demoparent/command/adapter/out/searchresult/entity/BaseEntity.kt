@@ -1,4 +1,4 @@
-package io.holixon.cqrshexagonaldemo.demoparent.command.adapter.out.searchresultdb.entity
+package io.holixon.cqrshexagonaldemo.demoparent.command.adapter.out.searchresult.entity
 
 import jakarta.persistence.Column
 import jakarta.persistence.MappedSuperclass

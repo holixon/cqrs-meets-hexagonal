@@ -10,7 +10,7 @@ import java.util.*
 @EnableJpaAuditing
 open class AuditingConfig {
     @Bean
-    fun aircraftdocumentAuditorProvider(): AuditorAware<String> {
+    open fun aircraftdocumentAuditorProvider(): AuditorAware<String> {
         return AuditorAware { Optional.of("cqrs-meets-hexagonal") }
     }
 }

@@ -1,4 +1,4 @@
-package io.holixon.cqrshexagonaldemo.demoparent.command.adapter.out.searchresultdb.converter
+package io.holixon.cqrshexagonaldemo.demoparent.command.adapter.out.searchresult.converter
 
 import jakarta.persistence.AttributeConverter
 import jakarta.persistence.Converter
