@@ -13,7 +13,7 @@ CREATE SEQUENCE [command].data_item_seq
     INCREMENT BY 50
 GO
 -- ------------------------------------------------------------------------------#
-CREATE TABLE [command].item
+CREATE TABLE [command].search_result_item
 (
     id         BIGINT       NOT NULL
         DEFAULT (NEXT VALUE FOR [command].item_seq),
@@ -44,14 +44,14 @@ CREATE TABLE [command].data_item
     media_type   VARCHAR(255) NOT NULL,
     nasa_id      VARCHAR(255) NOT NULL,
     title        VARCHAR(255) NOT NULL,
-    item_id      BIGINT       NOT NULL
+    search_result_item_id      BIGINT       NOT NULL
 
         CONSTRAINT PK_DATA_ITEM_ID PRIMARY KEY (id)
 )
 GO
 -- ------------------------------------------------------------------------------#
 ALTER TABLE [command].data_item
-    ADD CONSTRAINT FK_DATA_ITEM_ITEM FOREIGN KEY (item_id) REFERENCES [command].item (id)
+    ADD CONSTRAINT FK_DATA_ITEM__SEARCH_RESULT_ITEM FOREIGN KEY (search_result_item_id) REFERENCES [command].search_result_item (id)
 GO
 -- ------------------------------------------------------------------------------#
 
@@ -73,6 +73,6 @@ CREATE TABLE [command].link
 GO
 -- ------------------------------------------------------------------------------#
 ALTER TABLE [command].link
-    ADD CONSTRAINT FK_LINK_DATA_ITEM FOREIGN KEY (data_item_id) REFERENCES [command].data_item (id)
+    ADD CONSTRAINT FK_LINK__DATA_ITEM FOREIGN KEY (data_item_id) REFERENCES [command].data_item (id)
 GO
 -- ------------------------------------------------------------------------------#

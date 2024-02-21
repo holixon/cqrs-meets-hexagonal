@@ -4,7 +4,7 @@ import io.holixon.cqrshexagonaldemo.demoparent.command.adapter.out.nasaapi.mappe
 import io.holixon.cqrshexagonaldemo.demoparent.command.adapter.out.nasaapi.mapper.NasaApiMapper
 import io.holixon.cqrshexagonaldemo.demoparent.command.adapter.out.nasaapi.model.LinkDto
 import io.holixon.cqrshexagonaldemo.demoparent.command.application.port.out.nasaapi.NasaApiOutPort
-import io.holixon.cqrshexagonaldemo.demoparent.command.domain.Item
+import io.holixon.cqrshexagonaldemo.demoparent.command.domain.SearchResultItem
 import mu.KLogging
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
@@ -19,7 +19,7 @@ class NasaApiOutAdapter @Autowired constructor(
 
     companion object : KLogging()
 
-    override fun findItemsBySearchTerm(searchTerm: String): Flux<Item> {
+    override fun findItemsBySearchTerm(searchTerm: String): Flux<SearchResultItem> {
         return restClient.getSearchResults(searchTerm)
             .map { item ->
                 val links = item.links;

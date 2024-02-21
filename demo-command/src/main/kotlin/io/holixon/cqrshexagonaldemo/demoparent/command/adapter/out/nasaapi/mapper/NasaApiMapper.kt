@@ -1,11 +1,11 @@
 package io.holixon.cqrshexagonaldemo.demoparent.command.adapter.out.nasaapi.mapper
 
 import io.holixon.cqrshexagonaldemo.demoparent.command.adapter.out.nasaapi.model.DataItemDto
-import io.holixon.cqrshexagonaldemo.demoparent.command.adapter.out.nasaapi.model.ItemDto
+import io.holixon.cqrshexagonaldemo.demoparent.command.adapter.out.nasaapi.model.SearchResultItemDto
 import io.holixon.cqrshexagonaldemo.demoparent.command.adapter.out.nasaapi.model.LinkDto
 import io.holixon.cqrshexagonaldemo.demoparent.command.adapter.out.nasaapi.model.MetaDataDto
 import io.holixon.cqrshexagonaldemo.demoparent.command.domain.DataItem
-import io.holixon.cqrshexagonaldemo.demoparent.command.domain.Item
+import io.holixon.cqrshexagonaldemo.demoparent.command.domain.SearchResultItem
 import io.holixon.cqrshexagonaldemo.demoparent.command.domain.Link
 import io.holixon.cqrshexagonaldemo.demoparent.command.domain.MetaData
 import org.mapstruct.Context
@@ -21,9 +21,9 @@ interface NasaApiMapper {
 
     fun toDto(domainObject: DataItem, @Context cycleAvoidingMappingContext: CycleAvoidingMappingContext): DataItemDto
 
-    fun toDomainObject(dto: ItemDto, @Context cycleAvoidingMappingContext: CycleAvoidingMappingContext): Item
+    fun toDomainObject(dto: SearchResultItemDto, @Context cycleAvoidingMappingContext: CycleAvoidingMappingContext): SearchResultItem
 
-    fun toDto(domainObject: Item, @Context cycleAvoidingMappingContext: CycleAvoidingMappingContext): ItemDto
+    fun toDto(domainObject: SearchResultItem, @Context cycleAvoidingMappingContext: CycleAvoidingMappingContext): SearchResultItemDto
 
     fun toDomainObject(dto: LinkDto, @Context cycleAvoidingMappingContext: CycleAvoidingMappingContext): Link
 

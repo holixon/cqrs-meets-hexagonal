@@ -1,7 +1,7 @@
 package io.holixon.cqrshexagonaldemo.demoparent.command.adapter.out.nasaapi
 
 import io.holixon.cqrshexagonaldemo.demoparent.command.adapter.out.nasaapi.model.CollectionItemDto
-import io.holixon.cqrshexagonaldemo.demoparent.command.adapter.out.nasaapi.model.ItemDto
+import io.holixon.cqrshexagonaldemo.demoparent.command.adapter.out.nasaapi.model.SearchResultItemDto
 import io.holixon.cqrshexagonaldemo.demoparent.command.adapter.out.nasaapi.model.SearchResultDto
 import io.holixon.cqrshexagonaldemo.demoparent.command.config.ReactiveProperties
 import mu.KLogging
@@ -25,15 +25,15 @@ class ReactiveRestClient @Autowired constructor(webBuilder: WebClient.Builder, v
 
     companion object : KLogging()
 
-    fun getSearchResults(searchTerm: String?): Flux<ItemDto> {
+    fun getSearchResults(searchTerm: String?): Flux<SearchResultItemDto> {
         return getSearchResults(searchTerm, null, null)
-            .map { item: ItemDto ->
+            .map { item: SearchResultItemDto ->
                 check(!item.data[0].nasaId.contains("GS")) { "error" }
                 item
             }
     }
 
-    fun getSearchResults(searchTerm: String?, page: Long?, pageSize: Long?): Flux<ItemDto> {
+    fun getSearchResults(searchTerm: String?, page: Long?, pageSize: Long?): Flux<SearchResultItemDto> {
         val queryParams: LinkedMultiValueMap<String?, String?> = LinkedMultiValueMap<String?, String?>()
         queryParams.add("q", searchTerm)
         val nullSafePage = Optional.ofNullable(page)

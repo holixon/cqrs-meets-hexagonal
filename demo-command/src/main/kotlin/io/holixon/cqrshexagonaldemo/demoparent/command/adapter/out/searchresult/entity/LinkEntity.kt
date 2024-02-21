@@ -18,7 +18,7 @@ class LinkEntity(
     var rel: String,
     @Column(nullable = true)
     var render: String?,
-    @JoinColumn(nullable = false, name = "data_item_id", foreignKey = ForeignKey(name = "FK_LINK_DATA_ITEM"))
+    @JoinColumn(nullable = false, name = "data_item_id", foreignKey = ForeignKey(name = "FK_LINK__DATA_ITEM"))
     @ManyToOne(fetch = FetchType.LAZY)
     var dataItem: DataItemEntity
 ) : BaseEntity() {

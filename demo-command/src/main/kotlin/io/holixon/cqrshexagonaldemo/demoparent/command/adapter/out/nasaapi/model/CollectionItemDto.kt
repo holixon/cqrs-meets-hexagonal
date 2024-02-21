@@ -2,7 +2,7 @@ package io.holixon.cqrshexagonaldemo.demoparent.command.adapter.out.nasaapi.mode
 
 data class CollectionItemDto(
     val href: String,
-    val items: List<ItemDto>,
+    val items: List<SearchResultItemDto>,
     val links: List<LinkDto>,
     val metadata: MetaDataDto,
     val version: String

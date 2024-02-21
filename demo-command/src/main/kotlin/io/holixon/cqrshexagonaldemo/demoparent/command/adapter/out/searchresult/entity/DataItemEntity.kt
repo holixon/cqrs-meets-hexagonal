@@ -28,9 +28,9 @@ class DataItemEntity(
     var nasaId: String,
     @Column
     var title: String,
-    @JoinColumn(nullable = false, name = "item_id", foreignKey = ForeignKey(name = "FK_DATA_ITEM_ITEM"))
+    @JoinColumn(nullable = false, name = "search_result_item_id", foreignKey = ForeignKey(name = "FK_DATA_ITEM__SEARCH_RESULT_ITEM"))
     @ManyToOne(fetch = FetchType.LAZY)
-    var item: ItemEntity,
+    var searchResultItem: SearchResultItemEntity,
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "dataItem")
     var links: Set<LinkEntity>
 ) {
