@@ -1,28 +1,34 @@
 package io.holixon.cqrshexagonaldemo.demoparent.command.adapter.out.searchresult.entity
 
 import jakarta.persistence.Column
+import jakarta.persistence.EntityListeners
 import jakarta.persistence.MappedSuperclass
 import org.springframework.data.annotation.CreatedBy
 import org.springframework.data.annotation.CreatedDate
 import org.springframework.data.annotation.LastModifiedBy
 import org.springframework.data.annotation.LastModifiedDate
+import org.springframework.data.jpa.domain.support.AuditingEntityListener
 import java.io.Serializable
 import java.time.Instant
 
 @MappedSuperclass
-abstract class BaseEntity : Serializable {
-
+@EntityListeners(AuditingEntityListener::class)
+abstract class BaseEntity(
     @CreatedDate
     @Column(updatable = false)
-    var created: Instant? = null
+    open var created: Instant?,
 
     @LastModifiedDate
-    val updated: Instant? = null
+    open val updated: Instant?,
 
     @CreatedBy
     @Column(updatable = false)
-    var createdBy: String? = null
+    open var createdBy: String?,
 
     @LastModifiedBy
-    val updatedBy: String? = null
+    open val updatedBy: String?
+
+) : Serializable {
+
+
 }

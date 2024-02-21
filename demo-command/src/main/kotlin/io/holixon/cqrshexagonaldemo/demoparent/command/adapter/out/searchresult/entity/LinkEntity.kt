@@ -1,7 +1,10 @@
 package io.holixon.cqrshexagonaldemo.demoparent.command.adapter.out.searchresult.entity
 
 import jakarta.persistence.*
+import org.springframework.data.jpa.domain.support.AuditingEntityListener
+import java.time.Instant
 
+@EntityListeners(AuditingEntityListener::class)
 @Entity
 @Table(
     name = "link",
@@ -20,6 +23,11 @@ class LinkEntity(
     var render: String?,
     @JoinColumn(nullable = false, name = "data_item_id", foreignKey = ForeignKey(name = "FK_LINK__DATA_ITEM"))
     @ManyToOne(fetch = FetchType.LAZY)
-    var dataItem: DataItemEntity
-) : BaseEntity() {
+    var dataItem: DataItemEntity?,
+    created: Instant?,
+    updated: Instant?,
+    createdBy: String?,
+    updatedBy: String?
+
+) : BaseEntity(created, updated, createdBy, updatedBy) {
 }

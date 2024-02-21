@@ -1,32 +1,38 @@
 package io.holixon.cqrshexagonaldemo.demoparent.command.application
 
 import io.holixon.cqrshexagonaldemo.demoparent.command.application.port.out.nasaapi.NasaApiOutPort
+import io.holixon.cqrshexagonaldemo.demoparent.command.application.port.out.searchresult.SearchResultOutPort
 import mu.KLogging
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.context.event.ApplicationReadyEvent
 import org.springframework.context.event.EventListener
-import org.springframework.scheduling.annotation.Async
 import org.springframework.stereotype.Service
+import java.util.stream.Stream
 
 @Service
-open class CommandService @Autowired constructor(val nasaApi: NasaApiOutPort) {
+open class CommandService @Autowired constructor(
+    val nasaApi: NasaApiOutPort,
+    val outPort: SearchResultOutPort
+) {
 
     companion object : KLogging()
 
-    @Async
     @EventListener
     fun init(applicationReadyEvent: ApplicationReadyEvent) {
         findItems("Ceres")
     }
 
     fun findItems(searchTerm: String) {
-        nasaApi.findItemsBySearchTerm(searchTerm)
-            .doOnNext { item ->
-                val dataItem = item.data[0]
+        val toList = nasaApi.findItemsBySearchTerm(searchTerm)
+            .stream()
+            .map { searchResultItem -> outPort.saveSearchResult(searchResultItem) }
+            .map { searchResultItem ->
+                val dataItem = searchResultItem.data[0]
                 logger.info("nasaId: {} - title: {}", dataItem.nasaId, dataItem.title)
+                dataItem
             }
-            .flatMapIterable { item -> item.links }
-            .subscribe { link -> logger.info("uri {}", link.href) }
+            .flatMap { item -> item.links?.stream() ?: Stream.empty() }
+            .toList()
     };
 
 }
