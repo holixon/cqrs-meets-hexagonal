@@ -21,6 +21,7 @@ services:
       TZ: UTC
     volumes:
       - ./local:/opt/startup-scripts
+      - ./data:/var/opt/mssql/data
     entrypoint: [ "bash", "-c", "while ! /opt/mssql-tools/bin/sqlcmd -S cqrs-meets-hexagonal-azure-sql -U SA -P 'Aut0mat0rs!' -Q \"$$(cat /opt/startup-scripts/local-db-setup.sql)\"; do sleep 5; done" ]
 
   zookeeper:

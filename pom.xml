@@ -10,7 +10,7 @@
     </parent>
     <packaging>pom</packaging>
     <modules>
-        <module>demo-command</module>
+        <module>demo-transactions</module>
     </modules>
     <groupId>io.holixon.cqrshexagonaldemo</groupId>
     <artifactId>demo-parent</artifactId>
