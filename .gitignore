@@ -32,3 +32,11 @@ build/
 ### VS Code ###
 .vscode/
 /.env
+
+### docker
+docker/azure-sql-edge/data/*
+!docker/azure-sql-edge/data/.gitkeep
+docker/azure-sql-edge/log/*
+!docker/azure-sql-edge/log/.gitkeep
+docker/azure-sql-edge/secrets/*
+!docker/azure-sql-edge/secrets/.gitkeep

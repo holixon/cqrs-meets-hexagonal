@@ -10,6 +10,10 @@ services:
       TZ: UTC
     ports:
       - "1434:1433"
+    volumes:
+      - ./data:/var/opt/mssql/data
+      - ./log:/var/opt/mssql/log
+      - ./secrets:/var/opt/mssql/secrets
 
   databaseSetup:
     image: mcr.microsoft.com/mssql/server:2019-latest
@@ -21,7 +25,6 @@ services:
       TZ: UTC
     volumes:
       - ./local:/opt/startup-scripts
-      - ./data:/var/opt/mssql/data
     entrypoint: [ "bash", "-c", "while ! /opt/mssql-tools/bin/sqlcmd -S cqrs-meets-hexagonal-azure-sql -U SA -P 'Aut0mat0rs!' -Q \"$$(cat /opt/startup-scripts/local-db-setup.sql)\"; do sleep 5; done" ]
 
   zookeeper:

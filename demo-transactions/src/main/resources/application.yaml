@@ -20,7 +20,7 @@ spring:
     async:
       request-timeout: 600000 # milliseconds applied to server sent events
   application:
-    name: "demo-command"
+    name: "demo-tranascations"
   profiles:
     default: local
   datasource:
@@ -44,15 +44,15 @@ spring:
     database-platform: org.hibernate.dialect.SQLServerDialect
     properties:
       hibernate:
-        default_schema: command
+        default_schema: transactions
   flyway:
     enabled: true
     user: ${FLYWAY_USER}
     password: ${FLYWAY_PASSWORD}
     url: ${FLYWAY_URL}
     schemas:
-      - command
+      - transactions
       - query
     locations:
-      - classpath:io/holixon/cqrshexagonaldemo/demoparent/command/adapter/outbound/flyway
+      - classpath:io/holixon/cqrshexagonaldemo/demoparent/transactions/adapter/outbound/flyway
 
