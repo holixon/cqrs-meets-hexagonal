@@ -15,8 +15,10 @@ externalDocs:
 tags:
   - name: image-search
     description: Image search
+servers:
+  - url: http://localhost:8080/api/v1
 paths:
-  /api/v1/search/:
+  /search:
     get:
       tags:
         - image-search
@@ -39,17 +41,18 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/SearchResultItem'
+                  $ref: '#/components/schemas/UserDataItem'
 components:
   schemas:
-    Link:
+    UserLink:
       type: object
       properties:
         id:
           type: string
         href:
           type: string
-    DataItem:
+
+    UserDataItem:
       type: object
       properties:
         id:
@@ -62,24 +65,19 @@ components:
           type: array
           items:
             type: string
+          default: [ ]
         nasaId:
           type: string
         dateCreated:
+          type: string
           format: date-time
           example: '2019-07-15T19:08:21.42Z'
         links:
           type: array
+          default: [ ]
           items:
-            $ref: '#/components/schemas/Link'
-    SearchResultItem:
-      type: object
-      required:
-        - items
-      properties:
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/DataItem'
+            $ref: '#/components/schemas/UserLink'
+
 
 
 

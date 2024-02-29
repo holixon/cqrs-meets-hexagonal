@@ -26,7 +26,8 @@ class NasaApiOutAdapter @Autowired constructor(
                 val uriList = links.stream().map(LinkDto::href).toList()
                 item.data[0].links = links
                 logSearchResults(uriList, searchTerm)
-                mapper.toDomainObject(item, CycleAvoidingMappingContext())
+                val toDomainObject = mapper.toDomainObject(item, CycleAvoidingMappingContext())
+                toDomainObject
             }
             .toList();
     }

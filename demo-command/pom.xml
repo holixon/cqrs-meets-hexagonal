@@ -138,14 +138,19 @@
                         </goals>
                         <configuration>
                             <inputSpec>${project.basedir}/src/main/resources/openapi.yaml</inputSpec>
-                            <generatorName>kotlin-spring</generatorName>
-                            <apiPackage>io.holixon.cqrshexagonaldemo.demoparent.command.adapter.inbound.searchquery.service.gen</apiPackage>
-                            <modelPackage>io.holixon.cqrshexagonaldemo.demoparent.command.adapter.inbound.searchquery.model</modelPackage>
+                            <generatorName>spring</generatorName>
+                            <apiPackage>
+                                io.holixon.cqrshexagonaldemo.demoparent.command.adapter.inbound.searchquery.service.gen
+                            </apiPackage>
+                            <modelPackage>
+                                io.holixon.cqrshexagonaldemo.demoparent.command.adapter.inbound.searchquery.model
+                            </modelPackage>
                             <modelNameSuffix>Dto</modelNameSuffix>
                             <generateSupportingFiles>false</generateSupportingFiles>
                             <typeMappings>
                                 <typeMapping>BigDecimal=java.lang.Long</typeMapping>
                                 <typeMappings>integer=Long,int=Long</typeMappings>
+                                <typeMappings>DateTime=java.time.Instant</typeMappings>
                             </typeMappings>
                             <configOptions>
                                 <useJakartaEe>true</useJakartaEe>
@@ -169,9 +174,11 @@
                         </goals>
                         <configuration>
                             <sourceDirs>
-                                <sourceDir>${project.build.directory}/generated-sources/openapi/src/main/kotlin</sourceDir>
+                                <sourceDir>${project.build.directory}/generated-sources/openapi/src/main/kotlin
+                                </sourceDir>
                             </sourceDirs>
                         </configuration>
+
                     </execution>
                     <execution>
                         <id>kapt</id>
@@ -186,9 +193,12 @@
                                 <plugin>spring</plugin>
                                 <plugin>jpa</plugin>
                             </compilerPlugins>
+
                             <sourceDirs>
                                 <sourceDir>src/main/kotlin</sourceDir>
                                 <sourceDir>src/main/java</sourceDir>
+                                <sourceDir>${project.build.directory}/generated-sources/openapi/src/main/kotlin
+                                </sourceDir>
                             </sourceDirs>
                             <annotationProcessorPaths>
                                 <annotationProcessorPath>
@@ -216,8 +226,14 @@
                         <artifactId>kotlin-maven-noarg</artifactId>
                         <version>${kotlin.version}</version>
                     </dependency>
+                    <dependency>
+                        <groupId>org.mapstruct</groupId>
+                        <artifactId>mapstruct-processor</artifactId>
+                        <version>${org.mapstruct.version}</version>
+                    </dependency>
                 </dependencies>
             </plugin>
+
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
