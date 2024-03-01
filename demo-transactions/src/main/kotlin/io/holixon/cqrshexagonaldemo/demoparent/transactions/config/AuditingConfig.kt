@@ -11,7 +11,7 @@ import java.util.*
 @EnableJpaAuditing
 open class AuditingConfig {
     @Bean
-    open fun aircraftdocumentAuditorProvider(): AuditorAware<String> {
+    open fun transactionsAuditorProvider(): AuditorAware<String> {
         return AuditorAware { Optional.of("cqrs-meets-hexagonal") }
     }
 

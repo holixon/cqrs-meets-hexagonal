@@ -1,6 +1,6 @@
 openapi: 3.0.3
 info:
-  title: ETLB Aircraft Document Service - OpenAPI 3.0
+  title: CQRS meets hexagonaö - OpenAPI 3.0
   description: |-
   termsOfService: https://swagger.io/terms/
   contact:
