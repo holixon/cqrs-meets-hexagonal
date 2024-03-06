@@ -22,7 +22,7 @@
         <kotlin.version>1.9.22</kotlin.version>
         <spring-version>3.2.2</spring-version>
         <flyway.version>9.22.3</flyway.version>
-        <flyway-sqlserver.version>9.22.3</flyway-sqlserver.version>
+        <flyway-sqlserver.version>10.9.0</flyway-sqlserver.version>
         <kotlin-logging.version>3.0.5</kotlin-logging.version>
         <org.mapstruct.version>1.5.5.Final</org.mapstruct.version>
         <mssql-jdbc.version>11.2.3.jre17</mssql-jdbc.version>
