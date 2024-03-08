@@ -12,32 +12,18 @@ GO
 -- ------------------------------------------------------------------------------#
 CREATE TABLE [transactions].account
 (
-    id              BIGINT       NOT NULL
-        DEFAULT (NEXT VALUE FOR [transactions].account_seq),
-
-    created         DATETIMEOFFSET(6),
-    updated         DATETIMEOFFSET(6),
-    created_by      VARCHAR(255),
-    updated_by      VARCHAR(255),
-
-    account_number  VARCHAR(255) NOT NULL,
+    iban            VARCHAR(255) NOT NULL,
     customer_number VARCHAR(255) NOT NULL,
 
-    CONSTRAINT PK_ACCOUNT_ID PRIMARY KEY (id)
+    CONSTRAINT PK_ACCOUNT_ID PRIMARY KEY (iban)
 )
 GO
 -- ------------------------------------------------------------------------------#
 CREATE TABLE [transactions].customer
 (
-    id              BIGINT       NOT NULL
-        DEFAULT (NEXT VALUE FOR [transactions].customer_seq),
-    created         DATETIMEOFFSET(6),
-    updated         DATETIMEOFFSET(6),
-    created_by      VARCHAR(255),
-    updated_by      VARCHAR(255),
-
     customer_number VARCHAR(255) NOT NULL,
+    customer_name   VARCHAR(255) NOT NULL,
 
-    CONSTRAINT PK_CUSTOMER_ID PRIMARY KEY (id)
+    CONSTRAINT PK_CUSTOMER_ID PRIMARY KEY (customer_number)
 )
 GO

@@ -4,14 +4,14 @@ logging:
     'org.springframework.web': DEBUG
 
 spring:
+  application:
+    name: "demo-tranascations"
   threads:
     virtual:
       enabled: true
   mvc:
     async:
       request-timeout: 600000 # milliseconds applied to server sent events
-  application:
-    name: "demo-tranascations"
   profiles:
     default: local
   datasource:
@@ -45,5 +45,5 @@ spring:
       - transactions
       - query
     locations:
-      - classpath:io/holixon/cqrshexagonaldemo/demoparent/transactions/adapter/outbound/flyway
+      - classpath:db
 

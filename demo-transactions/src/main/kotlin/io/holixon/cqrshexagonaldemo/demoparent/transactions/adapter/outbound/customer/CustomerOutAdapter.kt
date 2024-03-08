@@ -4,10 +4,10 @@ import io.holixon.cqrshexagonaldemo.demoparent.transactions.adapter.outbound.cus
 import io.holixon.cqrshexagonaldemo.demoparent.transactions.application.port.outbound.customer.CustomerOutPort
 import io.holixon.cqrshexagonaldemo.demoparent.transactions.domain.model.customer.Customer
 import io.holixon.cqrshexagonaldemo.demoparent.transactions.domain.model.customer.CustomerNumber
+import io.holixon.cqrshexagonaldemo.demoparent.transactions.framework.OutAdapter
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.stereotype.Service
 
-@Service
+@OutAdapter
 class CustomerOutAdapter @Autowired constructor(
         private val jpaCustomerOutAdapter: JpaCustomerOutAdapter,
         private val customerEntityMapper: CustomerEntityMapper

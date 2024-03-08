@@ -4,9 +4,9 @@ import io.holixon.cqrshexagonaldemo.demoparent.transactions.adapter.outbound.acc
 import io.holixon.cqrshexagonaldemo.demoparent.transactions.application.port.outbound.account.AccountOutPort
 import io.holixon.cqrshexagonaldemo.demoparent.transactions.domain.model.account.Account
 import io.holixon.cqrshexagonaldemo.demoparent.transactions.domain.model.account.Iban
-import org.springframework.stereotype.Service
+import io.holixon.cqrshexagonaldemo.demoparent.transactions.framework.OutAdapter
 
-@Service
+@OutAdapter
 class AccountOutAdapter(
         private val jpaAccountOutAdapter: JpaAccountOutAdapter,
         private val accountEntityMapper: AccountEntityMapper

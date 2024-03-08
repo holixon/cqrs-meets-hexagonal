@@ -1,16 +1,17 @@
-package io.holixon.cqrshexagonaldemo.demoparent.transactions.application
+package io.holixon.cqrshexagonaldemo.demoparent.transactions.application.usecase
 
 import com.nhaarman.mockitokotlin2.any
 import com.nhaarman.mockitokotlin2.verify
 import com.nhaarman.mockitokotlin2.whenever
 import io.holixon.cqrshexagonaldemo.demoparent.transactions.application.port.outbound.account.AccountOutPort
 import io.holixon.cqrshexagonaldemo.demoparent.transactions.application.port.outbound.customer.CustomerOutPort
-import io.holixon.cqrshexagonaldemo.demoparent.transactions.domain.event.AccountCreatedEvent
+import io.holixon.cqrshexagonaldemo.demoparent.transactions.application.port.outbound.eventing.EventingOutAdapter
 import io.holixon.cqrshexagonaldemo.demoparent.transactions.domain.model.account.Account
 import io.holixon.cqrshexagonaldemo.demoparent.transactions.domain.model.account.Iban
 import io.holixon.cqrshexagonaldemo.demoparent.transactions.domain.model.common.Name
 import io.holixon.cqrshexagonaldemo.demoparent.transactions.domain.model.customer.Customer
 import io.holixon.cqrshexagonaldemo.demoparent.transactions.domain.model.customer.CustomerNumber
+import io.holixon.cqrshexagonaldemo.demoparent.transactions.domain.model.event.AccountCreatedEvent
 import io.holixon.cqrshexagonaldemo.demoparent.transactions.domain.service.CustomerAccountVerificationService
 import io.holixon.cqrshexagonaldemo.demoparent.transactions.domain.service.IbanCreationService
 import org.assertj.core.api.Assertions
@@ -20,7 +21,6 @@ import org.mockito.InjectMocks
 import org.mockito.Mock
 import org.mockito.Mockito
 import org.mockito.junit.jupiter.MockitoExtension
-import org.springframework.context.ApplicationEventPublisher
 
 
 @ExtendWith(MockitoExtension::class)
@@ -28,21 +28,25 @@ class CreateAccountUsecaseTest {
 
     @Mock
     private lateinit var accountOutPort: AccountOutPort
+
     @Mock
     private lateinit var customerOutPort: CustomerOutPort
+
     @Mock
     private lateinit var customerAccountVerificationService: CustomerAccountVerificationService
+
     @Mock
     private lateinit var ibanCreationService: IbanCreationService
+
     @Mock
-    private lateinit var applicationEventPublisher: ApplicationEventPublisher
-    
+    private lateinit var eventingOutAdapter: EventingOutAdapter
+
     @InjectMocks
     private lateinit var createAccountUsecase: CreateAccountUsecase
-    
+
     @Test
     fun `should create an account`() {
-      // given
+        // given
         val customerNumber = CustomerNumber("123456789")
         val customer = Customer(customerNumber, Name("Dagobert Duck"))
         whenever(customerOutPort.findCustomer(customerNumber)).thenReturn(customer)
@@ -58,7 +62,7 @@ class CreateAccountUsecaseTest {
         // then
         Assertions.assertThat(createdAccount).isNotNull
         verify(accountOutPort).createAccount(account)
-        Mockito.verify(applicationEventPublisher).publishEvent(AccountCreatedEvent(customerNumber, iban))
+        Mockito.verify(eventingOutAdapter).publishEvent(AccountCreatedEvent(customerNumber, iban))
     }
-    
+
 }

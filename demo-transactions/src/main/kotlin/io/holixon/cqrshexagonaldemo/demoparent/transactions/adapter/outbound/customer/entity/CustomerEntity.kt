@@ -13,5 +13,5 @@ import jakarta.persistence.Table
 class CustomerEntity(
         @Id
         var customerNumber: String,
-        var name: String
+        var customerName: String
 )

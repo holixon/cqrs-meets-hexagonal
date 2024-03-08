@@ -11,14 +11,14 @@ class CustomerEntityMapper {
     fun toEntity(customer: Customer): CustomerEntity {
         return CustomerEntity(
                 customerNumber = customer.customerNumber.value,
-                name = customer.name.value
+                customerName = customer.name.value
         )
     }
 
     fun toDomain(customerEntity: CustomerEntity): Customer {
         return Customer(
                 customerNumber = CustomerNumber(customerEntity.customerNumber),
-                name = Name(customerEntity.name)
+                name = Name(customerEntity.customerName)
         )
     }
 }

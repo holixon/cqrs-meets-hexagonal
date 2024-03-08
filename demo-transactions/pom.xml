@@ -110,8 +110,8 @@
 
         <dependency>
             <groupId>org.springdoc</groupId>
-            <artifactId>springdoc-openapi-starter-webmvc-api</artifactId>
-            <version>${springdoc-openapi-starter-webmvc-api.version}</version>
+            <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
+            <version>${springdoc.version}</version>
         </dependency>
         <dependency>
             <groupId>org.openapitools</groupId>
@@ -139,32 +139,31 @@
                 <version>${openapi-generator-maven-plugin.version}</version>
                 <executions>
                     <execution>
-                        <id>flight-service</id>
                         <goals>
                             <goal>generate</goal>
                         </goals>
                         <configuration>
-                            <inputSpec>${project.basedir}/src/main/resources/openapi.yaml</inputSpec>
+                            <inputSpec>${project.basedir}/src/main/resources/api/api.yaml</inputSpec>
                             <generatorName>spring</generatorName>
-                            <apiPackage>
-                                io.holixon.cqrshexagonaldemo.demoparent.transactions.adapter.inbound.searchquery.service.gen
-                            </apiPackage>
-                            <modelPackage>
-                                io.holixon.cqrshexagonaldemo.demoparent.transactions.adapter.inbound.searchquery.model
-                            </modelPackage>
                             <modelNameSuffix>Dto</modelNameSuffix>
-                            <generateSupportingFiles>false</generateSupportingFiles>
+                            <supportingFilesToGenerate>ApiUtil.java,SpringDocConfiguration.java
+                            </supportingFilesToGenerate>
                             <typeMappings>
                                 <typeMapping>BigDecimal=java.lang.Long</typeMapping>
                                 <typeMappings>integer=Long,int=Long</typeMappings>
                                 <typeMappings>DateTime=java.time.Instant</typeMappings>
                             </typeMappings>
                             <configOptions>
-                                <useJakartaEe>true</useJakartaEe>
-                                <interfaceOnly>true</interfaceOnly>
-                                <dateLibrary>java8</dateLibrary>
-                                <skipDefaultInterface>true</skipDefaultInterface>
                                 <useTags>true</useTags>
+                                <apiPackage>io.holixon.cqrshexagonaldemo.demoparent.transactions.adapter.inbound
+                                </apiPackage>
+                                <modelPackage>io.holixon.cqrshexagonaldemo.demoparent.transactions.adapter.inbound.dto
+                                </modelPackage>
+                                <configPackage>
+                                    io.holixon.cqrshexagonaldemo.demoparent.transactions.adapter.inbound.config
+                                </configPackage>
+                                <delegatePattern>true</delegatePattern>
+                                <useJakartaEe>true</useJakartaEe>
                             </configOptions>
                         </configuration>
                     </execution>
@@ -204,8 +203,6 @@
                             <sourceDirs>
                                 <sourceDir>src/main/kotlin</sourceDir>
                                 <sourceDir>src/main/java</sourceDir>
-                                <sourceDir>${project.build.directory}/generated-sources/openapi/src/main/kotlin
-                                </sourceDir>
                             </sourceDirs>
                             <annotationProcessorPaths>
                                 <annotationProcessorPath>
@@ -216,6 +213,7 @@
                             </annotationProcessorPaths>
                             <annotationProcessorArgs>
                                 <annotationProcessorArg>
+                                    mapstruct.defaultComponentModel=spring
                                     mapstruct.defaultComponentModel=spring
                                 </annotationProcessorArg>
                             </annotationProcessorArgs>
