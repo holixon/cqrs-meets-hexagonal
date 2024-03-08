@@ -40,5 +40,4 @@ open class CreateAccountUsecase(
 
         return createdAccount
     }
-
 }
