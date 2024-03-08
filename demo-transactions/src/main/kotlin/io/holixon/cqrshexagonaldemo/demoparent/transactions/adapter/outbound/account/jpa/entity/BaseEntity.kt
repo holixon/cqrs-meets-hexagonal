@@ -1,4 +1,4 @@
-package io.holixon.cqrshexagonaldemo.demoparent.transactions.adapter.outbound.account.entity
+package io.holixon.cqrshexagonaldemo.demoparent.transactions.adapter.outbound.account.jpa.entity
 
 import jakarta.persistence.Column
 import jakarta.persistence.EntityListeners

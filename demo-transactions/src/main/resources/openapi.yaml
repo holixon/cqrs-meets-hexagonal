@@ -1,6 +1,6 @@
 openapi: 3.0.3
 info:
-  title: CQRS meets hexagonaö - OpenAPI 3.0
+  title: CQRS meets hexagonal - OpenAPI 3.0
   description: |-
   termsOfService: https://swagger.io/terms/
   contact:
@@ -17,6 +17,35 @@ tags:
     description: Image search
 
 paths:
+  /api/v1/customer/create:
+    post:
+      tags:
+        - create-account
+      summary: >
+        Search for Images
+      description: >
+        Search for Images
+      operationId: createCustomer
+      requestBody:
+        description: Customer to be created
+        required: true
+        content:
+          application/json:
+            schema:
+              properties:
+                name:
+                  type: string
+              required:
+                - name
+
+      responses:
+        '200':
+          description: created customer
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Customer'
+
   /api/v1/create-account:
     post:
       tags:
@@ -27,42 +56,43 @@ paths:
         Search for Images
       operationId: createAccount
       requestBody:
-        description: Event to be created
         required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Account'
+              properties:
+                customerNumber:
+                  type: string
+              required:
+                - customerNumber
       responses:
         '200':
-          description: returns list of items and an empty arry in case the query has no results
+          description: created account
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Account'
+                $ref: '#/components/schemas/Account'
 components:
   schemas:
     Account:
       type: object
       properties:
-        id:
-          type: string
-        accountNumber:
-          type: string
         customerNumber:
           type: string
+        iban:
+          type: string
+      required:
+        - customerNumber
+        - iban
 
     Customer:
       type: object
       properties:
-        id:
-          type: string
         customerNumber:
           type: string
-
-
-
-
+        name:
+          type: string
+      required:
+        - customerNumber
+        - name
 
