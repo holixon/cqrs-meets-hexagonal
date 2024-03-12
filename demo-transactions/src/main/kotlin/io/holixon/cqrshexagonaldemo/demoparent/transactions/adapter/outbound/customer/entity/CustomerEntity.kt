@@ -12,6 +12,6 @@ import jakarta.persistence.Table
 )
 class CustomerEntity(
         @Id
-        var customerNumber: String,
-        var customerName: String
+        var customerNumber: String = "", //Default constructor needed for JPA
+        var customerName: String = ""
 )

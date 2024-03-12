@@ -11,6 +11,6 @@ import jakarta.persistence.Table
 )
 class AccountEntity(
         @Id
-        var iban: String,
-        var customerNumber: String
+        var iban: String = "",
+        var customerNumber: String = ""
 )

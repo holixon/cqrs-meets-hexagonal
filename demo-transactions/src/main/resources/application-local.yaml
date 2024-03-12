@@ -1,9 +1,9 @@
 spring:
   datasource:
-    url: jdbc:sqlserver://localhost:1434;database=cqrs-meets-hexagonal;encrypt=false;trustServerCertificate=false;hostNameInCertificate=*.database.windows.net;loginTimeout=30;
-    username: sa
+    url: jdbc:mysql://localhost:3306/transactions
+    username: SA
     password: Aut0mat0rs!
   flyway:
     user: SA
     password: Aut0mat0rs!
-    url: jdbc:sqlserver://localhost:1434;database=cqrs-meets-hexagonal;encrypt=false;trustServerCertificate=false;hostNameInCertificate=*.database.windows.net;loginTimeout=30;
+    url: jdbc:mysql://localhost:3306/transactions
