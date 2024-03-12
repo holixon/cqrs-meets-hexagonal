@@ -1,0 +1,22 @@
+version: "3.5"
+name: cqrs-meets-hexagonal
+
+services:
+  mysql-database:
+    image: arm64v8/mysql:8.0.36
+    restart: always
+    environment:
+      MYSQL_DATABASE: 'cqrs-meets-hexagonal'
+      MYSQL_USER: 'SA'
+      MYSQL_PASSWORD: 'Aut0mat0rs!'
+      MYSQL_ROOT_PASSWORD: 'Aut0mat0rs!'
+    ports:
+      - '3306:3306'
+    volumes:
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+
+volumes:
+  data:
+
+networks:
+  cqrs-meets-hexagonal:

@@ -1,26 +1,17 @@
-cqrs-demo-command:
-  nasa-api-schema: https
-  nasa-api-hostname: images-api.nasa.gov
-  nasa-api-search-endpoint: /search
-  nasa-api-asset-endpoint: /asset
-  nasa-api-captions-endpoint: /captions
-  nasa-api-album-endpoint: /album
-  api-key: ${API_KEY}
-
 logging:
   level:
     org.hibernate.SQL: OFF
     'org.springframework.web': DEBUG
 
 spring:
+  application:
+    name: "demo-transactions"
   threads:
     virtual:
       enabled: true
   mvc:
     async:
       request-timeout: 600000 # milliseconds applied to server sent events
-  application:
-    name: "demo-tranascations"
   profiles:
     default: local
   datasource:
@@ -41,7 +32,7 @@ spring:
       ddl-auto: none
       generate_statistics: true
 
-    database-platform: org.hibernate.dialect.SQLServerDialect
+    database-platform: org.hibernate.dialect.MySQL8Dialect
     properties:
       hibernate:
         default_schema: transactions
@@ -54,5 +45,4 @@ spring:
       - transactions
       - query
     locations:
-      - classpath:io/holixon/cqrshexagonaldemo/demoparent/transactions/adapter/outbound/flyway
-
+      - classpath:db

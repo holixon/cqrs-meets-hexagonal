@@ -21,16 +21,16 @@
         <java.version>21</java.version>
         <kotlin.version>1.9.22</kotlin.version>
         <spring-version>3.2.2</spring-version>
-        <flyway.version>9.22.3</flyway.version>
-        <flyway-sqlserver.version>9.22.3</flyway-sqlserver.version>
+        <flyway.version>10.9.1</flyway.version>
+        <flyway-mysql.version>10.9.1</flyway-mysql.version>
         <kotlin-logging.version>3.0.5</kotlin-logging.version>
         <org.mapstruct.version>1.5.5.Final</org.mapstruct.version>
-        <mssql-jdbc.version>11.2.3.jre17</mssql-jdbc.version>
+        <mysql.connector.version>8.0.33</mysql.connector.version>
         <maven-compiler-plugin.version>3.8.1</maven-compiler-plugin.version>
-        <flyway-maven-plugin.version>9.22.3</flyway-maven-plugin.version>
+        <flyway-maven-plugin.version>10.9.1</flyway-maven-plugin.version>
         <archunit-junit5.version>1.2.1</archunit-junit5.version>
         <openapi-generator-maven-plugin.version>7.3.0</openapi-generator-maven-plugin.version>
-        <springdoc-openapi-starter-webmvc-api.version>2.3.0</springdoc-openapi-starter-webmvc-api.version>
+        <springdoc.version>2.3.0</springdoc.version>
         <jackson-databind-nullable.version>0.2.6</jackson-databind-nullable.version>
         <validation-api.version>2.0.1.Final</validation-api.version>
     </properties>

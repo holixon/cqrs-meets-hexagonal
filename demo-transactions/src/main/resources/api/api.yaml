@@ -1,0 +1,98 @@
+openapi: 3.0.3
+info:
+  title: CQRS meets hexagonal - OpenAPI 3.0
+  description: |-
+  termsOfService: https://swagger.io/terms/
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0.html
+  version: 1.0.11
+externalDocs:
+  description: Find out more about Swagger
+  url: https://swagger.io
+servers:
+  - url: http://localhost:8080
+tags:
+  - name: customer
+  - name: account
+
+paths:
+  /api/v1/customer/create:
+    post:
+      tags:
+        - customer
+      summary: >
+        Create a customer
+      description: >
+        Create a customer
+      operationId: createCustomer
+      requestBody:
+        description: Customer to be created
+        required: true
+        content:
+          application/json:
+            schema:
+              properties:
+                name:
+                  type: string
+              required:
+                - name
+
+      responses:
+        '200':
+          description: created customer
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Customer'
+
+  /api/v1/account/create:
+    post:
+      tags:
+        - account
+      summary: >
+        Create an account for a customer
+      description: >
+        Create an account for a customer
+      operationId: createAccount
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              properties:
+                customerNumber:
+                  type: string
+              required:
+                - customerNumber
+      responses:
+        '200':
+          description: created account
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Account'
+components:
+  schemas:
+    Account:
+      type: object
+      properties:
+        customerNumber:
+          type: string
+        iban:
+          type: string
+      required:
+        - customerNumber
+        - iban
+
+    Customer:
+      type: object
+      properties:
+        customerNumber:
+          type: string
+        name:
+          type: string
+      required:
+        - customerNumber
+        - name
+

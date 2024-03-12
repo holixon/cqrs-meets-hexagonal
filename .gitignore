@@ -40,3 +40,5 @@ docker/azure-sql-edge/log/*
 !docker/azure-sql-edge/log/.gitkeep
 docker/azure-sql-edge/secrets/*
 !docker/azure-sql-edge/secrets/.gitkeep
+
+.java-version
