@@ -37,9 +37,9 @@
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.microsoft.sqlserver</groupId>
-            <artifactId>mssql-jdbc</artifactId>
-            <version>${mssql-jdbc.version}</version>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>${mysql.connector.version}</version>
         </dependency>
         <dependency>
             <groupId>com.fasterxml.jackson.module</groupId>
@@ -92,10 +92,9 @@
         </dependency>
         <dependency>
             <groupId>org.flywaydb</groupId>
-            <artifactId>flyway-sqlserver</artifactId>
-            <version>${flyway-sqlserver.version}</version>
+            <artifactId>flyway-mysql</artifactId>
+            <version>${flyway-mysql.version}</version>
         </dependency>
-
         <dependency>
             <groupId>io.github.microutils</groupId>
             <artifactId>kotlin-logging-jvm</artifactId>
@@ -280,7 +279,7 @@
                 <artifactId>flyway-maven-plugin</artifactId>
                 <version>${flyway-maven-plugin.version}</version>
                 <configuration>
-                    <driver>com.microsoft.sqlserver.jdbc.SQLServerDriver</driver>
+                    <driver>com.mysql.jdbc.Driver</driver>
                 </configuration>
             </plugin>
         </plugins>
