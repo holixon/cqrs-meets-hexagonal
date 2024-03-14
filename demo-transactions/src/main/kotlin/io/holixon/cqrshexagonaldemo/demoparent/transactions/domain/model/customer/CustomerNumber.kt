@@ -1,5 +1,4 @@
 package io.holixon.cqrshexagonaldemo.demoparent.transactions.domain.model.customer
 
 @JvmInline
-value class CustomerNumber(val value: String) {
-}
+value class CustomerNumber(val value: String)

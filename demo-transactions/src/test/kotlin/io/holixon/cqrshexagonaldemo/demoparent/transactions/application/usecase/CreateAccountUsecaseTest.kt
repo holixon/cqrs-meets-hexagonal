@@ -8,6 +8,7 @@ import io.holixon.cqrshexagonaldemo.demoparent.transactions.application.port.out
 import io.holixon.cqrshexagonaldemo.demoparent.transactions.application.port.outbound.eventing.EventingOutAdapter
 import io.holixon.cqrshexagonaldemo.demoparent.transactions.domain.model.account.Account
 import io.holixon.cqrshexagonaldemo.demoparent.transactions.domain.model.account.Iban
+import io.holixon.cqrshexagonaldemo.demoparent.transactions.domain.model.account.Money
 import io.holixon.cqrshexagonaldemo.demoparent.transactions.domain.model.common.Name
 import io.holixon.cqrshexagonaldemo.demoparent.transactions.domain.model.customer.Customer
 import io.holixon.cqrshexagonaldemo.demoparent.transactions.domain.model.customer.CustomerNumber
@@ -53,7 +54,8 @@ class CreateAccountUsecaseTest {
         whenever(customerAccountVerificationService.canAccountBeCreatedForCustomer(customer)).thenReturn(true)
         val iban = Iban("DE00123456789")
         whenever(ibanCreationService.generateNextIban()).thenReturn(iban)
-        val account = Account(customerNumber, iban)
+        val balance = Money()
+        val account = Account(customerNumber, iban, balance)
         whenever(accountOutPort.createAccount(any())).thenReturn(account)
 
         // when
