@@ -26,7 +26,7 @@
         <kotlin-logging.version>3.0.5</kotlin-logging.version>
         <org.mapstruct.version>1.5.5.Final</org.mapstruct.version>
         <mssql-jdbc.version>11.2.3.jre17</mssql-jdbc.version>
-        <maven-compiler-plugin.version>3.8.1</maven-compiler-plugin.version>
+        <maven-compiler-plugin.version>3.12.1</maven-compiler-plugin.version>
         <flyway-maven-plugin.version>10.10.0</flyway-maven-plugin.version>
         <archunit-junit5.version>1.2.1</archunit-junit5.version>
         <openapi-generator-maven-plugin.version>7.3.0</openapi-generator-maven-plugin.version>
