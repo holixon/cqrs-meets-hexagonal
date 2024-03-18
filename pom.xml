@@ -29,7 +29,7 @@
         <maven-compiler-plugin.version>3.12.1</maven-compiler-plugin.version>
         <flyway-maven-plugin.version>10.10.0</flyway-maven-plugin.version>
         <archunit-junit5.version>1.2.1</archunit-junit5.version>
-        <openapi-generator-maven-plugin.version>7.3.0</openapi-generator-maven-plugin.version>
+        <openapi-generator-maven-plugin.version>7.4.0</openapi-generator-maven-plugin.version>
         <springdoc-openapi-starter-webmvc-api.version>2.4.0</springdoc-openapi-starter-webmvc-api.version>
         <jackson-databind-nullable.version>0.2.6</jackson-databind-nullable.version>
         <validation-api.version>2.0.1.Final</validation-api.version>
