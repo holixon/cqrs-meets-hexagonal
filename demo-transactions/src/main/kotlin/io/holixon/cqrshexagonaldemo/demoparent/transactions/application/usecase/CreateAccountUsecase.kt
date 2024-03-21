@@ -5,6 +5,7 @@ import io.holixon.cqrshexagonaldemo.demoparent.transactions.application.port.out
 import io.holixon.cqrshexagonaldemo.demoparent.transactions.application.port.outbound.customer.CustomerOutPort
 import io.holixon.cqrshexagonaldemo.demoparent.transactions.application.port.outbound.eventing.EventingOutAdapter
 import io.holixon.cqrshexagonaldemo.demoparent.transactions.domain.model.account.Account
+import io.holixon.cqrshexagonaldemo.demoparent.transactions.domain.model.account.Money
 import io.holixon.cqrshexagonaldemo.demoparent.transactions.domain.model.customer.CustomerNumber
 import io.holixon.cqrshexagonaldemo.demoparent.transactions.domain.model.event.AccountCreatedEvent
 import io.holixon.cqrshexagonaldemo.demoparent.transactions.domain.service.CustomerAccountVerificationService
@@ -30,7 +31,8 @@ open class CreateAccountUsecase(
 
         val newAccount = Account(
                 customerNumber,
-                ibanCreationService.generateNextIban()
+                ibanCreationService.generateNextIban(),
+                Money()
         )
 
         val createdAccount = accountOutPort.createAccount(newAccount)

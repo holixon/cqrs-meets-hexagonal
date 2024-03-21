@@ -3,6 +3,7 @@ package io.holixon.cqrshexagonaldemo.demoparent.transactions.adapter.outbound.ac
 import io.holixon.cqrshexagonaldemo.demoparent.transactions.adapter.outbound.account.jpa.entity.AccountEntity
 import io.holixon.cqrshexagonaldemo.demoparent.transactions.domain.model.account.Account
 import io.holixon.cqrshexagonaldemo.demoparent.transactions.domain.model.account.Iban
+import io.holixon.cqrshexagonaldemo.demoparent.transactions.domain.model.account.Money
 import io.holixon.cqrshexagonaldemo.demoparent.transactions.domain.model.customer.CustomerNumber
 import org.springframework.stereotype.Component
 
@@ -10,13 +11,17 @@ import org.springframework.stereotype.Component
 class AccountEntityMapper {
     fun toEntity(account: Account): AccountEntity {
         return AccountEntity(
-                customerNumber = account.customerNumber.value,
-                iban = account.iban.value)
+            customerNumber = account.customerNumber.value,
+            iban = account.iban.value,
+            balance = account.balance.amount
+        )
     }
 
     fun toDomain(accountEntity: AccountEntity): Account {
         return Account(
-                customerNumber = CustomerNumber(accountEntity.customerNumber),
-                iban = Iban(accountEntity.iban))
+            customerNumber = CustomerNumber(accountEntity.customerNumber),
+            iban = Iban(accountEntity.iban),
+            balance = Money(accountEntity.balance)
+        )
     }
 }

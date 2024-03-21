@@ -3,6 +3,7 @@ package io.holixon.cqrshexagonaldemo.demoparent.transactions.adapter.outbound.ac
 import jakarta.persistence.Entity
 import jakarta.persistence.Id
 import jakarta.persistence.Table
+import java.math.BigDecimal
 
 @Entity
 @Table(
@@ -12,5 +13,6 @@ import jakarta.persistence.Table
 class AccountEntity(
         @Id
         var iban: String = "",
-        var customerNumber: String = ""
+        var customerNumber: String = "",
+        var balance: BigDecimal = BigDecimal.ZERO
 )

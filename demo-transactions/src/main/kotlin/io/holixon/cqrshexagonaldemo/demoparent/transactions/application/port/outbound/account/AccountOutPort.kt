@@ -6,4 +6,6 @@ import io.holixon.cqrshexagonaldemo.demoparent.transactions.domain.model.account
 interface AccountOutPort {
     fun findAccount(iban: Iban): Account?
     fun createAccount(account: Account): Account
+    fun deposit(account: Account): Account
+    fun withdraw(account: Account): Account
 }

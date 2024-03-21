@@ -8,8 +8,8 @@ import io.holixon.cqrshexagonaldemo.demoparent.transactions.framework.OutAdapter
 
 @OutAdapter
 class AccountOutAdapter(
-        private val jpaAccountOutAdapter: JpaAccountOutAdapter,
-        private val accountEntityMapper: AccountEntityMapper
+    private val jpaAccountOutAdapter: JpaAccountOutAdapter,
+    private val accountEntityMapper: AccountEntityMapper
 ) : AccountOutPort {
 
     override fun findAccount(iban: Iban): Account? {
@@ -25,5 +25,13 @@ class AccountOutAdapter(
 
         val savedAccount = jpaAccountOutAdapter.save(toEntity)
         return accountEntityMapper.toDomain(savedAccount)
+    }
+
+    override fun deposit(account: Account): Account {
+        TODO("Not implemented yet")
+    }
+
+    override fun withdraw(account: Account): Account {
+        TODO("Not implemented yet")
     }
 }
