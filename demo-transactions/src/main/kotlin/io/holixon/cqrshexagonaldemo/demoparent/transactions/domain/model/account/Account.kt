@@ -1,21 +1,20 @@
 package io.holixon.cqrshexagonaldemo.demoparent.transactions.domain.model.account
 
 import io.holixon.cqrshexagonaldemo.demoparent.transactions.domain.model.customer.CustomerNumber
-import java.math.BigDecimal
 
 data class Account(
     var customerNumber: CustomerNumber,
     var iban: Iban,
     var balance: Money
 ) {
-    fun deposit(amount: BigDecimal) {
-        this.balance.amount.plus(amount)
+    fun deposit(amount: Amount) {
+        this.balance.amount += amount.value
     }
 
-    fun withdraw(amount: BigDecimal) {
-        require(this.balance.amount > amount) {
+    fun withdraw(amount: Amount) {
+        require(this.balance.amount > amount.value) {
             "Cannot withdraw more than account balance"
         }
-        this.balance.amount -= amount
+        this.balance.amount -= amount.value
     }
 }
