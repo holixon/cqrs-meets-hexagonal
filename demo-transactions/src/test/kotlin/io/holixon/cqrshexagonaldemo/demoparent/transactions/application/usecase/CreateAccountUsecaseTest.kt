@@ -1,8 +1,5 @@
 package io.holixon.cqrshexagonaldemo.demoparent.transactions.application.usecase
 
-import com.nhaarman.mockitokotlin2.any
-import com.nhaarman.mockitokotlin2.verify
-import com.nhaarman.mockitokotlin2.whenever
 import io.holixon.cqrshexagonaldemo.demoparent.transactions.application.port.outbound.account.AccountOutPort
 import io.holixon.cqrshexagonaldemo.demoparent.transactions.application.port.outbound.customer.CustomerOutPort
 import io.holixon.cqrshexagonaldemo.demoparent.transactions.application.port.outbound.eventing.EventingOutAdapter
@@ -15,34 +12,35 @@ import io.holixon.cqrshexagonaldemo.demoparent.transactions.domain.model.custome
 import io.holixon.cqrshexagonaldemo.demoparent.transactions.domain.model.event.AccountCreatedEvent
 import io.holixon.cqrshexagonaldemo.demoparent.transactions.domain.service.CustomerAccountVerificationService
 import io.holixon.cqrshexagonaldemo.demoparent.transactions.domain.service.IbanCreationService
+import io.mockk.every
+import io.mockk.impl.annotations.InjectMockKs
+import io.mockk.impl.annotations.MockK
+import io.mockk.impl.annotations.RelaxedMockK
+import io.mockk.junit5.MockKExtension
+import io.mockk.verify
 import org.assertj.core.api.Assertions
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
-import org.mockito.InjectMocks
-import org.mockito.Mock
-import org.mockito.Mockito
-import org.mockito.junit.jupiter.MockitoExtension
 
-
-@ExtendWith(MockitoExtension::class)
+@ExtendWith(MockKExtension::class)
 class CreateAccountUsecaseTest {
 
-    @Mock
+    @MockK
     private lateinit var accountOutPort: AccountOutPort
 
-    @Mock
+    @MockK
     private lateinit var customerOutPort: CustomerOutPort
 
-    @Mock
+    @MockK
     private lateinit var customerAccountVerificationService: CustomerAccountVerificationService
 
-    @Mock
+    @MockK
     private lateinit var ibanCreationService: IbanCreationService
 
-    @Mock
+    @RelaxedMockK
     private lateinit var eventingOutAdapter: EventingOutAdapter
 
-    @InjectMocks
+    @InjectMockKs
     private lateinit var createAccountUsecase: CreateAccountUsecase
 
     @Test
@@ -50,21 +48,24 @@ class CreateAccountUsecaseTest {
         // given
         val customerNumber = CustomerNumber("123456789")
         val customer = Customer(customerNumber, Name("Dagobert Duck"))
-        whenever(customerOutPort.findCustomer(customerNumber)).thenReturn(customer)
-        whenever(customerAccountVerificationService.canAccountBeCreatedForCustomer(customer)).thenReturn(true)
+        every { customerOutPort.findCustomer(customerNumber) } returns customer
+        every { customerAccountVerificationService.canAccountBeCreatedForCustomer(customer) } returns true
+
         val iban = Iban("DE00123456789")
-        whenever(ibanCreationService.generateNextIban()).thenReturn(iban)
+
+        every { ibanCreationService.generateNextIban() } returns iban
         val balance = Money()
         val account = Account(customerNumber, iban, balance)
-        whenever(accountOutPort.createAccount(any())).thenReturn(account)
+
+        every { accountOutPort.createAccount(this.any()) } returns account
 
         // when
         val createdAccount = createAccountUsecase.createAccount(customerNumber)
 
         // then
         Assertions.assertThat(createdAccount).isNotNull
-        verify(accountOutPort).createAccount(account)
-        Mockito.verify(eventingOutAdapter).publishEvent(AccountCreatedEvent(customerNumber, iban))
+        verify { accountOutPort.createAccount(account) }
+        verify { eventingOutAdapter.publishEvent(AccountCreatedEvent(customerNumber, iban)) }
     }
 
 }
