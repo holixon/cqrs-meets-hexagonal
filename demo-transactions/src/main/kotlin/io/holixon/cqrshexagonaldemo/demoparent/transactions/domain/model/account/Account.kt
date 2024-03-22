@@ -9,7 +9,7 @@ data class Account(
     var balance: Money
 ) {
     fun deposit(amount: BigDecimal) {
-        this.balance.amount.plus(amount)
+        this.balance.amount += amount
     }
 
     fun withdraw(amount: BigDecimal) {
