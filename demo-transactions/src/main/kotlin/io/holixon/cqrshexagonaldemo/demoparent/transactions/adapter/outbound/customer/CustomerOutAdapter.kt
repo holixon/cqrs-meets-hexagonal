@@ -1,26 +1,25 @@
 package io.holixon.cqrshexagonaldemo.demoparent.transactions.adapter.outbound.customer
 
-import io.holixon.cqrshexagonaldemo.demoparent.transactions.adapter.outbound.customer.mapper.EntityMapper
+import io.holixon.cqrshexagonaldemo.demoparent.transactions.adapter.outbound.customer.mapper.CustomerEntityMapper
 import io.holixon.cqrshexagonaldemo.demoparent.transactions.application.port.outbound.customer.CustomerOutPort
-import io.holixon.cqrshexagonaldemo.demoparent.transactions.domain.Customer
+import io.holixon.cqrshexagonaldemo.demoparent.transactions.domain.model.customer.Customer
+import io.holixon.cqrshexagonaldemo.demoparent.transactions.domain.model.customer.CustomerNumber
+import io.holixon.cqrshexagonaldemo.demoparent.transactions.framework.OutAdapter
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.stereotype.Service
-import java.time.Instant
 
-@Service
+@OutAdapter
 class CustomerOutAdapter @Autowired constructor(
-    val mapper: EntityMapper,
+        private val jpaCustomerOutAdapter: JpaCustomerOutAdapter,
+        private val customerEntityMapper: CustomerEntityMapper
 ) : CustomerOutPort {
 
-    override fun createAccount(searchResultItem: Customer): Customer {
+    override fun findCustomer(customerNumber: CustomerNumber): Customer? {
+        return jpaCustomerOutAdapter.findByCustomerNumber(customerNumber.value)
+                ?.let { entity -> customerEntityMapper.toDomain(entity) }
+    }
 
-        return Customer(
-            created = Instant.now(),
-            createdBy = "me",
-            customerNumber = "123",
-            id = -1,
-            updated = null,
-            updatedBy = null
-        )
+    override fun createCustomer(customer: Customer): Customer {
+        return jpaCustomerOutAdapter.save(customerEntityMapper.toEntity(customer))
+                .let { createdCustomer -> customerEntityMapper.toDomain(createdCustomer) }
     }
 }

@@ -1,0 +1,9 @@
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/transactions
+    username: SA
+    password: Aut0mat0rs!
+  flyway:
+    user: SA
+    password: Aut0mat0rs!
+    url: jdbc:mysql://localhost:3306/transactions

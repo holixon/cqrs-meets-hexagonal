@@ -1,6 +1,7 @@
 version: "3.5"
-services:
+name: cqrs-meets-hexagonal
 
+services:
   database:
     image: mcr.microsoft.com/azure-sql-edge
     container_name: cqrs-meets-hexagonal-azure-sql
