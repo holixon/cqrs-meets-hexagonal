@@ -14,6 +14,6 @@ fun AccountDto.toDomain(): Account {
     return Account(
             customerNumber = CustomerNumber(this.customerNumber),
             iban = Iban(this.iban),
-            balance = Money()
+            balance = Money.ZERO
     )
 }

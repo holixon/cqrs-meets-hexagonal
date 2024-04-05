@@ -2,7 +2,11 @@ package io.holixon.cqrshexagonaldemo.demoparent.transactions.domain.model.accoun
 
 import java.math.BigDecimal
 
-class Money(var amount: BigDecimal = BigDecimal.ZERO) {
+class Money(var amount: BigDecimal) {
+    companion object {
+        val ZERO = Money(BigDecimal.ZERO)
+    }
+
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
         if (javaClass != other?.javaClass) return false

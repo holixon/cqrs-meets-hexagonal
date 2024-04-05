@@ -54,7 +54,7 @@ class CreateAccountUsecaseTest {
         whenever(customerAccountVerificationService.canAccountBeCreatedForCustomer(customer)).thenReturn(true)
         val iban = Iban("DE00123456789")
         whenever(ibanCreationService.generateNextIban()).thenReturn(iban)
-        val balance = Money()
+        val balance = Money.ZERO
         val account = Account(customerNumber, iban, balance)
         whenever(accountOutPort.createAccount(any())).thenReturn(account)
 
