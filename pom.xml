@@ -5,7 +5,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>3.2.2</version>
+        <version>3.2.3</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <packaging>pom</packaging>
@@ -19,18 +19,18 @@
     <description>Example Projekt für CQRS meets Hexagonal</description>
     <properties>
         <java.version>21</java.version>
-        <kotlin.version>1.9.22</kotlin.version>
-        <spring-version>3.2.2</spring-version>
-        <flyway.version>10.9.1</flyway.version>
-        <flyway-mysql.version>10.9.1</flyway-mysql.version>
+        <kotlin.version>1.9.23</kotlin.version>
+        <spring-version>3.2.4</spring-version>
+        <flyway.version>10.10.0</flyway.version>
+        <flyway-sqlserver.version>10.10.0</flyway-sqlserver.version>
         <kotlin-logging.version>3.0.5</kotlin-logging.version>
         <org.mapstruct.version>1.5.5.Final</org.mapstruct.version>
-        <mysql.connector.version>8.0.33</mysql.connector.version>
-        <maven-compiler-plugin.version>3.8.1</maven-compiler-plugin.version>
-        <flyway-maven-plugin.version>10.9.1</flyway-maven-plugin.version>
+        <mssql-jdbc.version>12.3.0.jre17-preview</mssql-jdbc.version>
+        <maven-compiler-plugin.version>3.12.1</maven-compiler-plugin.version>
+        <flyway-maven-plugin.version>10.10.0</flyway-maven-plugin.version>
         <archunit-junit5.version>1.2.1</archunit-junit5.version>
-        <openapi-generator-maven-plugin.version>7.3.0</openapi-generator-maven-plugin.version>
-        <springdoc.version>2.3.0</springdoc.version>
+        <openapi-generator-maven-plugin.version>7.4.0</openapi-generator-maven-plugin.version>
+        <springdoc-openapi-starter-webmvc-api.version>2.4.0</springdoc-openapi-starter-webmvc-api.version>
         <jackson-databind-nullable.version>0.2.6</jackson-databind-nullable.version>
         <validation-api.version>2.0.1.Final</validation-api.version>
     </properties>
