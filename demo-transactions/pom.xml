@@ -12,13 +12,6 @@
 
     <artifactId>demo-transactions</artifactId>
 
-    <properties>
-        <maven.compiler.source>21</maven.compiler.source>
-        <maven.compiler.target>21</maven.compiler.target>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <mockito-kotlin.version>2.2.0</mockito-kotlin.version>
-        <testcontainers.version>1.19.7</testcontainers.version>
-    </properties>
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -94,7 +87,7 @@
         <dependency>
             <groupId>org.flywaydb</groupId>
             <artifactId>flyway-mysql</artifactId>
-            <version>${flyway-mysql.version}</version>
+            <version>${flyway.version}</version>
         </dependency>
         <dependency>
             <groupId>io.github.microutils</groupId>
@@ -105,7 +98,7 @@
         <dependency>
             <groupId>org.mapstruct</groupId>
             <artifactId>mapstruct</artifactId>
-            <version>${org.mapstruct.version}</version>
+            <version>${mapstruct.version}</version>
         </dependency>
 
         <dependency>
@@ -228,7 +221,7 @@
                                 <annotationProcessorPath>
                                     <groupId>org.mapstruct</groupId>
                                     <artifactId>mapstruct-processor</artifactId>
-                                    <version>${org.mapstruct.version}</version>
+                                    <version>${mapstruct.version}</version>
                                 </annotationProcessorPath>
                             </annotationProcessorPaths>
                             <annotationProcessorArgs>
@@ -254,7 +247,7 @@
                     <dependency>
                         <groupId>org.mapstruct</groupId>
                         <artifactId>mapstruct-processor</artifactId>
-                        <version>${org.mapstruct.version}</version>
+                        <version>${mapstruct.version}</version>
                     </dependency>
                 </dependencies>
             </plugin>
@@ -298,7 +291,7 @@
             <plugin>
                 <groupId>org.flywaydb</groupId>
                 <artifactId>flyway-maven-plugin</artifactId>
-                <version>${flyway-maven-plugin.version}</version>
+                <version>${flyway.version}</version>
                 <configuration>
                     <driver>com.mysql.jdbc.Driver</driver>
                 </configuration>
