@@ -33,7 +33,7 @@
         <openapi-generator-maven-plugin.version>7.4.0</openapi-generator-maven-plugin.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <spring-version>3.2.4</spring-version>
-        <springdoc.version>2.4.0</springdoc.version>
+        <springdoc.version>2.5.0</springdoc.version>
         <testcontainers.version>1.19.7</testcontainers.version>
         <validation-api.version>2.0.1.Final</validation-api.version>
     </properties>
