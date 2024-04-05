@@ -5,7 +5,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>3.2.2</version>
+        <version>3.2.3</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <packaging>pom</packaging>
@@ -18,20 +18,23 @@
     <name>demo-parent</name>
     <description>Example Projekt für CQRS meets Hexagonal</description>
     <properties>
-        <java.version>21</java.version>
-        <kotlin.version>1.9.22</kotlin.version>
-        <spring-version>3.2.2</spring-version>
-        <flyway.version>10.9.1</flyway.version>
-        <flyway-mysql.version>10.9.1</flyway-mysql.version>
-        <kotlin-logging.version>3.0.5</kotlin-logging.version>
-        <org.mapstruct.version>1.5.5.Final</org.mapstruct.version>
-        <mysql.connector.version>8.0.33</mysql.connector.version>
-        <maven-compiler-plugin.version>3.8.1</maven-compiler-plugin.version>
-        <flyway-maven-plugin.version>10.9.1</flyway-maven-plugin.version>
         <archunit-junit5.version>1.2.1</archunit-junit5.version>
-        <openapi-generator-maven-plugin.version>7.3.0</openapi-generator-maven-plugin.version>
-        <springdoc.version>2.3.0</springdoc.version>
+        <flyway.version>10.10.0</flyway.version>
         <jackson-databind-nullable.version>0.2.6</jackson-databind-nullable.version>
+        <java.version>21</java.version>
+        <kotlin.version>1.9.23</kotlin.version>
+        <kotlin-logging.version>3.0.5</kotlin-logging.version>
+        <mapstruct.version>1.5.5.Final</mapstruct.version>
+        <maven-compiler-plugin.version>3.12.1</maven-compiler-plugin.version>
+        <maven.compiler.source>21</maven.compiler.source>
+        <maven.compiler.target>21</maven.compiler.target>
+        <mockito-kotlin.version>2.2.0</mockito-kotlin.version>
+        <mysql.connector.version>8.0.33</mysql.connector.version>
+        <openapi-generator-maven-plugin.version>7.4.0</openapi-generator-maven-plugin.version>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <spring-version>3.2.4</spring-version>
+        <springdoc.version>2.4.0</springdoc.version>
+        <testcontainers.version>1.19.7</testcontainers.version>
         <validation-api.version>2.0.1.Final</validation-api.version>
     </properties>
 </project>
