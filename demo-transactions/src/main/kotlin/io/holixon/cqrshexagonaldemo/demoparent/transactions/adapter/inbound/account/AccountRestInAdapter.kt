@@ -7,8 +7,10 @@ import io.holixon.cqrshexagonaldemo.demoparent.transactions.adapter.inbound.dto.
 import io.holixon.cqrshexagonaldemo.demoparent.transactions.adapter.inbound.dto.DepositRequestDto
 import io.holixon.cqrshexagonaldemo.demoparent.transactions.application.port.inbound.account.CreateAccountInPort
 import io.holixon.cqrshexagonaldemo.demoparent.transactions.application.port.inbound.account.DepositAccountInPort
+import io.holixon.cqrshexagonaldemo.demoparent.transactions.domain.model.account.Amount
 import io.holixon.cqrshexagonaldemo.demoparent.transactions.domain.model.customer.CustomerNumber
 import io.holixon.cqrshexagonaldemo.demoparent.transactions.framework.InAdapter
+import jakarta.transaction.Transactional
 import mu.KLogging
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.RestController
@@ -16,7 +18,7 @@ import java.math.BigDecimal
 
 @RestController
 @InAdapter
-class AccountRestInAdapter(
+open class AccountRestInAdapter(
     private val createAccountInPort: CreateAccountInPort,
     private val depositAccountInPort: DepositAccountInPort
 ) : AccountApiDelegate {
@@ -28,8 +30,9 @@ class AccountRestInAdapter(
         return ResponseEntity.ok(createdAccount.toAccountCreatedResponseDto())
     }
 
+    @Transactional
     override fun deposit(depositRequestDto: DepositRequestDto): ResponseEntity<Void> {
-        depositAccountInPort.deposit(depositRequestDto.accountNumber, BigDecimal.valueOf(depositRequestDto.amount))
+        depositAccountInPort.deposit(depositRequestDto.accountNumber, Amount(BigDecimal.valueOf(depositRequestDto.amount)))
         return ResponseEntity.noContent().build()
     }
 }

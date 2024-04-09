@@ -4,6 +4,7 @@ import io.holixon.cqrshexagonaldemo.demoparent.transactions.application.port.out
 import io.holixon.cqrshexagonaldemo.demoparent.transactions.application.port.outbound.eventing.EventingOutAdapter
 import io.holixon.cqrshexagonaldemo.demoparent.transactions.domain.exception.AccountNotFoundException
 import io.holixon.cqrshexagonaldemo.demoparent.transactions.domain.model.account.Account
+import io.holixon.cqrshexagonaldemo.demoparent.transactions.domain.model.account.Amount
 import io.holixon.cqrshexagonaldemo.demoparent.transactions.domain.model.account.Iban
 import io.holixon.cqrshexagonaldemo.demoparent.transactions.domain.model.account.Money
 import io.holixon.cqrshexagonaldemo.demoparent.transactions.domain.model.customer.CustomerNumber
@@ -51,7 +52,7 @@ class DepositUsecaseTest {
         } returns true
 
         every {
-            accountOutPort.deposit(this.any(), this.any())
+            accountOutPort.deposit(this.any(), Amount(BigDecimal.ONE))
         } returns Account(
             account.customerNumber,
             Iban(validIban),
@@ -59,7 +60,7 @@ class DepositUsecaseTest {
         )
 
         //Act
-        depositUsecase.deposit(validIban, BigDecimal.ONE)
+        depositUsecase.deposit(validIban, Amount(BigDecimal.ONE))
 
         //Assert
         verify {
@@ -75,12 +76,12 @@ class DepositUsecaseTest {
         } returns true
 
         every {
-            accountOutPort.deposit(this.any(), this.any())
+            accountOutPort.deposit(this.any(), Amount(BigDecimal.ONE))
         } throws AccountNotFoundException("Account not found")
 
         // Act and Assert
         assertThrows<AccountNotFoundException> {
-            depositUsecase.deposit(validIban, BigDecimal.ONE)
+            depositUsecase.deposit(validIban, Amount(BigDecimal.ONE))
         }
 
         verify(exactly = 0) {
@@ -92,7 +93,7 @@ class DepositUsecaseTest {
     fun `should not deposit with negative deposit value`() {
         //Assert
         assertThrows<RuntimeException> {
-            depositUsecase.deposit(validIban, BigDecimal.ONE.negate())
+            depositUsecase.deposit(validIban, Amount(BigDecimal.ONE.negate()))
         }
 
         verify(exactly = 0) {

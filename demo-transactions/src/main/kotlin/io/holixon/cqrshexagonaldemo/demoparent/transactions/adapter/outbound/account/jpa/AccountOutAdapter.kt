@@ -4,10 +4,10 @@ import io.holixon.cqrshexagonaldemo.demoparent.transactions.adapter.outbound.acc
 import io.holixon.cqrshexagonaldemo.demoparent.transactions.application.port.outbound.account.AccountOutPort
 import io.holixon.cqrshexagonaldemo.demoparent.transactions.domain.exception.AccountNotFoundException
 import io.holixon.cqrshexagonaldemo.demoparent.transactions.domain.model.account.Account
+import io.holixon.cqrshexagonaldemo.demoparent.transactions.domain.model.account.Amount
 import io.holixon.cqrshexagonaldemo.demoparent.transactions.domain.model.account.Iban
 import io.holixon.cqrshexagonaldemo.demoparent.transactions.framework.OutAdapter
 import mu.KLogging
-import java.math.BigDecimal
 
 @OutAdapter
 class AccountOutAdapter(
@@ -17,7 +17,7 @@ class AccountOutAdapter(
 
     companion object : KLogging()
 
-    override fun findAccount(iban: Iban): Account? {
+    override fun findAccount(iban: Iban): Account {
         val entity = jpaAccountOutAdapter.findById(iban.value).orElseThrow {
             AccountNotFoundException("Account not found for Iban: ${iban.value}")
         }
@@ -33,32 +33,14 @@ class AccountOutAdapter(
         return accountEntityMapper.toDomain(savedAccount)
     }
 
-    override fun deposit(iban: Iban, amount: BigDecimal): Account {
-        val entity = jpaAccountOutAdapter.findById(iban.value)
-            .orElseThrow {
-                AccountNotFoundException("Account not found for Iban: ${iban.value}")
-            }
+    override fun deposit(iban: Iban, amount: Amount): Account {
+        val account = findAccount(iban)
 
-        val account = accountEntityMapper.toDomain(entity)
         account.deposit(amount)
+
         jpaAccountOutAdapter.save(accountEntityMapper.toEntity(account))
 
         return account
     }
 
-    override fun withdraw(iban: Iban, amount: BigDecimal): Account {
-        require(amount > BigDecimal.ZERO) {
-            "Amount to withdraw must be above zero"
-        }
-
-        val entity = jpaAccountOutAdapter.findById(iban.value)
-            .orElseThrow {
-                AccountNotFoundException("Account not found for Iban: ${iban.value}")
-            }
-
-        val account = accountEntityMapper.toDomain(entity)
-        account.withdraw(amount)
-        jpaAccountOutAdapter.save(accountEntityMapper.toEntity(account))
-        return account
-    }
 }
