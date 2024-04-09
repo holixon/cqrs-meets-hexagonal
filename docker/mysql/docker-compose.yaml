@@ -3,7 +3,7 @@ name: cqrs-meets-hexagonal
 
 services:
   mysql-database:
-    image: arm64v8/mysql:8.0.36
+    image: mysql:8.0.36
     restart: always
     environment:
       MYSQL_DATABASE: 'cqrs-meets-hexagonal'

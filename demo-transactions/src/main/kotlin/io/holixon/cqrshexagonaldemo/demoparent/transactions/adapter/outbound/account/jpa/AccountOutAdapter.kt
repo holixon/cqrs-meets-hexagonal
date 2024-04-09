@@ -6,12 +6,11 @@ import io.holixon.cqrshexagonaldemo.demoparent.transactions.domain.exception.Acc
 import io.holixon.cqrshexagonaldemo.demoparent.transactions.domain.model.account.Account
 import io.holixon.cqrshexagonaldemo.demoparent.transactions.domain.model.account.Iban
 import io.holixon.cqrshexagonaldemo.demoparent.transactions.framework.OutAdapter
-import jakarta.transaction.Transactional
 import mu.KLogging
 import java.math.BigDecimal
 
 @OutAdapter
-open class AccountOutAdapter(
+class AccountOutAdapter(
     private val jpaAccountOutAdapter: JpaAccountOutAdapter,
     private val accountEntityMapper: AccountEntityMapper
 ) : AccountOutPort {
@@ -34,7 +33,6 @@ open class AccountOutAdapter(
         return accountEntityMapper.toDomain(savedAccount)
     }
 
-    @Transactional
     override fun deposit(iban: Iban, amount: BigDecimal): Account {
         val entity = jpaAccountOutAdapter.findById(iban.value)
             .orElseThrow {
@@ -48,7 +46,6 @@ open class AccountOutAdapter(
         return account
     }
 
-    @Transactional
     override fun withdraw(iban: Iban, amount: BigDecimal): Account {
         require(amount > BigDecimal.ZERO) {
             "Amount to withdraw must be above zero"

@@ -1,0 +1,8 @@
+spring:
+  flyway:
+    user: SA
+    password: Aut0mat0rs!
+    url: jdbc:mysql://localhost:3306/transactions
+  jpa:
+    hibernate:
+      ddl-auto: create-drop

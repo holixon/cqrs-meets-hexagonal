@@ -1,8 +1,8 @@
 package io.holixon.cqrshexagonaldemo.demoparent.transactions.adapter.inbound.account
 
 import io.holixon.cqrshexagonaldemo.demoparent.transactions.adapter.inbound.AccountApiDelegate
-import io.holixon.cqrshexagonaldemo.demoparent.transactions.adapter.inbound.account.mapper.toDto
-import io.holixon.cqrshexagonaldemo.demoparent.transactions.adapter.inbound.dto.AccountDto
+import io.holixon.cqrshexagonaldemo.demoparent.transactions.adapter.inbound.account.mapper.toAccountCreatedResponseDto
+import io.holixon.cqrshexagonaldemo.demoparent.transactions.adapter.inbound.dto.AccountCreatedResponseDto
 import io.holixon.cqrshexagonaldemo.demoparent.transactions.adapter.inbound.dto.CreateAccountRequestDto
 import io.holixon.cqrshexagonaldemo.demoparent.transactions.adapter.inbound.dto.DepositRequestDto
 import io.holixon.cqrshexagonaldemo.demoparent.transactions.application.port.inbound.account.CreateAccountInPort
@@ -23,9 +23,9 @@ class AccountRestInAdapter(
 
     companion object : KLogging()
 
-    override fun createAccount(createAccountRequestDto: CreateAccountRequestDto): ResponseEntity<AccountDto> {
+    override fun createAccount(createAccountRequestDto: CreateAccountRequestDto): ResponseEntity<AccountCreatedResponseDto> {
         val createdAccount = createAccountInPort.createAccount(CustomerNumber(createAccountRequestDto.customerNumber))
-        return ResponseEntity.ok(createdAccount.toDto())
+        return ResponseEntity.ok(createdAccount.toAccountCreatedResponseDto())
     }
 
     override fun deposit(depositRequestDto: DepositRequestDto): ResponseEntity<Void> {

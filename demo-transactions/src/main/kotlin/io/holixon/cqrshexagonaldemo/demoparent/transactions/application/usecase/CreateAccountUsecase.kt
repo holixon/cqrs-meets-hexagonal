@@ -32,7 +32,7 @@ open class CreateAccountUsecase(
         val newAccount = Account(
                 customerNumber,
                 ibanCreationService.generateNextIban(),
-                Money()
+                Money.ZERO
         )
 
         val createdAccount = accountOutPort.createAccount(newAccount)

@@ -12,12 +12,6 @@
 
     <artifactId>demo-transactions</artifactId>
 
-    <properties>
-        <maven.compiler.source>21</maven.compiler.source>
-        <maven.compiler.target>21</maven.compiler.target>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <mockk.version>1.13.10</mockk.version>
-    </properties>
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -93,7 +87,7 @@
         <dependency>
             <groupId>org.flywaydb</groupId>
             <artifactId>flyway-mysql</artifactId>
-            <version>${flyway-mysql.version}</version>
+            <version>${flyway.version}</version>
         </dependency>
         <dependency>
             <groupId>io.github.microutils</groupId>
@@ -104,7 +98,7 @@
         <dependency>
             <groupId>org.mapstruct</groupId>
             <artifactId>mapstruct</artifactId>
-            <version>${org.mapstruct.version}</version>
+            <version>${mapstruct.version}</version>
         </dependency>
 
         <dependency>
@@ -121,6 +115,26 @@
             <groupId>javax.validation</groupId>
             <artifactId>validation-api</artifactId>
             <version>${validation-api.version}</version>
+        </dependency>
+
+        <!-- Testcontainers - test internal docker containers for different things -->
+        <dependency>
+            <groupId>org.testcontainers</groupId>
+            <artifactId>testcontainers</artifactId>
+            <version>${testcontainers.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.testcontainers</groupId>
+            <artifactId>junit-jupiter</artifactId>
+            <version>${testcontainers.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.testcontainers</groupId>
+            <artifactId>mysql</artifactId>
+            <version>${testcontainers.version}</version>
+            <scope>test</scope>
         </dependency>
     </dependencies>
 
@@ -207,7 +221,7 @@
                                 <annotationProcessorPath>
                                     <groupId>org.mapstruct</groupId>
                                     <artifactId>mapstruct-processor</artifactId>
-                                    <version>${org.mapstruct.version}</version>
+                                    <version>${mapstruct.version}</version>
                                 </annotationProcessorPath>
                             </annotationProcessorPaths>
                             <annotationProcessorArgs>
@@ -233,7 +247,7 @@
                     <dependency>
                         <groupId>org.mapstruct</groupId>
                         <artifactId>mapstruct-processor</artifactId>
-                        <version>${org.mapstruct.version}</version>
+                        <version>${mapstruct.version}</version>
                     </dependency>
                 </dependencies>
             </plugin>
@@ -277,7 +291,7 @@
             <plugin>
                 <groupId>org.flywaydb</groupId>
                 <artifactId>flyway-maven-plugin</artifactId>
-                <version>${flyway-maven-plugin.version}</version>
+                <version>${flyway.version}</version>
                 <configuration>
                     <driver>com.mysql.jdbc.Driver</driver>
                 </configuration>

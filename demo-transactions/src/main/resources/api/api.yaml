@@ -71,7 +71,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Account'
+                $ref: '#/components/schemas/AccountCreatedResponse'
   /api/v1/account/deposit:
     put:
       tags:
@@ -99,10 +99,9 @@ paths:
           description: Money Deposited
         '404':
           description: No Account found
-
 components:
   schemas:
-    Account:
+    AccountCreatedResponse:
       type: object
       properties:
         customerNumber:
@@ -123,4 +122,3 @@ components:
       required:
         - customerNumber
         - name
-

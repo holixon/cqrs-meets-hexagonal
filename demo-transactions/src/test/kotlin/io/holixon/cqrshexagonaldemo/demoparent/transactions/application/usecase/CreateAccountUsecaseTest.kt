@@ -54,7 +54,7 @@ class CreateAccountUsecaseTest {
         val iban = Iban("DE00123456789")
 
         every { ibanCreationService.generateNextIban() } returns iban
-        val balance = Money()
+        val balance = Money.ZERO
         val account = Account(customerNumber, iban, balance)
 
         every { accountOutPort.createAccount(this.any()) } returns account
