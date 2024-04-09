@@ -8,8 +8,8 @@ import io.holixon.cqrshexagonaldemo.demoparent.transactions.framework.OutAdapter
 
 @OutAdapter
 class AccountOutAdapter(
-        private val jpaAccountOutAdapter: JpaAccountOutAdapter,
-        private val accountEntityMapper: AccountEntityMapper
+    private val jpaAccountOutAdapter: JpaAccountOutAdapter,
+    private val accountEntityMapper: AccountEntityMapper
 ) : AccountOutPort {
 
     override fun findAccount(iban: Iban): Account? {

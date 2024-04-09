@@ -3,7 +3,7 @@ package io.holixon.cqrshexagonaldemo.demoparent.transactions.domain.model.accoun
 import io.holixon.cqrshexagonaldemo.demoparent.transactions.domain.model.customer.CustomerNumber
 
 data class Account(
-        var customerNumber: CustomerNumber,
-        var iban: Iban
-
+    var customerNumber: CustomerNumber,
+    var iban: Iban,
+    var balance: Money
 )
