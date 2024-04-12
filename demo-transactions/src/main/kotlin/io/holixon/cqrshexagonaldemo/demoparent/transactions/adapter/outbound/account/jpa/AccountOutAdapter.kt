@@ -33,12 +33,10 @@ class AccountOutAdapter(
         return accountEntityMapper.toDomain(savedAccount)
     }
 
-    override fun deposit(iban: Iban, amount: Amount): Account {
-        val account = findAccount(iban)
+    override fun deposit(account: Account, amount: Amount): Account {
+        jpaAccountOutAdapter.save(accountEntityMapper.toEntity(account))
 
         account.deposit(amount)
-
-        jpaAccountOutAdapter.save(accountEntityMapper.toEntity(account))
 
         return account
     }

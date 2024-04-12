@@ -9,7 +9,6 @@ import io.holixon.cqrshexagonaldemo.demoparent.transactions.domain.model.account
 import io.holixon.cqrshexagonaldemo.demoparent.transactions.domain.model.account.Money
 import io.holixon.cqrshexagonaldemo.demoparent.transactions.domain.model.customer.CustomerNumber
 import io.holixon.cqrshexagonaldemo.demoparent.transactions.domain.model.event.MoneyDepositedEvent
-import io.holixon.cqrshexagonaldemo.demoparent.transactions.domain.service.AccountValidationService
 import io.mockk.every
 import io.mockk.impl.annotations.InjectMockKs
 import io.mockk.impl.annotations.MockK
@@ -26,9 +25,6 @@ class DepositUsecaseTest {
 
     @MockK
     private lateinit var accountOutPort: AccountOutPort
-
-    @MockK
-    private lateinit var accountValidationService: AccountValidationService
 
     @RelaxedMockK
     private lateinit var eventingOutAdapter: EventingOutAdapter
@@ -48,8 +44,8 @@ class DepositUsecaseTest {
         )
 
         every {
-            accountValidationService.isAccountNumberValid(this.any())
-        } returns true
+            accountOutPort.findAccount(this.any())
+        } returns account
 
         every {
             accountOutPort.deposit(this.any(), Amount(BigDecimal.ONE))
@@ -72,12 +68,12 @@ class DepositUsecaseTest {
     fun `should not deposit with non existent account`() {
         //Arrange
         every {
-            accountValidationService.isAccountNumberValid(this.any())
-        } returns true
+            accountOutPort.deposit(this.any(Account::class), Amount(BigDecimal.ONE))
+        } throws AccountNotFoundException("Account not found")
 
         every {
-            accountOutPort.deposit(this.any(), Amount(BigDecimal.ONE))
-        } throws AccountNotFoundException("Account not found")
+            accountOutPort.findAccount(this.any())
+        } returns Account(CustomerNumber("abc"), Iban(validIban), Money(BigDecimal.ONE))
 
         // Act and Assert
         assertThrows<AccountNotFoundException> {
