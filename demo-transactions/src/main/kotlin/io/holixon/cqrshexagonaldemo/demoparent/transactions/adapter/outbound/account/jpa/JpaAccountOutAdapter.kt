@@ -5,5 +5,4 @@ import org.springframework.data.repository.CrudRepository
 import org.springframework.stereotype.Repository
 
 @Repository
-interface JpaAccountOutAdapter : CrudRepository<AccountEntity, String> {
-}
+interface JpaAccountOutAdapter : CrudRepository<AccountEntity, String>
