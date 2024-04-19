@@ -7,6 +7,7 @@ import io.holixon.cqrshexagonaldemo.demoparent.transactions.domain.model.account
 import io.holixon.cqrshexagonaldemo.demoparent.transactions.domain.model.account.Iban
 import io.holixon.cqrshexagonaldemo.demoparent.transactions.domain.model.event.MoneyDepositedEvent
 import io.holixon.cqrshexagonaldemo.demoparent.transactions.framework.Usecase
+import mu.KLogging
 
 @Usecase
 class DepositUsecase(
@@ -14,16 +15,22 @@ class DepositUsecase(
     private val eventingOutAdapter: EventingOutAdapter
 ) : DepositAccountInPort {
 
-    override fun deposit(accountNumber: String, amount: Amount) {
-        val account = accountOutPort.findAccount(Iban(accountNumber))
+    companion object : KLogging()
 
-        val depositedAccount = accountOutPort.deposit(account, amount)
+    override fun deposit(iban: Iban, amount: Amount) {
+        logger().info { "deposit $amount to account ${iban.value}" }
+
+        val account = accountOutPort.findAccount(iban)
+
+        val updatedAccount = accountOutPort.deposit(account, amount)
 
         eventingOutAdapter.publishEvent(MoneyDepositedEvent(
-            depositedAccount.iban,
-            depositedAccount.balance,
+            updatedAccount.iban,
+            updatedAccount.balance,
             System.currentTimeMillis()
         ))
+
+        logger().info { "updated account $updatedAccount" }
     }
 
 }

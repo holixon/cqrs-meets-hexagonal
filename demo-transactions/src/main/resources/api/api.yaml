@@ -73,7 +73,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/AccountCreatedResponse'
   /api/v1/account/deposit:
-    put:
+    post:
       tags:
         - account
       summary: >
@@ -87,12 +87,13 @@ paths:
           application/json:
             schema:
               properties:
-                accountNumber:
+                iban:
                   type: string
                 amount:
                   type: number
+                  format: double
               required:
-                - accountNumber
+                - iban
                 - amount
       responses:
         '204':

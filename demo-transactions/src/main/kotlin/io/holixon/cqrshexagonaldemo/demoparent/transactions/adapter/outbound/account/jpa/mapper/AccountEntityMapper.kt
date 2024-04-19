@@ -2,6 +2,7 @@ package io.holixon.cqrshexagonaldemo.demoparent.transactions.adapter.outbound.ac
 
 import io.holixon.cqrshexagonaldemo.demoparent.transactions.adapter.outbound.account.jpa.entity.AccountEntity
 import io.holixon.cqrshexagonaldemo.demoparent.transactions.domain.model.account.Account
+import io.holixon.cqrshexagonaldemo.demoparent.transactions.domain.model.account.Amount
 import io.holixon.cqrshexagonaldemo.demoparent.transactions.domain.model.account.Iban
 import io.holixon.cqrshexagonaldemo.demoparent.transactions.domain.model.account.Money
 import io.holixon.cqrshexagonaldemo.demoparent.transactions.domain.model.customer.CustomerNumber
@@ -13,7 +14,7 @@ class AccountEntityMapper {
         return AccountEntity(
             customerNumber = account.customerNumber.value,
             iban = account.iban.value,
-            balance = account.balance.amount
+            balance = account.balance.amount.value
         )
     }
 
@@ -21,7 +22,7 @@ class AccountEntityMapper {
         return Account(
             customerNumber = CustomerNumber(accountEntity.customerNumber),
             iban = Iban(accountEntity.iban),
-            balance = Money(accountEntity.balance)
+            balance = Money(Amount(accountEntity.balance))
         )
     }
 }
