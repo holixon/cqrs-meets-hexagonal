@@ -2,8 +2,8 @@ package io.holixon.cqrshexagonaldemo.demoparent.transactions.domain.model.accoun
 
 import java.math.BigDecimal
 
-data class Money(var amount: BigDecimal) {
+data class Money(var amount: Amount) {
     companion object {
-        val ZERO = Money(BigDecimal.ZERO)
+        val ZERO = Money(Amount(BigDecimal.ZERO))
     }
 }

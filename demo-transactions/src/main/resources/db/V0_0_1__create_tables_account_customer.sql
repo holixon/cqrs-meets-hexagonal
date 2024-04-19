@@ -1,4 +1,4 @@
-CREATE TABLE transactions.customer
+CREATE TABLE customer
 (
     customer_number VARCHAR(255) NOT NULL,
     customer_name   VARCHAR(255) NOT NULL,
@@ -6,7 +6,7 @@ CREATE TABLE transactions.customer
     CONSTRAINT PK_CUSTOMER_ID PRIMARY KEY (customer_number)
 );
 
-CREATE TABLE transactions.account
+CREATE TABLE account
 (
     iban            VARCHAR(255) NOT NULL,
     customer_number VARCHAR(255) NOT NULL,

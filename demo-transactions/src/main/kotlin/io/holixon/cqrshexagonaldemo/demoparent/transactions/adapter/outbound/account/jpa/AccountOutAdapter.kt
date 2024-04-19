@@ -32,16 +32,16 @@ class AccountOutAdapter(
 
     override fun createAccount(account: Account): Account {
         val toEntity = accountEntityMapper.toEntity(account)
-//        toEntity.updated = Instant.now()
 
         val savedAccount = jpaAccountOutAdapter.save(toEntity)
         return accountEntityMapper.toDomain(savedAccount)
     }
 
     override fun deposit(account: Account, amount: Amount): Account {
+        account.deposit(amount)
+
         jpaAccountOutAdapter.save(accountEntityMapper.toEntity(account))
 
-        account.deposit(amount)
 
         return account
     }

@@ -11,6 +11,7 @@ import io.holixon.cqrshexagonaldemo.demoparent.transactions.application.port.inb
 import io.holixon.cqrshexagonaldemo.demoparent.transactions.application.port.inbound.account.CreateAccountInPort
 import io.holixon.cqrshexagonaldemo.demoparent.transactions.application.port.inbound.account.DepositAccountInPort
 import io.holixon.cqrshexagonaldemo.demoparent.transactions.domain.model.account.Amount
+import io.holixon.cqrshexagonaldemo.demoparent.transactions.domain.model.account.Iban
 import io.holixon.cqrshexagonaldemo.demoparent.transactions.domain.model.customer.CustomerNumber
 import io.holixon.cqrshexagonaldemo.demoparent.transactions.framework.InAdapter
 import jakarta.transaction.Transactional
@@ -37,7 +38,7 @@ open class AccountRestInAdapter(
     @Transactional
     override fun deposit(depositRequestDto: DepositRequestDto): ResponseEntity<Void> {
         depositAccountInPort.deposit(
-            depositRequestDto.accountNumber,
+            Iban(depositRequestDto.iban),
             Amount(BigDecimal.valueOf(depositRequestDto.amount))
         )
         return ResponseEntity.noContent().build()

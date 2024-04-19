@@ -8,7 +8,8 @@ data class Account(
     var balance: Money
 ) {
     fun deposit(amount: Amount) {
-        this.balance.amount += amount.value
+        // TODO: better immutable?
+        this.balance.amount += amount
     }
 
 }

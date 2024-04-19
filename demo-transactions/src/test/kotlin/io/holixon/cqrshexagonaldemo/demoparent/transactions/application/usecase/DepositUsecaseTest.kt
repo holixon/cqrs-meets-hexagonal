@@ -32,27 +32,27 @@ class DepositUsecaseTest {
     @InjectMockKs
     private lateinit var depositUsecase: DepositUsecase
 
-    private val validIban = "DE00123456789"
+    private val validIban = Iban("DE00123456789")
 
     @Test
     fun `should deposit on valid account`() {
         //Arrange
         val account = Account(
             CustomerNumber("000123"),
-            Iban(validIban),
-            Money(BigDecimal.ZERO)
+            validIban,
+            Money(Amount(BigDecimal.valueOf(123.45)))
         )
 
         every {
-            accountOutPort.findAccount(this.any())
+            accountOutPort.findAccount(any())
         } returns account
 
         every {
-            accountOutPort.deposit(this.any(), Amount(BigDecimal.ONE))
+            accountOutPort.deposit(any(), Amount(BigDecimal.ONE))
         } returns Account(
             account.customerNumber,
-            Iban(validIban),
-            Money(BigDecimal.ONE)
+            validIban,
+            Money(Amount(BigDecimal.valueOf(124.45)))
         )
 
         //Act
@@ -60,7 +60,7 @@ class DepositUsecaseTest {
 
         //Assert
         verify {
-            eventingOutAdapter.publishEvent(this.any(MoneyDepositedEvent::class))
+            eventingOutAdapter.publishEvent(any(MoneyDepositedEvent::class))
         }
     }
 
@@ -68,12 +68,12 @@ class DepositUsecaseTest {
     fun `should not deposit with non existent account`() {
         //Arrange
         every {
-            accountOutPort.deposit(this.any(Account::class), Amount(BigDecimal.ONE))
+            accountOutPort.deposit(any(Account::class), Amount(BigDecimal.ONE))
         } throws AccountNotFoundException("Account not found")
 
         every {
-            accountOutPort.findAccount(this.any())
-        } returns Account(CustomerNumber("abc"), Iban(validIban), Money(BigDecimal.ONE))
+            accountOutPort.findAccount(any())
+        } returns Account(CustomerNumber("abc"), validIban, Money(Amount(BigDecimal.ONE)))
 
         // Act and Assert
         assertThrows<AccountNotFoundException> {
@@ -81,7 +81,7 @@ class DepositUsecaseTest {
         }
 
         verify(exactly = 0) {
-            eventingOutAdapter.publishEvent(this.any(MoneyDepositedEvent::class))
+            eventingOutAdapter.publishEvent(any(MoneyDepositedEvent::class))
         }
     }
 
@@ -93,7 +93,7 @@ class DepositUsecaseTest {
         }
 
         verify(exactly = 0) {
-            eventingOutAdapter.publishEvent(this.any(MoneyDepositedEvent::class))
+            eventingOutAdapter.publishEvent(any(MoneyDepositedEvent::class))
         }
     }
 
