@@ -19,7 +19,7 @@
     <description>Example Projekt für CQRS meets Hexagonal</description>
     <properties>
         <archunit-junit5.version>1.2.1</archunit-junit5.version>
-        <flyway.version>10.10.0</flyway.version>
+        <flyway.version>10.11.1</flyway.version>
         <jackson-databind-nullable.version>0.2.6</jackson-databind-nullable.version>
         <java.version>21</java.version>
         <kotlin.version>1.9.23</kotlin.version>
