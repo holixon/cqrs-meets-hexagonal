@@ -1,3 +1,0 @@
-CREATE DATABASE [cqrs-meets-hexagonal];
-ALTER DATABASE [cqrs-meets-hexagonal] SET READ_COMMITTED_SNAPSHOT ON;
-ALTER DATABASE [cqrs-meets-hexagonal] SET ALLOW_SNAPSHOT_ISOLATION ON;

@@ -16,9 +16,9 @@ class MySqlTestContainerExtension : BeforeAllCallback, AfterAllCallback {
 
     override fun beforeAll(p0: ExtensionContext?) {
         mysql = MySQLContainer(CONTAINER_IMAGE_TAG)
-                .withDatabaseName("cqrs-meets-hexagonal")
-                .withUsername("SA")
-                .withPassword("Aut0mat0rs!")
+            .withDatabaseName("cqrs-meets-hexagonal-test")
+            .withUsername("dbuser")
+            .withPassword("password")
 
         mysql.start()
 
