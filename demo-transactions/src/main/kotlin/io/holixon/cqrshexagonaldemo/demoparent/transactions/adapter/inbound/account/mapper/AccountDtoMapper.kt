@@ -12,6 +12,6 @@ fun Account.toAccountCreatedResponseDto(): AccountCreatedResponseDto {
 fun AccountBalance.toAccountBalanceResponseDto(): AccountBalanceResponseDto {
     return AccountBalanceResponseDto(
         this.iban.value,
-        this.balance.amount.toLong()
+        this.balance.amount.value.toLong()
     )
 }

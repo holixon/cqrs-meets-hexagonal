@@ -2,6 +2,7 @@ package io.holixon.cqrshexagonaldemo.demoparent.transactions.application.usecase
 
 import io.holixon.cqrshexagonaldemo.demoparent.transactions.application.port.outbound.account.AccountOutPort
 import io.holixon.cqrshexagonaldemo.demoparent.transactions.domain.exception.AccountNotFoundException
+import io.holixon.cqrshexagonaldemo.demoparent.transactions.domain.model.account.Amount
 import io.holixon.cqrshexagonaldemo.demoparent.transactions.domain.model.account.Iban
 import io.holixon.cqrshexagonaldemo.demoparent.transactions.domain.model.account.Money
 import io.holixon.cqrshexagonaldemo.demoparent.transactions.domain.model.projection.AccountBalance
@@ -31,7 +32,7 @@ class AccountBalanceUsecaseTest {
         val validIban = Iban("iban test")
         val accountBalance = AccountBalance(
             validIban,
-            Money(BigDecimal.ONE)
+            Money(Amount(BigDecimal.ONE))
         )
         every {
             accountOutPort.getAccountBalance(this.any())
