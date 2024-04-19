@@ -1,18 +1,23 @@
 package io.holixon.cqrshexagonaldemo.demoparent.transactions.adapter.outbound.account.jpa
 
 import io.holixon.cqrshexagonaldemo.demoparent.transactions.adapter.outbound.account.jpa.mapper.AccountEntityMapper
+import io.holixon.cqrshexagonaldemo.demoparent.transactions.adapter.outbound.accountbalance.jpa.JpaAccountBalanceOutAdapter
+import io.holixon.cqrshexagonaldemo.demoparent.transactions.adapter.outbound.accountbalance.jpa.mapper.AccountBalanceEntityMapper
 import io.holixon.cqrshexagonaldemo.demoparent.transactions.application.port.outbound.account.AccountOutPort
 import io.holixon.cqrshexagonaldemo.demoparent.transactions.domain.exception.AccountNotFoundException
 import io.holixon.cqrshexagonaldemo.demoparent.transactions.domain.model.account.Account
 import io.holixon.cqrshexagonaldemo.demoparent.transactions.domain.model.account.Amount
 import io.holixon.cqrshexagonaldemo.demoparent.transactions.domain.model.account.Iban
+import io.holixon.cqrshexagonaldemo.demoparent.transactions.domain.model.projection.AccountBalance
 import io.holixon.cqrshexagonaldemo.demoparent.transactions.framework.OutAdapter
 import mu.KLogging
 
 @OutAdapter
 class AccountOutAdapter(
     private val jpaAccountOutAdapter: JpaAccountOutAdapter,
-    private val accountEntityMapper: AccountEntityMapper
+    private val jpaAccountBalanceOutAdapter: JpaAccountBalanceOutAdapter,
+    private val accountEntityMapper: AccountEntityMapper,
+    private val accountBalanceEntityMapper: AccountBalanceEntityMapper
 ) : AccountOutPort {
 
     companion object : KLogging()
@@ -41,4 +46,11 @@ class AccountOutAdapter(
         return account
     }
 
+    override fun getAccountBalance(iban: Iban): AccountBalance {
+        val entity = jpaAccountBalanceOutAdapter.findById(iban.value).orElseThrow {
+            AccountNotFoundException("Account not found for Iban: ${iban.value}")
+        }
+
+        return accountBalanceEntityMapper.toDomain(entity)
+    }
 }

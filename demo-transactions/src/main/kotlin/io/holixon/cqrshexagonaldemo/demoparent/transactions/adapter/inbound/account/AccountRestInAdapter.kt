@@ -1,10 +1,13 @@
 package io.holixon.cqrshexagonaldemo.demoparent.transactions.adapter.inbound.account
 
 import io.holixon.cqrshexagonaldemo.demoparent.transactions.adapter.inbound.AccountApiDelegate
+import io.holixon.cqrshexagonaldemo.demoparent.transactions.adapter.inbound.account.mapper.toAccountBalanceResponseDto
 import io.holixon.cqrshexagonaldemo.demoparent.transactions.adapter.inbound.account.mapper.toAccountCreatedResponseDto
+import io.holixon.cqrshexagonaldemo.demoparent.transactions.adapter.inbound.dto.AccountBalanceResponseDto
 import io.holixon.cqrshexagonaldemo.demoparent.transactions.adapter.inbound.dto.AccountCreatedResponseDto
 import io.holixon.cqrshexagonaldemo.demoparent.transactions.adapter.inbound.dto.CreateAccountRequestDto
 import io.holixon.cqrshexagonaldemo.demoparent.transactions.adapter.inbound.dto.DepositRequestDto
+import io.holixon.cqrshexagonaldemo.demoparent.transactions.application.port.inbound.account.AccountBalanceInPort
 import io.holixon.cqrshexagonaldemo.demoparent.transactions.application.port.inbound.account.CreateAccountInPort
 import io.holixon.cqrshexagonaldemo.demoparent.transactions.application.port.inbound.account.DepositAccountInPort
 import io.holixon.cqrshexagonaldemo.demoparent.transactions.domain.model.account.Amount
@@ -20,7 +23,8 @@ import java.math.BigDecimal
 @InAdapter
 open class AccountRestInAdapter(
     private val createAccountInPort: CreateAccountInPort,
-    private val depositAccountInPort: DepositAccountInPort
+    private val depositAccountInPort: DepositAccountInPort,
+    private val accountBalanceInPort: AccountBalanceInPort
 ) : AccountApiDelegate {
 
     companion object : KLogging()
@@ -32,7 +36,15 @@ open class AccountRestInAdapter(
 
     @Transactional
     override fun deposit(depositRequestDto: DepositRequestDto): ResponseEntity<Void> {
-        depositAccountInPort.deposit(depositRequestDto.accountNumber, Amount(BigDecimal.valueOf(depositRequestDto.amount)))
+        depositAccountInPort.deposit(
+            depositRequestDto.accountNumber,
+            Amount(BigDecimal.valueOf(depositRequestDto.amount))
+        )
         return ResponseEntity.noContent().build()
+    }
+
+    override fun getBalance(accountNumber: String): ResponseEntity<AccountBalanceResponseDto> {
+        val accountBalance = accountBalanceInPort.getAccountBalance(accountNumber)
+        return ResponseEntity.ok(accountBalance.toAccountBalanceResponseDto())
     }
 }
