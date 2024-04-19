@@ -11,6 +11,7 @@ import io.holixon.cqrshexagonaldemo.demoparent.transactions.domain.model.event.A
 import io.holixon.cqrshexagonaldemo.demoparent.transactions.domain.service.CustomerAccountVerificationService
 import io.holixon.cqrshexagonaldemo.demoparent.transactions.domain.service.IbanCreationService
 import io.holixon.cqrshexagonaldemo.demoparent.transactions.framework.Usecase
+import mu.KLogging
 
 @Usecase
 open class CreateAccountUsecase(
@@ -21,7 +22,10 @@ open class CreateAccountUsecase(
         private val eventingOutAdapter: EventingOutAdapter
 ) : CreateAccountInPort {
 
+    companion object : KLogging()
+
     override fun createAccount(customerNumber: CustomerNumber): Account {
+        logger().info { "create new account for customer $customerNumber" }
 
         val customer = customerOutPort.findCustomer(customerNumber) ?: throw RuntimeException("no customer")
 
@@ -40,6 +44,7 @@ open class CreateAccountUsecase(
         val accountCreatedEvent = AccountCreatedEvent(customerNumber, createdAccount.iban)
         eventingOutAdapter.publishEvent(accountCreatedEvent)
 
+        logger().info { "newly created account: $createdAccount" }
         return createdAccount
     }
 }

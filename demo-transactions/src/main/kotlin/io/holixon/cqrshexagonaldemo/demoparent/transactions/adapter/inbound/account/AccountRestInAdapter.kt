@@ -4,17 +4,24 @@ import io.holixon.cqrshexagonaldemo.demoparent.transactions.adapter.inbound.Acco
 import io.holixon.cqrshexagonaldemo.demoparent.transactions.adapter.inbound.account.mapper.toAccountCreatedResponseDto
 import io.holixon.cqrshexagonaldemo.demoparent.transactions.adapter.inbound.dto.AccountCreatedResponseDto
 import io.holixon.cqrshexagonaldemo.demoparent.transactions.adapter.inbound.dto.CreateAccountRequestDto
+import io.holixon.cqrshexagonaldemo.demoparent.transactions.adapter.inbound.dto.DepositRequestDto
 import io.holixon.cqrshexagonaldemo.demoparent.transactions.application.port.inbound.account.CreateAccountInPort
+import io.holixon.cqrshexagonaldemo.demoparent.transactions.application.port.inbound.account.DepositAccountInPort
+import io.holixon.cqrshexagonaldemo.demoparent.transactions.domain.model.account.Amount
+import io.holixon.cqrshexagonaldemo.demoparent.transactions.domain.model.account.Iban
 import io.holixon.cqrshexagonaldemo.demoparent.transactions.domain.model.customer.CustomerNumber
 import io.holixon.cqrshexagonaldemo.demoparent.transactions.framework.InAdapter
+import jakarta.transaction.Transactional
 import mu.KLogging
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.RestController
+import java.math.BigDecimal
 
 @RestController
 @InAdapter
-class CreateAccountRestInAdapter(
-        private val createAccountInPort: CreateAccountInPort
+open class AccountRestInAdapter(
+    private val createAccountInPort: CreateAccountInPort,
+    private val depositAccountInPort: DepositAccountInPort
 ) : AccountApiDelegate {
 
     companion object : KLogging()
@@ -22,5 +29,12 @@ class CreateAccountRestInAdapter(
     override fun createAccount(createAccountRequestDto: CreateAccountRequestDto): ResponseEntity<AccountCreatedResponseDto> {
         val createdAccount = createAccountInPort.createAccount(CustomerNumber(createAccountRequestDto.customerNumber))
         return ResponseEntity.ok(createdAccount.toAccountCreatedResponseDto())
+    }
+
+    @Transactional
+    override fun deposit(depositRequestDto: DepositRequestDto): ResponseEntity<Void> {
+        depositAccountInPort.deposit(
+            Iban(depositRequestDto.iban), Amount(BigDecimal.valueOf(depositRequestDto.amount)))
+        return ResponseEntity.noContent().build()
     }
 }

@@ -1,8 +1,5 @@
 package io.holixon.cqrshexagonaldemo.demoparent.transactions.application.usecase
 
-import com.nhaarman.mockitokotlin2.any
-import com.nhaarman.mockitokotlin2.verify
-import com.nhaarman.mockitokotlin2.whenever
 import io.holixon.cqrshexagonaldemo.demoparent.transactions.application.port.outbound.customer.CustomerOutPort
 import io.holixon.cqrshexagonaldemo.demoparent.transactions.application.port.outbound.eventing.EventingOutAdapter
 import io.holixon.cqrshexagonaldemo.demoparent.transactions.domain.model.common.Name
@@ -10,43 +7,48 @@ import io.holixon.cqrshexagonaldemo.demoparent.transactions.domain.model.custome
 import io.holixon.cqrshexagonaldemo.demoparent.transactions.domain.model.customer.CustomerNumber
 import io.holixon.cqrshexagonaldemo.demoparent.transactions.domain.model.event.CustomerCreatedEvent
 import io.holixon.cqrshexagonaldemo.demoparent.transactions.domain.service.CustomerNumberCreationService
+import io.mockk.every
+import io.mockk.impl.annotations.InjectMockKs
+import io.mockk.impl.annotations.MockK
+import io.mockk.impl.annotations.RelaxedMockK
+import io.mockk.junit5.MockKExtension
+import io.mockk.verify
 import org.assertj.core.api.Assertions
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
-import org.mockito.InjectMocks
-import org.mockito.Mock
-import org.mockito.Mockito
-import org.mockito.junit.jupiter.MockitoExtension
 
 
-@ExtendWith(MockitoExtension::class)
+@ExtendWith(MockKExtension::class)
 class CreateCustomerUsecaseTest {
 
-    @Mock
+    @MockK
     private lateinit var customerOutPort: CustomerOutPort
-    @Mock
+
+    @MockK
     private lateinit var customerNumberCreationService: CustomerNumberCreationService
-    @Mock
+
+    @RelaxedMockK
     private lateinit var eventingOutAdapter: EventingOutAdapter
 
-    @InjectMocks
+    @InjectMockKs
     private lateinit var createCustomerUsecase: CreateCustomerUsecase
 
     @Test
     fun `should create a new customer`() {
-      // angenommen
+        // angenommen
         val customerNumber = CustomerNumber("000123")
-        whenever(customerNumberCreationService.generateNextCustomerNumber()).thenReturn(customerNumber)
+        every { customerNumberCreationService.generateNextCustomerNumber() } returns customerNumber
         val customerName = Name("Richi Rich")
         val customer = Customer(customerNumber, customerName)
-        whenever(customerOutPort.createCustomer(any())).thenReturn(customer)
 
-      // wenn
+        every { customerOutPort.createCustomer(this.any()) } returns customer
+
+        // wenn
         val createdCustomer = createCustomerUsecase.createCustomer(customerName)
 
         // dann
         Assertions.assertThat(createdCustomer).isNotNull
-        verify(customerOutPort).createCustomer(customer)
-        Mockito.verify(eventingOutAdapter).publishEvent(CustomerCreatedEvent(customerName, customerNumber))
+        verify { customerOutPort.createCustomer(customer) }
+        verify { eventingOutAdapter.publishEvent(CustomerCreatedEvent(customerName, customerNumber)) }
     }
 }

@@ -72,6 +72,34 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/AccountCreatedResponse'
+  /api/v1/account/deposit:
+    post:
+      tags:
+        - account
+      summary: >
+        Deposit money
+      description: >
+        Deposit money for a specified account
+      operationId: deposit
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              properties:
+                iban:
+                  type: string
+                amount:
+                  type: number
+                  format: double
+              required:
+                - iban
+                - amount
+      responses:
+        '204':
+          description: Money Deposited
+        '404':
+          description: No Account found
 components:
   schemas:
     AccountCreatedResponse:

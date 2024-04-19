@@ -73,9 +73,9 @@
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>com.nhaarman.mockitokotlin2</groupId>
-            <artifactId>mockito-kotlin</artifactId>
-            <version>${mockito-kotlin.version}</version>
+            <groupId>io.mockk</groupId>
+            <artifactId>mockk-jvm</artifactId>
+            <version>${mockk.version}</version>
             <scope>test</scope>
         </dependency>
 
@@ -251,7 +251,6 @@
                     </dependency>
                 </dependencies>
             </plugin>
-
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
@@ -295,6 +294,32 @@
                 <configuration>
                     <driver>com.mysql.jdbc.Driver</driver>
                 </configuration>
+            </plugin>
+            <plugin>
+                <!-- plugin for running integration tests -->
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-failsafe-plugin</artifactId>
+                <version>${maven-failsafe-plugin.version}</version>
+                <configuration>
+                    <!-- all tests should run with test profile to bind application-test.yaml -->
+                    <argLine>-Dspring.profiles.active=test</argLine>
+                    <!-- the repackaging done by spring-boot-maven-plugin places the classes and resources
+                     of your application in an unusual location in the JAR, see
+                     https://stackoverflow.com/questions/42082131/maven-verify-classnotfoundexception-for-class-of-spring-boot-application  -->
+                    <classesDirectory>${project.build.outputDirectory}</classesDirectory>
+                    <!-- see https://sandor.tech/2017/10/16/integration-tests-with-spring-boot-classnotfoundexception.html -->
+                    <additionalClasspathElements>
+                        <additionalClasspathElement>${basedir}/target/classes</additionalClasspathElement>
+                    </additionalClasspathElements>
+                </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>integration-test</goal>
+                            <goal>verify</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>

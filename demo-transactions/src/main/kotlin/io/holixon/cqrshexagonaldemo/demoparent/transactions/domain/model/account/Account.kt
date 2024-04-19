@@ -6,4 +6,10 @@ data class Account(
     var customerNumber: CustomerNumber,
     var iban: Iban,
     var balance: Money
-)
+) {
+    fun deposit(amount: Amount) {
+        // TODO: better immutable?
+        this.balance.amount += amount
+    }
+
+}

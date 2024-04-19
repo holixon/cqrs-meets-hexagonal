@@ -31,18 +31,11 @@ spring:
     hibernate:
       ddl-auto: none
       generate_statistics: true
-
     database-platform: org.hibernate.dialect.MySQL8Dialect
-    properties:
-      hibernate:
-        default_schema: transactions
   flyway:
     enabled: true
-    user: ${FLYWAY_USER}
-    password: ${FLYWAY_PASSWORD}
-    url: ${FLYWAY_URL}
-    schemas:
-      - transactions
-      - query
+    user: ${spring.datasource.username}
+    password: ${spring.datasource.password}
+    url: ${spring.datasource.url}
     locations:
       - classpath:db

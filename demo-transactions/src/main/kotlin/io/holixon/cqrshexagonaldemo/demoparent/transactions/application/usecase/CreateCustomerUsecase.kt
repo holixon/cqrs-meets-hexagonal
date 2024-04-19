@@ -8,6 +8,7 @@ import io.holixon.cqrshexagonaldemo.demoparent.transactions.domain.model.custome
 import io.holixon.cqrshexagonaldemo.demoparent.transactions.domain.model.event.CustomerCreatedEvent
 import io.holixon.cqrshexagonaldemo.demoparent.transactions.domain.service.CustomerNumberCreationService
 import io.holixon.cqrshexagonaldemo.demoparent.transactions.framework.Usecase
+import mu.KLogging
 
 @Usecase
 open class CreateCustomerUsecase(
@@ -16,7 +17,10 @@ open class CreateCustomerUsecase(
         private val eventingOutAdapter: EventingOutAdapter
 ) : CreateCustomerInPort {
 
+    companion object : KLogging()
+
     override fun createCustomer(customerName: Name): Customer {
+        logger().info { "register new customer ${customerName.value}" }
         val customer = Customer(
                 customerNumber = customerNumberCreationService.generateNextCustomerNumber(),
                 name = customerName)
@@ -25,6 +29,7 @@ open class CreateCustomerUsecase(
         val customerCreatedEvent = CustomerCreatedEvent(customerName = customerName, customerNumber = createdCustomer.customerNumber)
         eventingOutAdapter.publishEvent(customerCreatedEvent)
 
+        logger().info { "newly registered customer: $createdCustomer" }
         return createdCustomer
     }
 
