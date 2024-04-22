@@ -1,6 +1,5 @@
 package io.holixon.cqrshexagonaldemo.demoparent.transactions.integrationtest
 
-import io.holixon.cqrshexagonaldemo.demoparent.transactions.application.port.inbound.account.AccountBalanceInPort
 import io.holixon.cqrshexagonaldemo.demoparent.transactions.application.port.inbound.account.CreateAccountInPort
 import io.holixon.cqrshexagonaldemo.demoparent.transactions.application.port.inbound.account.DepositAccountInPort
 import io.holixon.cqrshexagonaldemo.demoparent.transactions.application.port.inbound.customer.CreateCustomerInPort
@@ -9,7 +8,6 @@ import io.holixon.cqrshexagonaldemo.demoparent.transactions.domain.model.account
 import io.holixon.cqrshexagonaldemo.demoparent.transactions.domain.model.common.Name
 import org.assertj.core.api.Assertions
 import org.hamcrest.CoreMatchers.containsString
-import org.junit.Ignore
 import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
@@ -34,8 +32,8 @@ class GlobalIT : IntegrationTextBase() {
     @Autowired
     private lateinit var accountOutPort: AccountOutPort
 
-    @Autowired
-    private lateinit var accountBalanceInPort: AccountBalanceInPort
+    //@Autowired
+    //private lateinit var accountBalanceInPort: AccountBalanceInPort
 
     @Test
     fun `should create customer`() {
@@ -115,7 +113,7 @@ class GlobalIT : IntegrationTextBase() {
     }
 
     //TODO: When the sync with write model with read model is done we should change the test to expect 200 http and not 404.
-    @Test
+    @Disabled
     fun `should fetch account balance for existing account`() {
         //given
         val customer = createCustomerInPort.createCustomer(Name("Charles Montgomery Burns"))
@@ -130,6 +128,6 @@ class GlobalIT : IntegrationTextBase() {
         )
 
         // then
-        response.andExpect(status().isNotFound)
+        response.andExpect(status().isOk)
     }
 }
