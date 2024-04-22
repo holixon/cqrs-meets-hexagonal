@@ -8,6 +8,7 @@ import io.holixon.cqrshexagonaldemo.demoparent.transactions.domain.model.account
 import io.holixon.cqrshexagonaldemo.demoparent.transactions.domain.model.event.MoneyDepositedEvent
 import io.holixon.cqrshexagonaldemo.demoparent.transactions.framework.Usecase
 import mu.KLogging
+import java.math.BigDecimal
 
 @Usecase
 class DepositUsecase(
@@ -20,15 +21,23 @@ class DepositUsecase(
     override fun deposit(iban: Iban, amount: Amount) {
         logger().info { "deposit $amount to account ${iban.value}" }
 
+        require(amount.value >= BigDecimal.ZERO) {
+            logger().error {
+                "Amount must be positive"
+            }
+        }
+
         val account = accountOutPort.findAccount(iban)
 
         val updatedAccount = accountOutPort.deposit(account, amount)
 
-        eventingOutAdapter.publishEvent(MoneyDepositedEvent(
-            updatedAccount.iban,
-            updatedAccount.balance,
-            System.currentTimeMillis()
-        ))
+        eventingOutAdapter.publishEvent(
+            MoneyDepositedEvent(
+                updatedAccount.iban,
+                updatedAccount.balance,
+                System.currentTimeMillis()
+            )
+        )
 
         logger().info { "updated account $updatedAccount" }
     }

@@ -7,12 +7,6 @@ import java.math.BigDecimal
  */
 @JvmInline
 value class Amount(val value: BigDecimal) {
-    init {
-        require(value >= BigDecimal.ZERO){
-            "Amount must be positive"
-        }
-    }
-
     operator fun plus(value2: Amount) : Amount {
         return Amount(this.value.plus(value2.value))
     }
