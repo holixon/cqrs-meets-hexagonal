@@ -10,6 +10,7 @@ class MySqlTestContainerExtension : BeforeAllCallback, AfterAllCallback {
 
     companion object {
         const val CONTAINER_IMAGE_TAG = "mysql:8.0.36"
+        private const val ROOT_PASSWORD_ENV = "MYSQL_ROOT_PASSWORD"
     }
 
     private lateinit var mysql: MySQLContainer<*>
@@ -17,8 +18,9 @@ class MySqlTestContainerExtension : BeforeAllCallback, AfterAllCallback {
     override fun beforeAll(p0: ExtensionContext?) {
         mysql = MySQLContainer(CONTAINER_IMAGE_TAG)
             .withDatabaseName("cqrs-meets-hexagonal-test")
-            .withUsername("dbuser")
+            .withUsername("root")
             .withPassword("password")
+            .withEnv(ROOT_PASSWORD_ENV, "password")
 
         mysql.start()
 
