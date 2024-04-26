@@ -38,4 +38,8 @@ spring:
     password: ${spring.datasource.password}
     url: ${spring.datasource.url}
     locations:
-      - classpath:db
+      - classpath:db/write
+      - classpath:db/read
+    schemas:
+      - cqrs-meets-hexagonal
+      - cqrs-meets-hexagonal-read-db

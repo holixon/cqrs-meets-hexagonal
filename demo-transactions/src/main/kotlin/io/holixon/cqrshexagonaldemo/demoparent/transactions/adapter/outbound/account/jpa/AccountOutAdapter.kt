@@ -42,7 +42,6 @@ class AccountOutAdapter(
 
         jpaAccountOutAdapter.save(accountEntityMapper.toEntity(account))
 
-
         return account
     }
 
