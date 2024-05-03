@@ -1,7 +1,8 @@
 package io.holixon.cqrshexagonaldemo.demoparent.transactions.application.usecase
 
-import io.holixon.cqrshexagonaldemo.demoparent.transactions.application.port.outbound.customer.CustomerOutPort
-import io.holixon.cqrshexagonaldemo.demoparent.transactions.application.port.outbound.eventing.EventingOutAdapter
+import io.holixon.cqrshexagonaldemo.demoparent.transactions.command.application.port.outbound.customer.CustomerOutPort
+import io.holixon.cqrshexagonaldemo.demoparent.transactions.command.application.port.outbound.eventing.EventingOutAdapter
+import io.holixon.cqrshexagonaldemo.demoparent.transactions.command.application.usecase.CreateCustomerUsecase
 import io.holixon.cqrshexagonaldemo.demoparent.transactions.domain.model.common.Name
 import io.holixon.cqrshexagonaldemo.demoparent.transactions.domain.model.customer.Customer
 import io.holixon.cqrshexagonaldemo.demoparent.transactions.domain.model.customer.CustomerNumber

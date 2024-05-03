@@ -1,7 +1,8 @@
 package io.holixon.cqrshexagonaldemo.demoparent.transactions.application.usecase
 
-import io.holixon.cqrshexagonaldemo.demoparent.transactions.application.port.outbound.account.AccountOutPort
-import io.holixon.cqrshexagonaldemo.demoparent.transactions.application.port.outbound.eventing.EventingOutAdapter
+import io.holixon.cqrshexagonaldemo.demoparent.transactions.command.application.port.outbound.account.AccountOutPort
+import io.holixon.cqrshexagonaldemo.demoparent.transactions.command.application.port.outbound.eventing.EventingOutAdapter
+import io.holixon.cqrshexagonaldemo.demoparent.transactions.command.application.usecase.DepositUsecase
 import io.holixon.cqrshexagonaldemo.demoparent.transactions.domain.exception.AccountNotFoundException
 import io.holixon.cqrshexagonaldemo.demoparent.transactions.domain.model.account.Account
 import io.holixon.cqrshexagonaldemo.demoparent.transactions.domain.model.account.Amount

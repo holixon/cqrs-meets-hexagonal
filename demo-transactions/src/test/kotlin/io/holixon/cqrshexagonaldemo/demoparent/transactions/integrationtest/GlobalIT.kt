@@ -1,9 +1,9 @@
 package io.holixon.cqrshexagonaldemo.demoparent.transactions.integrationtest
 
-import io.holixon.cqrshexagonaldemo.demoparent.transactions.application.port.inbound.account.CreateAccountInPort
-import io.holixon.cqrshexagonaldemo.demoparent.transactions.application.port.inbound.account.DepositAccountInPort
-import io.holixon.cqrshexagonaldemo.demoparent.transactions.application.port.inbound.customer.CreateCustomerInPort
-import io.holixon.cqrshexagonaldemo.demoparent.transactions.application.port.outbound.account.AccountOutPort
+import io.holixon.cqrshexagonaldemo.demoparent.transactions.command.application.port.inbound.account.CreateAccountInPort
+import io.holixon.cqrshexagonaldemo.demoparent.transactions.command.application.port.inbound.account.DepositAccountInPort
+import io.holixon.cqrshexagonaldemo.demoparent.transactions.command.application.port.inbound.customer.CreateCustomerInPort
+import io.holixon.cqrshexagonaldemo.demoparent.transactions.command.application.port.outbound.account.AccountOutPort
 import io.holixon.cqrshexagonaldemo.demoparent.transactions.domain.model.account.Amount
 import io.holixon.cqrshexagonaldemo.demoparent.transactions.domain.model.common.Name
 import org.assertj.core.api.Assertions

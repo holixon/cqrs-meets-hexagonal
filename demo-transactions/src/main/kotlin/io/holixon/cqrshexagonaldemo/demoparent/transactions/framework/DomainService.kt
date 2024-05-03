@@ -8,4 +8,4 @@ import org.springframework.stereotype.Indexed
 @MustBeDocumented
 @Indexed
 @Component
-annotation class DomainService()
+annotation class DomainService
