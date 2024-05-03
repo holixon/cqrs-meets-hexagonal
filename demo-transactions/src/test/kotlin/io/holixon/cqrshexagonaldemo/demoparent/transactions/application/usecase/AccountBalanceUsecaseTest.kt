@@ -1,11 +1,12 @@
 package io.holixon.cqrshexagonaldemo.demoparent.transactions.application.usecase
 
-import io.holixon.cqrshexagonaldemo.demoparent.transactions.application.port.outbound.account.AccountOutPort
+import io.holixon.cqrshexagonaldemo.demoparent.transactions.query.application.usecase.AccountBalanceUsecase
 import io.holixon.cqrshexagonaldemo.demoparent.transactions.domain.exception.AccountNotFoundException
 import io.holixon.cqrshexagonaldemo.demoparent.transactions.domain.model.account.Amount
 import io.holixon.cqrshexagonaldemo.demoparent.transactions.domain.model.account.Iban
 import io.holixon.cqrshexagonaldemo.demoparent.transactions.domain.model.account.Money
-import io.holixon.cqrshexagonaldemo.demoparent.transactions.domain.model.projection.AccountBalance
+import io.holixon.cqrshexagonaldemo.demoparent.transactions.query.domain.model.projection.AccountBalance
+import io.holixon.cqrshexagonaldemo.demoparent.transactions.query.application.port.outbound.accountbalance.AccountBalanceOutPort
 import io.mockk.every
 import io.mockk.impl.annotations.InjectMockKs
 import io.mockk.impl.annotations.MockK
@@ -21,7 +22,7 @@ import java.math.BigDecimal
 class AccountBalanceUsecaseTest {
 
     @MockK
-    private lateinit var accountOutPort: AccountOutPort
+    private lateinit var accountBalanceOutPort: AccountBalanceOutPort
 
     @InjectMockKs
     private lateinit var accountBalanceUsecase: AccountBalanceUsecase
@@ -35,7 +36,7 @@ class AccountBalanceUsecaseTest {
             Money(Amount(BigDecimal.ONE))
         )
         every {
-            accountOutPort.getAccountBalance(this.any())
+            accountBalanceOutPort.getAccountBalance(this.any())
         } returns accountBalance
         //Act
         val actualBalance = accountBalanceUsecase.getAccountBalance(validIban.value)
@@ -50,7 +51,7 @@ class AccountBalanceUsecaseTest {
         //arrange
         val iban = Iban("Invalid iban")
         every {
-            accountOutPort.getAccountBalance(iban)
+            accountBalanceOutPort.getAccountBalance(iban)
         } throws AccountNotFoundException("Account not found for Iban: ${iban.value}")
         //Act & assert
         assertThrows<AccountNotFoundException> {

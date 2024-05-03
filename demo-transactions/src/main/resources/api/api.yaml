@@ -103,7 +103,7 @@ paths:
   /api/v1/account/balance:
     get:
       tags:
-        - account
+        - accountBalance
       summary: >
         Gets balance for account
       description: >
