@@ -5,8 +5,8 @@ import io.holixon.cqrshexagonaldemo.demoparent.transactions.command.adapter.inbo
 import io.holixon.cqrshexagonaldemo.demoparent.transactions.adapter.inbound.dto.CreateCustomerRequestDto
 import io.holixon.cqrshexagonaldemo.demoparent.transactions.adapter.inbound.dto.CustomerDto
 import io.holixon.cqrshexagonaldemo.demoparent.transactions.command.application.port.inbound.customer.CreateCustomerInPort
-import io.holixon.cqrshexagonaldemo.demoparent.transactions.domain.model.common.Name
-import io.holixon.cqrshexagonaldemo.demoparent.transactions.framework.InAdapter
+import io.holixon.cqrshexagonaldemo.demoparent.transactions.command.domain.model.common.Name
+import io.holixon.cqrshexagonaldemo.demoparent.transactions.shared.framework.InAdapter
 import mu.KLogging
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.RestController

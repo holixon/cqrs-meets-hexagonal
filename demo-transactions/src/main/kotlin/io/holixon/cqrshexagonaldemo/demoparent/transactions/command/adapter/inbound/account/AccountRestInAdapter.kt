@@ -7,10 +7,10 @@ import io.holixon.cqrshexagonaldemo.demoparent.transactions.adapter.inbound.dto.
 import io.holixon.cqrshexagonaldemo.demoparent.transactions.command.adapter.inbound.account.mapper.toAccountCreatedResponseDto
 import io.holixon.cqrshexagonaldemo.demoparent.transactions.command.application.port.inbound.account.CreateAccountInPort
 import io.holixon.cqrshexagonaldemo.demoparent.transactions.command.application.port.inbound.account.DepositAccountInPort
-import io.holixon.cqrshexagonaldemo.demoparent.transactions.domain.model.account.Amount
-import io.holixon.cqrshexagonaldemo.demoparent.transactions.domain.model.account.Iban
-import io.holixon.cqrshexagonaldemo.demoparent.transactions.domain.model.customer.CustomerNumber
-import io.holixon.cqrshexagonaldemo.demoparent.transactions.framework.InAdapter
+import io.holixon.cqrshexagonaldemo.demoparent.transactions.command.domain.model.account.Amount
+import io.holixon.cqrshexagonaldemo.demoparent.transactions.command.domain.model.account.Iban
+import io.holixon.cqrshexagonaldemo.demoparent.transactions.command.domain.model.customer.CustomerNumber
+import io.holixon.cqrshexagonaldemo.demoparent.transactions.shared.framework.InAdapter
 import jakarta.transaction.Transactional
 import mu.KLogging
 import org.springframework.http.ResponseEntity

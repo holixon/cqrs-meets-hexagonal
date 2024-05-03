@@ -1,9 +1,9 @@
 package io.holixon.cqrshexagonaldemo.demoparent.transactions.command.adapter.inbound.customer.mapper
 
 import io.holixon.cqrshexagonaldemo.demoparent.transactions.adapter.inbound.dto.CustomerDto
-import io.holixon.cqrshexagonaldemo.demoparent.transactions.domain.model.common.Name
-import io.holixon.cqrshexagonaldemo.demoparent.transactions.domain.model.customer.Customer
-import io.holixon.cqrshexagonaldemo.demoparent.transactions.domain.model.customer.CustomerNumber
+import io.holixon.cqrshexagonaldemo.demoparent.transactions.command.domain.model.common.Name
+import io.holixon.cqrshexagonaldemo.demoparent.transactions.command.domain.model.customer.Customer
+import io.holixon.cqrshexagonaldemo.demoparent.transactions.command.domain.model.customer.CustomerNumber
 
 fun Customer.toDto(): CustomerDto {
     return CustomerDto(this.customerNumber.value, this.name.value)

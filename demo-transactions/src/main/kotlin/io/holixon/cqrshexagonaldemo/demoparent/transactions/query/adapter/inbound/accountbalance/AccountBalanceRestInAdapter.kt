@@ -2,7 +2,7 @@ package io.holixon.cqrshexagonaldemo.demoparent.transactions.query.adapter.inbou
 
 import io.holixon.cqrshexagonaldemo.demoparent.transactions.adapter.inbound.AccountBalanceApiDelegate
 import io.holixon.cqrshexagonaldemo.demoparent.transactions.adapter.inbound.dto.AccountBalanceResponseDto
-import io.holixon.cqrshexagonaldemo.demoparent.transactions.framework.InAdapter
+import io.holixon.cqrshexagonaldemo.demoparent.transactions.shared.framework.InAdapter
 import io.holixon.cqrshexagonaldemo.demoparent.transactions.query.adapter.inbound.accountbalance.mapper.toAccountBalanceResponseDto
 import io.holixon.cqrshexagonaldemo.demoparent.transactions.query.application.port.inbound.accountbalance.AccountBalanceInPort
 import org.springframework.http.ResponseEntity

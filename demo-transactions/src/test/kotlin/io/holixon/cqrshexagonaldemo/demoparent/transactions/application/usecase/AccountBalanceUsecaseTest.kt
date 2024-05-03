@@ -1,12 +1,12 @@
 package io.holixon.cqrshexagonaldemo.demoparent.transactions.application.usecase
 
 import io.holixon.cqrshexagonaldemo.demoparent.transactions.query.application.usecase.AccountBalanceUsecase
-import io.holixon.cqrshexagonaldemo.demoparent.transactions.domain.exception.AccountNotFoundException
-import io.holixon.cqrshexagonaldemo.demoparent.transactions.domain.model.account.Amount
-import io.holixon.cqrshexagonaldemo.demoparent.transactions.domain.model.account.Iban
-import io.holixon.cqrshexagonaldemo.demoparent.transactions.domain.model.account.Money
+import io.holixon.cqrshexagonaldemo.demoparent.transactions.command.domain.exception.AccountNotFoundException
+import io.holixon.cqrshexagonaldemo.demoparent.transactions.command.domain.model.account.Amount
+import io.holixon.cqrshexagonaldemo.demoparent.transactions.command.domain.model.account.Iban
+import io.holixon.cqrshexagonaldemo.demoparent.transactions.command.domain.model.account.Money
 import io.holixon.cqrshexagonaldemo.demoparent.transactions.query.domain.model.projection.AccountBalance
-import io.holixon.cqrshexagonaldemo.demoparent.transactions.query.application.port.outbound.accountbalance.AccountBalanceOutPort
+import io.holixon.cqrshexagonaldemo.demoparent.transactions.query.application.port.outbound.accountbalance.AccountBalanceService
 import io.mockk.every
 import io.mockk.impl.annotations.InjectMockKs
 import io.mockk.impl.annotations.MockK
@@ -22,7 +22,7 @@ import java.math.BigDecimal
 class AccountBalanceUsecaseTest {
 
     @MockK
-    private lateinit var accountBalanceOutPort: AccountBalanceOutPort
+    private lateinit var accountBalanceService: AccountBalanceService
 
     @InjectMockKs
     private lateinit var accountBalanceUsecase: AccountBalanceUsecase
@@ -36,7 +36,7 @@ class AccountBalanceUsecaseTest {
             Money(Amount(BigDecimal.ONE))
         )
         every {
-            accountBalanceOutPort.getAccountBalance(this.any())
+            accountBalanceService.getAccountBalance(this.any())
         } returns accountBalance
         //Act
         val actualBalance = accountBalanceUsecase.getAccountBalance(validIban.value)
@@ -51,7 +51,7 @@ class AccountBalanceUsecaseTest {
         //arrange
         val iban = Iban("Invalid iban")
         every {
-            accountBalanceOutPort.getAccountBalance(iban)
+            accountBalanceService.getAccountBalance(iban)
         } throws AccountNotFoundException("Account not found for Iban: ${iban.value}")
         //Act & assert
         assertThrows<AccountNotFoundException> {

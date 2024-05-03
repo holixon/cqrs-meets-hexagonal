@@ -1,18 +1,18 @@
 package io.holixon.cqrshexagonaldemo.demoparent.transactions.application.usecase
 
-import io.holixon.cqrshexagonaldemo.demoparent.transactions.command.application.port.outbound.account.AccountOutPort
-import io.holixon.cqrshexagonaldemo.demoparent.transactions.command.application.port.outbound.customer.CustomerOutPort
+import io.holixon.cqrshexagonaldemo.demoparent.transactions.command.application.port.outbound.account.AccountService
+import io.holixon.cqrshexagonaldemo.demoparent.transactions.command.application.port.outbound.customer.CustomerService
 import io.holixon.cqrshexagonaldemo.demoparent.transactions.command.application.port.outbound.eventing.EventingOutAdapter
 import io.holixon.cqrshexagonaldemo.demoparent.transactions.command.application.usecase.CreateAccountUsecase
-import io.holixon.cqrshexagonaldemo.demoparent.transactions.domain.model.account.Account
-import io.holixon.cqrshexagonaldemo.demoparent.transactions.domain.model.account.Iban
-import io.holixon.cqrshexagonaldemo.demoparent.transactions.domain.model.account.Money
-import io.holixon.cqrshexagonaldemo.demoparent.transactions.domain.model.common.Name
-import io.holixon.cqrshexagonaldemo.demoparent.transactions.domain.model.customer.Customer
-import io.holixon.cqrshexagonaldemo.demoparent.transactions.domain.model.customer.CustomerNumber
-import io.holixon.cqrshexagonaldemo.demoparent.transactions.domain.model.event.AccountCreatedEvent
-import io.holixon.cqrshexagonaldemo.demoparent.transactions.domain.service.CustomerAccountVerificationService
-import io.holixon.cqrshexagonaldemo.demoparent.transactions.domain.service.IbanCreationService
+import io.holixon.cqrshexagonaldemo.demoparent.transactions.command.domain.model.account.Account
+import io.holixon.cqrshexagonaldemo.demoparent.transactions.command.domain.model.account.Iban
+import io.holixon.cqrshexagonaldemo.demoparent.transactions.command.domain.model.account.Money
+import io.holixon.cqrshexagonaldemo.demoparent.transactions.command.domain.model.common.Name
+import io.holixon.cqrshexagonaldemo.demoparent.transactions.command.domain.model.customer.Customer
+import io.holixon.cqrshexagonaldemo.demoparent.transactions.command.domain.model.customer.CustomerNumber
+import io.holixon.cqrshexagonaldemo.demoparent.transactions.command.domain.model.event.AccountCreatedEvent
+import io.holixon.cqrshexagonaldemo.demoparent.transactions.command.domain.service.CustomerAccountVerificationService
+import io.holixon.cqrshexagonaldemo.demoparent.transactions.command.domain.service.IbanCreationService
 import io.mockk.every
 import io.mockk.impl.annotations.InjectMockKs
 import io.mockk.impl.annotations.MockK
@@ -27,10 +27,10 @@ import org.junit.jupiter.api.extension.ExtendWith
 class CreateAccountUsecaseTest {
 
     @MockK
-    private lateinit var accountOutPort: AccountOutPort
+    private lateinit var accountService: AccountService
 
     @MockK
-    private lateinit var customerOutPort: CustomerOutPort
+    private lateinit var customerService: CustomerService
 
     @MockK
     private lateinit var customerAccountVerificationService: CustomerAccountVerificationService
@@ -49,7 +49,7 @@ class CreateAccountUsecaseTest {
         // given
         val customerNumber = CustomerNumber("123456789")
         val customer = Customer(customerNumber, Name("Dagobert Duck"))
-        every { customerOutPort.findCustomer(customerNumber) } returns customer
+        every { customerService.findCustomer(customerNumber) } returns customer
         every { customerAccountVerificationService.canAccountBeCreatedForCustomer(customer) } returns true
 
         val iban = Iban("DE00123456789")
@@ -58,14 +58,14 @@ class CreateAccountUsecaseTest {
         val balance = Money.ZERO
         val account = Account(customerNumber, iban, balance)
 
-        every { accountOutPort.createAccount(this.any()) } returns account
+        every { accountService.createAccount(this.any()) } returns account
 
         // when
         val createdAccount = createAccountUsecase.createAccount(customerNumber)
 
         // then
         Assertions.assertThat(createdAccount).isNotNull
-        verify { accountOutPort.createAccount(account) }
+        verify { accountService.createAccount(account) }
         verify { eventingOutAdapter.publishEvent(AccountCreatedEvent(customerNumber, iban)) }
     }
 

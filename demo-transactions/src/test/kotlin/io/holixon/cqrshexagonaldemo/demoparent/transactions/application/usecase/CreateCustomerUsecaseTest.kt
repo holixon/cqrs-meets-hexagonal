@@ -1,13 +1,13 @@
 package io.holixon.cqrshexagonaldemo.demoparent.transactions.application.usecase
 
-import io.holixon.cqrshexagonaldemo.demoparent.transactions.command.application.port.outbound.customer.CustomerOutPort
+import io.holixon.cqrshexagonaldemo.demoparent.transactions.command.application.port.outbound.customer.CustomerService
 import io.holixon.cqrshexagonaldemo.demoparent.transactions.command.application.port.outbound.eventing.EventingOutAdapter
 import io.holixon.cqrshexagonaldemo.demoparent.transactions.command.application.usecase.CreateCustomerUsecase
-import io.holixon.cqrshexagonaldemo.demoparent.transactions.domain.model.common.Name
-import io.holixon.cqrshexagonaldemo.demoparent.transactions.domain.model.customer.Customer
-import io.holixon.cqrshexagonaldemo.demoparent.transactions.domain.model.customer.CustomerNumber
-import io.holixon.cqrshexagonaldemo.demoparent.transactions.domain.model.event.CustomerCreatedEvent
-import io.holixon.cqrshexagonaldemo.demoparent.transactions.domain.service.CustomerNumberCreationService
+import io.holixon.cqrshexagonaldemo.demoparent.transactions.command.domain.model.common.Name
+import io.holixon.cqrshexagonaldemo.demoparent.transactions.command.domain.model.customer.Customer
+import io.holixon.cqrshexagonaldemo.demoparent.transactions.command.domain.model.customer.CustomerNumber
+import io.holixon.cqrshexagonaldemo.demoparent.transactions.command.domain.model.event.CustomerCreatedEvent
+import io.holixon.cqrshexagonaldemo.demoparent.transactions.command.domain.service.CustomerNumberCreationService
 import io.mockk.every
 import io.mockk.impl.annotations.InjectMockKs
 import io.mockk.impl.annotations.MockK
@@ -23,7 +23,7 @@ import org.junit.jupiter.api.extension.ExtendWith
 class CreateCustomerUsecaseTest {
 
     @MockK
-    private lateinit var customerOutPort: CustomerOutPort
+    private lateinit var customerService: CustomerService
 
     @MockK
     private lateinit var customerNumberCreationService: CustomerNumberCreationService
@@ -42,14 +42,14 @@ class CreateCustomerUsecaseTest {
         val customerName = Name("Richi Rich")
         val customer = Customer(customerNumber, customerName)
 
-        every { customerOutPort.createCustomer(this.any()) } returns customer
+        every { customerService.createCustomer(this.any()) } returns customer
 
         // wenn
         val createdCustomer = createCustomerUsecase.createCustomer(customerName)
 
         // dann
         Assertions.assertThat(createdCustomer).isNotNull
-        verify { customerOutPort.createCustomer(customer) }
+        verify { customerService.createCustomer(customer) }
         verify { eventingOutAdapter.publishEvent(CustomerCreatedEvent(customerName, customerNumber)) }
     }
 }

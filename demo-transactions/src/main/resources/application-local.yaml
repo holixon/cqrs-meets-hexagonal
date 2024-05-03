@@ -1,5 +1,5 @@
 spring:
   datasource:
-    url: jdbc:mysql://localhost:3306/cqrs-meets-hexagonal
+    url: jdbc:mysql://localhost:3306/command-model
     username: root
     password: Aut0mat0rs!

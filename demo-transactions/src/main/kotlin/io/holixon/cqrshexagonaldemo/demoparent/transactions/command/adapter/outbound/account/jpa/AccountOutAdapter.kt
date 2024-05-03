@@ -1,19 +1,19 @@
 package io.holixon.cqrshexagonaldemo.demoparent.transactions.command.adapter.outbound.account.jpa
 
 import io.holixon.cqrshexagonaldemo.demoparent.transactions.command.adapter.outbound.account.jpa.mapper.AccountEntityMapper
-import io.holixon.cqrshexagonaldemo.demoparent.transactions.command.application.port.outbound.account.AccountOutPort
-import io.holixon.cqrshexagonaldemo.demoparent.transactions.domain.exception.AccountNotFoundException
-import io.holixon.cqrshexagonaldemo.demoparent.transactions.domain.model.account.Account
-import io.holixon.cqrshexagonaldemo.demoparent.transactions.domain.model.account.Amount
-import io.holixon.cqrshexagonaldemo.demoparent.transactions.domain.model.account.Iban
-import io.holixon.cqrshexagonaldemo.demoparent.transactions.framework.OutAdapter
+import io.holixon.cqrshexagonaldemo.demoparent.transactions.command.application.port.outbound.account.AccountService
+import io.holixon.cqrshexagonaldemo.demoparent.transactions.command.domain.exception.AccountNotFoundException
+import io.holixon.cqrshexagonaldemo.demoparent.transactions.command.domain.model.account.Account
+import io.holixon.cqrshexagonaldemo.demoparent.transactions.command.domain.model.account.Amount
+import io.holixon.cqrshexagonaldemo.demoparent.transactions.command.domain.model.account.Iban
+import io.holixon.cqrshexagonaldemo.demoparent.transactions.shared.framework.OutAdapter
 import mu.KLogging
 
 @OutAdapter
 class AccountOutAdapter(
     private val jpaAccountOutAdapter: JpaAccountOutAdapter,
     private val accountEntityMapper: AccountEntityMapper
-) : AccountOutPort {
+) : AccountService {
 
     companion object : KLogging()
 

@@ -1,15 +1,15 @@
 package io.holixon.cqrshexagonaldemo.demoparent.transactions.application.usecase
 
-import io.holixon.cqrshexagonaldemo.demoparent.transactions.command.application.port.outbound.account.AccountOutPort
+import io.holixon.cqrshexagonaldemo.demoparent.transactions.command.application.port.outbound.account.AccountService
 import io.holixon.cqrshexagonaldemo.demoparent.transactions.command.application.port.outbound.eventing.EventingOutAdapter
 import io.holixon.cqrshexagonaldemo.demoparent.transactions.command.application.usecase.DepositUsecase
-import io.holixon.cqrshexagonaldemo.demoparent.transactions.domain.exception.AccountNotFoundException
-import io.holixon.cqrshexagonaldemo.demoparent.transactions.domain.model.account.Account
-import io.holixon.cqrshexagonaldemo.demoparent.transactions.domain.model.account.Amount
-import io.holixon.cqrshexagonaldemo.demoparent.transactions.domain.model.account.Iban
-import io.holixon.cqrshexagonaldemo.demoparent.transactions.domain.model.account.Money
-import io.holixon.cqrshexagonaldemo.demoparent.transactions.domain.model.customer.CustomerNumber
-import io.holixon.cqrshexagonaldemo.demoparent.transactions.domain.model.event.MoneyDepositedEvent
+import io.holixon.cqrshexagonaldemo.demoparent.transactions.command.domain.exception.AccountNotFoundException
+import io.holixon.cqrshexagonaldemo.demoparent.transactions.command.domain.model.account.Account
+import io.holixon.cqrshexagonaldemo.demoparent.transactions.command.domain.model.account.Amount
+import io.holixon.cqrshexagonaldemo.demoparent.transactions.command.domain.model.account.Iban
+import io.holixon.cqrshexagonaldemo.demoparent.transactions.command.domain.model.account.Money
+import io.holixon.cqrshexagonaldemo.demoparent.transactions.command.domain.model.customer.CustomerNumber
+import io.holixon.cqrshexagonaldemo.demoparent.transactions.command.domain.model.event.MoneyDepositedEvent
 import io.mockk.every
 import io.mockk.impl.annotations.InjectMockKs
 import io.mockk.impl.annotations.MockK
@@ -25,7 +25,7 @@ import java.math.BigDecimal
 class DepositUsecaseTest {
 
     @MockK
-    private lateinit var accountOutPort: AccountOutPort
+    private lateinit var accountService: AccountService
 
     @RelaxedMockK
     private lateinit var eventingOutAdapter: EventingOutAdapter
@@ -45,11 +45,11 @@ class DepositUsecaseTest {
         )
 
         every {
-            accountOutPort.findAccount(any())
+            accountService.findAccount(any())
         } returns account
 
         every {
-            accountOutPort.deposit(any(), Amount(BigDecimal.ONE))
+            accountService.deposit(any(), Amount(BigDecimal.ONE))
         } returns Account(
             account.customerNumber,
             validIban,
@@ -69,11 +69,11 @@ class DepositUsecaseTest {
     fun `should not deposit with non existent account`() {
         //Arrange
         every {
-            accountOutPort.deposit(any(Account::class), Amount(BigDecimal.ONE))
+            accountService.deposit(any(Account::class), Amount(BigDecimal.ONE))
         } throws AccountNotFoundException("Account not found")
 
         every {
-            accountOutPort.findAccount(any())
+            accountService.findAccount(any())
         } returns Account(CustomerNumber("abc"), validIban, Money(Amount(BigDecimal.ONE)))
 
         // Act and Assert

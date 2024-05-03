@@ -1,18 +1,18 @@
 package io.holixon.cqrshexagonaldemo.demoparent.transactions.command.application.usecase
 
 import io.holixon.cqrshexagonaldemo.demoparent.transactions.command.application.port.inbound.account.DepositAccountInPort
-import io.holixon.cqrshexagonaldemo.demoparent.transactions.command.application.port.outbound.account.AccountOutPort
+import io.holixon.cqrshexagonaldemo.demoparent.transactions.command.application.port.outbound.account.AccountService
 import io.holixon.cqrshexagonaldemo.demoparent.transactions.command.application.port.outbound.eventing.EventingOutAdapter
-import io.holixon.cqrshexagonaldemo.demoparent.transactions.domain.model.account.Amount
-import io.holixon.cqrshexagonaldemo.demoparent.transactions.domain.model.account.Iban
-import io.holixon.cqrshexagonaldemo.demoparent.transactions.domain.model.event.MoneyDepositedEvent
-import io.holixon.cqrshexagonaldemo.demoparent.transactions.framework.Usecase
+import io.holixon.cqrshexagonaldemo.demoparent.transactions.command.domain.model.account.Amount
+import io.holixon.cqrshexagonaldemo.demoparent.transactions.command.domain.model.account.Iban
+import io.holixon.cqrshexagonaldemo.demoparent.transactions.command.domain.model.event.MoneyDepositedEvent
+import io.holixon.cqrshexagonaldemo.demoparent.transactions.shared.framework.Usecase
 import mu.KLogging
 import java.math.BigDecimal
 
 @Usecase
 class DepositUsecase(
-    private val accountOutPort: AccountOutPort,
+    private val accountService: AccountService,
     private val eventingOutAdapter: EventingOutAdapter
 ) : DepositAccountInPort {
 
@@ -27,9 +27,9 @@ class DepositUsecase(
             }
         }
 
-        val account = accountOutPort.findAccount(iban)
+        val account = accountService.findAccount(iban)
 
-        val updatedAccount = accountOutPort.deposit(account, amount)
+        val updatedAccount = accountService.deposit(account, amount)
 
         eventingOutAdapter.publishEvent(
             MoneyDepositedEvent(

@@ -3,9 +3,9 @@ package io.holixon.cqrshexagonaldemo.demoparent.transactions.integrationtest
 import io.holixon.cqrshexagonaldemo.demoparent.transactions.command.application.port.inbound.account.CreateAccountInPort
 import io.holixon.cqrshexagonaldemo.demoparent.transactions.command.application.port.inbound.account.DepositAccountInPort
 import io.holixon.cqrshexagonaldemo.demoparent.transactions.command.application.port.inbound.customer.CreateCustomerInPort
-import io.holixon.cqrshexagonaldemo.demoparent.transactions.command.application.port.outbound.account.AccountOutPort
-import io.holixon.cqrshexagonaldemo.demoparent.transactions.domain.model.account.Amount
-import io.holixon.cqrshexagonaldemo.demoparent.transactions.domain.model.common.Name
+import io.holixon.cqrshexagonaldemo.demoparent.transactions.command.application.port.outbound.account.AccountService
+import io.holixon.cqrshexagonaldemo.demoparent.transactions.command.domain.model.account.Amount
+import io.holixon.cqrshexagonaldemo.demoparent.transactions.command.domain.model.common.Name
 import org.assertj.core.api.Assertions
 import org.hamcrest.CoreMatchers.containsString
 import org.junit.jupiter.api.Disabled
@@ -30,7 +30,7 @@ class GlobalIT : IntegrationTextBase() {
     private lateinit var depositAccountInPort: DepositAccountInPort
 
     @Autowired
-    private lateinit var accountOutPort: AccountOutPort
+    private lateinit var accountService: AccountService
 
     //@Autowired
     //private lateinit var accountBalanceInPort: AccountBalanceInPort
@@ -108,7 +108,7 @@ class GlobalIT : IntegrationTextBase() {
 
         // then
         response.andExpect(status().isNoContent)
-        val currentAccount = accountOutPort.findAccount(account.iban)
+        val currentAccount = accountService.findAccount(account.iban)
         Assertions.assertThat(currentAccount.balance.amount).isEqualTo(Amount(BigDecimal.valueOf(234.56)))
     }
 

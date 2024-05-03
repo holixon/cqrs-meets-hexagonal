@@ -1,9 +1,9 @@
 package io.holixon.cqrshexagonaldemo.demoparent.transactions.command.adapter.outbound.customer.mapper
 
 import io.holixon.cqrshexagonaldemo.demoparent.transactions.command.adapter.outbound.customer.entity.CustomerEntity
-import io.holixon.cqrshexagonaldemo.demoparent.transactions.domain.model.common.Name
-import io.holixon.cqrshexagonaldemo.demoparent.transactions.domain.model.customer.Customer
-import io.holixon.cqrshexagonaldemo.demoparent.transactions.domain.model.customer.CustomerNumber
+import io.holixon.cqrshexagonaldemo.demoparent.transactions.command.domain.model.common.Name
+import io.holixon.cqrshexagonaldemo.demoparent.transactions.command.domain.model.customer.Customer
+import io.holixon.cqrshexagonaldemo.demoparent.transactions.command.domain.model.customer.CustomerNumber
 import org.springframework.stereotype.Component
 
 @Component

@@ -1,22 +1,22 @@
 package io.holixon.cqrshexagonaldemo.demoparent.transactions.command.application.usecase
 
 import io.holixon.cqrshexagonaldemo.demoparent.transactions.command.application.port.inbound.account.CreateAccountInPort
-import io.holixon.cqrshexagonaldemo.demoparent.transactions.command.application.port.outbound.account.AccountOutPort
-import io.holixon.cqrshexagonaldemo.demoparent.transactions.command.application.port.outbound.customer.CustomerOutPort
+import io.holixon.cqrshexagonaldemo.demoparent.transactions.command.application.port.outbound.account.AccountService
+import io.holixon.cqrshexagonaldemo.demoparent.transactions.command.application.port.outbound.customer.CustomerService
 import io.holixon.cqrshexagonaldemo.demoparent.transactions.command.application.port.outbound.eventing.EventingOutAdapter
-import io.holixon.cqrshexagonaldemo.demoparent.transactions.domain.model.account.Account
-import io.holixon.cqrshexagonaldemo.demoparent.transactions.domain.model.account.Money
-import io.holixon.cqrshexagonaldemo.demoparent.transactions.domain.model.customer.CustomerNumber
-import io.holixon.cqrshexagonaldemo.demoparent.transactions.domain.model.event.AccountCreatedEvent
-import io.holixon.cqrshexagonaldemo.demoparent.transactions.domain.service.CustomerAccountVerificationService
-import io.holixon.cqrshexagonaldemo.demoparent.transactions.domain.service.IbanCreationService
-import io.holixon.cqrshexagonaldemo.demoparent.transactions.framework.Usecase
+import io.holixon.cqrshexagonaldemo.demoparent.transactions.command.domain.model.account.Account
+import io.holixon.cqrshexagonaldemo.demoparent.transactions.command.domain.model.account.Money
+import io.holixon.cqrshexagonaldemo.demoparent.transactions.command.domain.model.customer.CustomerNumber
+import io.holixon.cqrshexagonaldemo.demoparent.transactions.command.domain.model.event.AccountCreatedEvent
+import io.holixon.cqrshexagonaldemo.demoparent.transactions.command.domain.service.CustomerAccountVerificationService
+import io.holixon.cqrshexagonaldemo.demoparent.transactions.command.domain.service.IbanCreationService
+import io.holixon.cqrshexagonaldemo.demoparent.transactions.shared.framework.Usecase
 import mu.KLogging
 
 @Usecase
 open class CreateAccountUsecase(
-    private val accountOutPort: AccountOutPort,
-    private val customerOutPort: CustomerOutPort,
+    private val accountService: AccountService,
+    private val customerService: CustomerService,
     private val customerAccountVerificationService: CustomerAccountVerificationService,
     private val ibanCreationService: IbanCreationService,
     private val eventingOutAdapter: EventingOutAdapter
@@ -27,7 +27,7 @@ open class CreateAccountUsecase(
     override fun createAccount(customerNumber: CustomerNumber): Account {
         logger().info { "create new account for customer $customerNumber" }
 
-        val customer = customerOutPort.findCustomer(customerNumber) ?: throw RuntimeException("no customer")
+        val customer = customerService.findCustomer(customerNumber) ?: throw RuntimeException("no customer")
 
         if (!customerAccountVerificationService.canAccountBeCreatedForCustomer(customer)) {
             throw RuntimeException("customer already has an account")
@@ -39,7 +39,7 @@ open class CreateAccountUsecase(
                 Money.ZERO
         )
 
-        val createdAccount = accountOutPort.createAccount(newAccount)
+        val createdAccount = accountService.createAccount(newAccount)
 
         val accountCreatedEvent = AccountCreatedEvent(customerNumber, createdAccount.iban)
         eventingOutAdapter.publishEvent(accountCreatedEvent)

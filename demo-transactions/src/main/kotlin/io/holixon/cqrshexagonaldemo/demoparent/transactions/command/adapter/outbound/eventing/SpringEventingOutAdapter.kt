@@ -1,8 +1,8 @@
 package io.holixon.cqrshexagonaldemo.demoparent.transactions.command.adapter.outbound.eventing
 
 import io.holixon.cqrshexagonaldemo.demoparent.transactions.command.application.port.outbound.eventing.EventingOutAdapter
-import io.holixon.cqrshexagonaldemo.demoparent.transactions.domain.model.event.Event
-import io.holixon.cqrshexagonaldemo.demoparent.transactions.framework.OutAdapter
+import io.holixon.cqrshexagonaldemo.demoparent.transactions.command.domain.model.event.Event
+import io.holixon.cqrshexagonaldemo.demoparent.transactions.shared.framework.OutAdapter
 import org.springframework.context.ApplicationEventPublisher
 
 @OutAdapter

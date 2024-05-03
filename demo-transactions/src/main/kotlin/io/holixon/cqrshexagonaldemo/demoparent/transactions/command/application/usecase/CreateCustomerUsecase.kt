@@ -1,18 +1,18 @@
 package io.holixon.cqrshexagonaldemo.demoparent.transactions.command.application.usecase
 
 import io.holixon.cqrshexagonaldemo.demoparent.transactions.command.application.port.inbound.customer.CreateCustomerInPort
-import io.holixon.cqrshexagonaldemo.demoparent.transactions.command.application.port.outbound.customer.CustomerOutPort
+import io.holixon.cqrshexagonaldemo.demoparent.transactions.command.application.port.outbound.customer.CustomerService
 import io.holixon.cqrshexagonaldemo.demoparent.transactions.command.application.port.outbound.eventing.EventingOutAdapter
-import io.holixon.cqrshexagonaldemo.demoparent.transactions.domain.model.common.Name
-import io.holixon.cqrshexagonaldemo.demoparent.transactions.domain.model.customer.Customer
-import io.holixon.cqrshexagonaldemo.demoparent.transactions.domain.model.event.CustomerCreatedEvent
-import io.holixon.cqrshexagonaldemo.demoparent.transactions.domain.service.CustomerNumberCreationService
-import io.holixon.cqrshexagonaldemo.demoparent.transactions.framework.Usecase
+import io.holixon.cqrshexagonaldemo.demoparent.transactions.command.domain.model.common.Name
+import io.holixon.cqrshexagonaldemo.demoparent.transactions.command.domain.model.customer.Customer
+import io.holixon.cqrshexagonaldemo.demoparent.transactions.command.domain.model.event.CustomerCreatedEvent
+import io.holixon.cqrshexagonaldemo.demoparent.transactions.command.domain.service.CustomerNumberCreationService
+import io.holixon.cqrshexagonaldemo.demoparent.transactions.shared.framework.Usecase
 import mu.KLogging
 
 @Usecase
 open class CreateCustomerUsecase(
-    private val customerOutPort: CustomerOutPort,
+    private val customerService: CustomerService,
     private val customerNumberCreationService: CustomerNumberCreationService,
     private val eventingOutAdapter: EventingOutAdapter
 ) : CreateCustomerInPort {
@@ -24,7 +24,7 @@ open class CreateCustomerUsecase(
         val customer = Customer(
                 customerNumber = customerNumberCreationService.generateNextCustomerNumber(),
                 name = customerName)
-        val createdCustomer = customerOutPort.createCustomer(customer)
+        val createdCustomer = customerService.createCustomer(customer)
 
         val customerCreatedEvent = CustomerCreatedEvent(customerName = customerName, customerNumber = createdCustomer.customerNumber)
         eventingOutAdapter.publishEvent(customerCreatedEvent)
