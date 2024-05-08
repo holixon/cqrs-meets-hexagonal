@@ -6,9 +6,9 @@ import io.holixon.cqrshexagonaldemo.demoparent.transactions.command.application.
 import io.holixon.cqrshexagonaldemo.demoparent.transactions.command.application.port.outbound.account.AccountService
 import io.holixon.cqrshexagonaldemo.demoparent.transactions.command.domain.model.account.Amount
 import io.holixon.cqrshexagonaldemo.demoparent.transactions.command.domain.model.common.Name
+import io.holixon.cqrshexagonaldemo.demoparent.transactions.query.application.port.inbound.accountbalance.AccountBalanceInPort
 import org.assertj.core.api.Assertions
 import org.hamcrest.CoreMatchers.containsString
-import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.MediaType
@@ -30,10 +30,10 @@ class GlobalIT : IntegrationTextBase() {
     private lateinit var depositAccountInPort: DepositAccountInPort
 
     @Autowired
-    private lateinit var accountService: AccountService
+    private lateinit var accountBalanceInPort: AccountBalanceInPort
 
-    //@Autowired
-    //private lateinit var accountBalanceInPort: AccountBalanceInPort
+    @Autowired
+    private lateinit var accountService: AccountService
 
     @Test
     fun `should create customer`() {
@@ -112,12 +112,12 @@ class GlobalIT : IntegrationTextBase() {
         Assertions.assertThat(currentAccount.balance.amount).isEqualTo(Amount(BigDecimal.valueOf(234.56)))
     }
 
-    //TODO: When the sync with write model with read model is done we should change the test to expect 200 http and not 404.
-    @Disabled
+   @Test
     fun `should fetch account balance for existing account`() {
         //given
         val customer = createCustomerInPort.createCustomer(Name("Charles Montgomery Burns"))
         val account = createAccountInPort.createAccount(customer.customerNumber)
+        depositAccountInPort.deposit(account.iban, Amount(BigDecimal.valueOf(123.45)))
 
         //when
         val response = this.mockMvc.perform(
@@ -129,5 +129,8 @@ class GlobalIT : IntegrationTextBase() {
 
         // then
         response.andExpect(status().isOk)
+        val currentAccount = accountBalanceInPort.getAccountBalance(account.iban.value)
+        Assertions.assertThat(currentAccount.iban).isEqualTo(account.iban)
+        Assertions.assertThat(currentAccount.balance.amount.value).isEqualTo(BigDecimal.valueOf(123.45))
     }
 }

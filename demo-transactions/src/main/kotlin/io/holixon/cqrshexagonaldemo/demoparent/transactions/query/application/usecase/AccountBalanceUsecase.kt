@@ -12,7 +12,6 @@ class AccountBalanceUsecase(
 ) : AccountBalanceInPort {
 
     override fun getAccountBalance(accountNumber: String): AccountBalance {
-        val accountBalance = accountBalanceService.getAccountBalance(Iban(accountNumber))
-        return accountBalance
+        return accountBalanceService.getAccountBalance(Iban(accountNumber))
     }
 }
