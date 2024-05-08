@@ -6,7 +6,7 @@ import jakarta.persistence.Table
 import java.math.BigDecimal
 
 @Entity
-@Table(name = "account_balance", catalog = "cqrs-meets-hexagonal-read-db")
+@Table(name = "account_balance", catalog = "query-model")
 class AccountBalanceEntity(
     @Id
     var iban: String = "",
