@@ -6,11 +6,11 @@ import io.holixon.cqrshexagonaldemo.demoparent.transactions.shared.framework.InA
 import org.springframework.context.event.EventListener
 
 @InAdapter
-class QueryEventListener( //TODO: Rename class
+class QueryEventListener(
     private val bankEventInPort: BankEventInPort
 ) {
 
     @EventListener
-    fun handle(event: MoneyDepositedEvent) = bankEventInPort.moneyDeposit(event)
+    fun handle(event: MoneyDepositedEvent) = bankEventInPort.handleMoneyDeposit(event)
 
 }

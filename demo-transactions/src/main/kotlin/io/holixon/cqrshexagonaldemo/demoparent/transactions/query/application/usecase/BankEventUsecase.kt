@@ -18,7 +18,7 @@ class BankEventUsecase(
 
     companion object : KLogging()
 
-    override fun moneyDeposit(event: MoneyDepositedEvent) { //TODO rename class
+    override fun handleMoneyDeposit(event: MoneyDepositedEvent) { //TODO rename class
         logger.debug { "Received MoneyDepositEvent for iban ${event.iban} with amount ${event.balance}" }
         try {
             val account = accountBalanceService.getAccountBalance(event.iban)
@@ -27,10 +27,13 @@ class BankEventUsecase(
 
             accountBalanceService.deposit(account, event.balance.amount)
         }catch (accountNotFound: AccountNotFoundException) {
-            //Create the accountBalance since it's the first time for this bank account
-            val newAccount = AccountBalance(event.iban, event.balance)
-            accountBalanceService.createAccountBalance(newAccount)
+            createAccountBalance(event)
         }
+    }
+
+    private fun createAccountBalance(event: MoneyDepositedEvent) {
+        val newAccount = AccountBalance(event.iban, event.balance)
+        accountBalanceService.createAccountBalance(newAccount)
     }
 
 }

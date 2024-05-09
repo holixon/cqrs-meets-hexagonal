@@ -3,5 +3,5 @@ package io.holixon.cqrshexagonaldemo.demoparent.transactions.query.application.p
 import io.holixon.cqrshexagonaldemo.demoparent.transactions.command.domain.model.event.MoneyDepositedEvent
 
 interface BankEventInPort {
-    fun moneyDeposit(event: MoneyDepositedEvent)
+    fun handleMoneyDeposit(event: MoneyDepositedEvent)
 }
