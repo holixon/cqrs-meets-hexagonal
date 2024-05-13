@@ -2,7 +2,6 @@ package io.holixon.cqrshexagonaldemo.demoparent.transactions.integrationtest
 
 import io.holixon.cqrshexagonaldemo.demoparent.transactions.command.application.port.inbound.account.CreateAccountInPort
 import io.holixon.cqrshexagonaldemo.demoparent.transactions.command.application.port.inbound.account.DepositAccountInPort
-import io.holixon.cqrshexagonaldemo.demoparent.transactions.command.application.port.inbound.account.WithdrawAccountInPort
 import io.holixon.cqrshexagonaldemo.demoparent.transactions.command.application.port.inbound.customer.CreateCustomerInPort
 import io.holixon.cqrshexagonaldemo.demoparent.transactions.command.application.port.outbound.account.AccountService
 import io.holixon.cqrshexagonaldemo.demoparent.transactions.command.domain.model.account.Amount
@@ -29,9 +28,6 @@ class GlobalIT : IntegrationTextBase() {
 
     @Autowired
     private lateinit var depositAccountInPort: DepositAccountInPort
-
-    @Autowired
-    private lateinit var withdrawAccountInPort: WithdrawAccountInPort
 
     @Autowired
     private lateinit var accountBalanceInPort: AccountBalanceInPort
