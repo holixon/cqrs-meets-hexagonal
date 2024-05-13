@@ -2,6 +2,7 @@ package io.holixon.cqrshexagonaldemo.demoparent.transactions.integrationtest
 
 import io.holixon.cqrshexagonaldemo.demoparent.transactions.command.application.port.inbound.account.CreateAccountInPort
 import io.holixon.cqrshexagonaldemo.demoparent.transactions.command.application.port.inbound.account.DepositAccountInPort
+import io.holixon.cqrshexagonaldemo.demoparent.transactions.command.application.port.inbound.account.WithdrawAccountInPort
 import io.holixon.cqrshexagonaldemo.demoparent.transactions.command.application.port.inbound.customer.CreateCustomerInPort
 import io.holixon.cqrshexagonaldemo.demoparent.transactions.command.application.port.outbound.account.AccountService
 import io.holixon.cqrshexagonaldemo.demoparent.transactions.command.domain.model.account.Amount
@@ -28,6 +29,9 @@ class GlobalIT : IntegrationTextBase() {
 
     @Autowired
     private lateinit var depositAccountInPort: DepositAccountInPort
+
+    @Autowired
+    private lateinit var withdrawAccountInPort: WithdrawAccountInPort
 
     @Autowired
     private lateinit var accountBalanceInPort: AccountBalanceInPort
@@ -132,5 +136,33 @@ class GlobalIT : IntegrationTextBase() {
         val currentAccount = accountBalanceInPort.getAccountBalance(account.iban.value)
         Assertions.assertThat(currentAccount.iban).isEqualTo(account.iban)
         Assertions.assertThat(currentAccount.balance.amount.value).isEqualTo(BigDecimal.valueOf(123.45))
+    }
+
+    @Test
+    fun `should withdraw money on existing account`() {
+        //given
+        val customer = createCustomerInPort.createCustomer(Name("Charles Montgomery Burns"))
+        val account = createAccountInPort.createAccount(customer.customerNumber)
+        depositAccountInPort.deposit(account.iban, Amount(BigDecimal.valueOf(100.00)))
+
+        val payload = """
+            {
+              "iban": "${account.iban}",
+              "amount": 50.00
+            }
+        """.trimIndent()
+
+        //when
+        val response = this.mockMvc.perform(
+            post("/api/v1/account/withdraw")
+                .accept(MediaType.APPLICATION_JSON)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(payload)
+        )
+
+        //then
+        response.andExpect(status().isNoContent)
+        val currentAccount = accountService.findAccount(account.iban)
+        Assertions.assertThat(currentAccount.balance.amount).isEqualTo(Amount(BigDecimal.valueOf(50.00).setScale(2)))
     }
 }
