@@ -8,4 +8,5 @@ interface AccountService {
     fun findAccount(iban: Iban): Account
     fun createAccount(account: Account): Account
     fun deposit(account: Account, amount: Amount): Account
+    fun withdraw(account: Account, amount: Amount): Account
 }

@@ -1,0 +1,6 @@
+package io.holixon.cqrshexagonaldemo.demoparent.transactions.command.domain.model.event
+
+import io.holixon.cqrshexagonaldemo.demoparent.transactions.command.domain.model.account.Iban
+import io.holixon.cqrshexagonaldemo.demoparent.transactions.command.domain.model.account.Money
+
+data class MoneyWithdrawnEvent(val iban: Iban, val balance: Money, val timeStamp: Long) : Event

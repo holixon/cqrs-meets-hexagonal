@@ -11,6 +11,10 @@ value class Amount(val value: BigDecimal) {
         return Amount(this.value.plus(value2.value))
     }
 
+    operator fun minus(value2: Amount) : Amount {
+        return Amount(this.value.minus(value2.value))
+    }
+
     override fun toString(): String {
         return value.toString()
     }

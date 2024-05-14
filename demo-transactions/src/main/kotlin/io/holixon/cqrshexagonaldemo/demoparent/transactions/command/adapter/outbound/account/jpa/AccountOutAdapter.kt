@@ -39,4 +39,11 @@ class AccountOutAdapter(
 
         return account
     }
+
+    override fun withdraw(account: Account, amount: Amount): Account {
+        account.withdraw(amount)
+
+        jpaAccountOutAdapter.save(accountEntityMapper.toEntity(account))
+        return account
+    }
 }

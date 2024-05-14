@@ -4,9 +4,11 @@ import io.holixon.cqrshexagonaldemo.demoparent.transactions.adapter.inbound.Acco
 import io.holixon.cqrshexagonaldemo.demoparent.transactions.adapter.inbound.dto.AccountCreatedResponseDto
 import io.holixon.cqrshexagonaldemo.demoparent.transactions.adapter.inbound.dto.CreateAccountRequestDto
 import io.holixon.cqrshexagonaldemo.demoparent.transactions.adapter.inbound.dto.DepositRequestDto
+import io.holixon.cqrshexagonaldemo.demoparent.transactions.adapter.inbound.dto.WithdrawRequestDtoDto
 import io.holixon.cqrshexagonaldemo.demoparent.transactions.command.adapter.inbound.account.mapper.toAccountCreatedResponseDto
 import io.holixon.cqrshexagonaldemo.demoparent.transactions.command.application.port.inbound.account.CreateAccountInPort
 import io.holixon.cqrshexagonaldemo.demoparent.transactions.command.application.port.inbound.account.DepositAccountInPort
+import io.holixon.cqrshexagonaldemo.demoparent.transactions.command.application.port.inbound.account.WithdrawAccountInPort
 import io.holixon.cqrshexagonaldemo.demoparent.transactions.command.domain.model.account.Amount
 import io.holixon.cqrshexagonaldemo.demoparent.transactions.command.domain.model.account.Iban
 import io.holixon.cqrshexagonaldemo.demoparent.transactions.command.domain.model.customer.CustomerNumber
@@ -21,7 +23,8 @@ import java.math.BigDecimal
 @InAdapter
 open class AccountRestInAdapter(
     private val createAccountInPort: CreateAccountInPort,
-    private val depositAccountInPort: DepositAccountInPort
+    private val depositAccountInPort: DepositAccountInPort,
+    private val withdrawAccountInPort: WithdrawAccountInPort
 ) : AccountApiDelegate {
 
     companion object : KLogging()
@@ -36,6 +39,15 @@ open class AccountRestInAdapter(
         depositAccountInPort.deposit(
             Iban(depositRequestDto.iban),
             Amount(BigDecimal.valueOf(depositRequestDto.amount))
+        )
+        return ResponseEntity.noContent().build()
+    }
+
+    @Transactional
+    override fun withdraw(withdrawRequestDtoDto: WithdrawRequestDtoDto): ResponseEntity<Void> {
+        withdrawAccountInPort.withdraw(
+            Iban(withdrawRequestDtoDto.iban),
+            Amount(BigDecimal.valueOf(withdrawRequestDtoDto.amount))
         )
         return ResponseEntity.noContent().build()
     }

@@ -100,6 +100,27 @@ paths:
           description: Money Deposited
         '404':
           description: No Account found
+  /api/v1/account/withdraw:
+    post:
+      tags:
+        - account
+      summary: >
+        Withdraw money
+      description: >
+        Withdraw money for a specified account
+      operationId: withdraw
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/WithdrawRequestDto'
+      responses:
+        '204':
+          description: Money withdrew
+        '404':
+          description: No Account found
+
   /api/v1/account/balance:
     get:
       tags:
@@ -166,3 +187,14 @@ components:
       required:
         - accountNumber
         - balance
+    WithdrawRequestDto:
+      type: object
+      properties:
+         iban:
+           type: string
+         amount:
+           type: number
+           format: double
+      required:
+        - iban
+        - amount

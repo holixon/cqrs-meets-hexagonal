@@ -133,4 +133,32 @@ class GlobalIT : IntegrationTextBase() {
         Assertions.assertThat(currentAccount.iban).isEqualTo(account.iban)
         Assertions.assertThat(currentAccount.balance.amount.value).isEqualTo(BigDecimal.valueOf(123.45))
     }
+
+    @Test
+    fun `should withdraw money on existing account`() {
+        //given
+        val customer = createCustomerInPort.createCustomer(Name("Charles Montgomery Burns"))
+        val account = createAccountInPort.createAccount(customer.customerNumber)
+        depositAccountInPort.deposit(account.iban, Amount(BigDecimal.valueOf(100.00)))
+
+        val payload = """
+            {
+              "iban": "${account.iban}",
+              "amount": 50.00
+            }
+        """.trimIndent()
+
+        //when
+        val response = this.mockMvc.perform(
+            post("/api/v1/account/withdraw")
+                .accept(MediaType.APPLICATION_JSON)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(payload)
+        )
+
+        //then
+        response.andExpect(status().isNoContent)
+        val currentAccount = accountService.findAccount(account.iban)
+        Assertions.assertThat(currentAccount.balance.amount).isEqualTo(Amount(BigDecimal.valueOf(50.00).setScale(2)))
+    }
 }
