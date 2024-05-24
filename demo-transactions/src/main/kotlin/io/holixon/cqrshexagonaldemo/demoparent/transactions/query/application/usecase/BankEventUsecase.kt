@@ -18,7 +18,7 @@ class BankEventUsecase(
 
     companion object : KLogging()
 
-    override fun handleMoneyDeposit(event: MoneyDepositedEvent) { //TODO rename class
+    override fun handleMoneyDeposit(event: MoneyDepositedEvent) {
         logger.debug { "Received MoneyDepositEvent for iban ${event.iban} with amount ${event.balance}" }
         try {
             val account = accountBalanceService.getAccountBalance(event.iban)

@@ -1,10 +1,10 @@
 package io.holixon.cqrshexagonaldemo.demoparent.transactions.command.adapter.inbound.account
 
-import io.holixon.cqrshexagonaldemo.demoparent.transactions.adapter.inbound.AccountApiDelegate
-import io.holixon.cqrshexagonaldemo.demoparent.transactions.adapter.inbound.dto.AccountCreatedResponseDto
-import io.holixon.cqrshexagonaldemo.demoparent.transactions.adapter.inbound.dto.CreateAccountRequestDto
-import io.holixon.cqrshexagonaldemo.demoparent.transactions.adapter.inbound.dto.DepositRequestDto
+import io.holixon.cqrshexagonaldemo.demoparent.transactions.command.adapter.inbound.AccountApiDelegate
 import io.holixon.cqrshexagonaldemo.demoparent.transactions.command.adapter.inbound.account.mapper.toAccountCreatedResponseDto
+import io.holixon.cqrshexagonaldemo.demoparent.transactions.command.adapter.inbound.dto.AccountCreatedResponseDto
+import io.holixon.cqrshexagonaldemo.demoparent.transactions.command.adapter.inbound.dto.CreateAccountRequestDto
+import io.holixon.cqrshexagonaldemo.demoparent.transactions.command.adapter.inbound.dto.DepositRequestDto
 import io.holixon.cqrshexagonaldemo.demoparent.transactions.command.application.port.inbound.account.CreateAccountInPort
 import io.holixon.cqrshexagonaldemo.demoparent.transactions.command.application.port.inbound.account.DepositAccountInPort
 import io.holixon.cqrshexagonaldemo.demoparent.transactions.command.domain.model.account.Amount
