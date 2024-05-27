@@ -8,8 +8,8 @@ data class AccountBalance(
     var iban: Iban,
     var balance: Money
 ) {
-    fun deposit(amount: Amount) {
-        //should it be immutable ?
-        this.balance.amount += amount
+    fun addAmount(amount: Amount) : AccountBalance {
+        val newBalance = this.balance.amount + amount
+        return this.copy(iban = this.iban, balance = Money(newBalance))
     }
 }

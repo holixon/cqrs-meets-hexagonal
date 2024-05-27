@@ -6,7 +6,7 @@ import io.holixon.cqrshexagonaldemo.demoparent.transactions.shared.framework.InA
 import org.springframework.context.event.EventListener
 
 @InAdapter
-class QueryEventListener(
+class TransactionEventListener(
     private val bankEventInPort: BankEventInPort
 ) {
 
