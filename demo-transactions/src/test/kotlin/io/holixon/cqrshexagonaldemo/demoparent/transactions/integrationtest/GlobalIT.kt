@@ -32,9 +32,6 @@ class GlobalIT : IntegrationTextBase() {
     @Autowired
     private lateinit var accountService: AccountService
 
-    //@Autowired
-    //private lateinit var accountBalanceInPort: AccountBalanceInPort
-
     @Test
     fun `should create customer`() {
         // given

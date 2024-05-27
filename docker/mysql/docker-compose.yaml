@@ -6,7 +6,7 @@ services:
     image: mysql:8.0.36
     restart: always
     environment:
-      MYSQL_DATABASE: 'command-model'
+      MYSQL_DATABASE: 'command'
       MYSQL_USER: 'SA'
       MYSQL_PASSWORD: 'Aut0mat0rs!'
       MYSQL_ROOT_PASSWORD: 'Aut0mat0rs!'
