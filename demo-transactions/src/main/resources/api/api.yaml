@@ -100,6 +100,37 @@ paths:
           description: Money Deposited
         '404':
           description: No Account found
+  /api/v1/account/balance:
+    get:
+      tags:
+        - accountBalance
+      summary: >
+        Gets balance for account
+      description: >
+        Gets the balance for the account specified
+      operationId: getBalance
+      parameters:
+        - name: accountNumber
+          in: query
+          description: Account identifier
+          required: true
+          schema:
+            type: string
+            example: DE01123456780000000001
+      responses:
+        '200':
+          description: Balance details for account
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccountBalanceResponse'
+        '400':
+          description: Invalid parameters
+        '404':
+          description: Account not found for balance
+        '500':
+          description: Internal error with request
+
 components:
   schemas:
     AccountCreatedResponse:
@@ -112,7 +143,6 @@ components:
       required:
         - customerNumber
         - iban
-
     Customer:
       type: object
       properties:
@@ -123,3 +153,16 @@ components:
       required:
         - customerNumber
         - name
+    AccountBalanceResponse:
+      type: object
+      properties:
+        accountNumber:
+          type: string
+          description: The account number
+        balance:
+          type: number
+          format: decimal
+          description: The balance of the account
+      required:
+        - accountNumber
+        - balance
