@@ -10,6 +10,6 @@ data class AccountBalance(
 ) {
     fun addAmount(amount: Amount) : AccountBalance {
         val newBalance = this.balance.amount + amount
-        return this.copy(iban = this.iban, balance = Money(newBalance))
+        return this.copy(balance = Money(newBalance))
     }
 }
