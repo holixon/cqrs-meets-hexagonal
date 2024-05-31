@@ -5,4 +5,5 @@ import io.holixon.cqrshexagonaldemo.demoparent.transactions.query.domain.model.p
 
 interface AccountBalanceService {
     fun getAccountBalance(iban: Iban): AccountBalance
+    fun persistAccountBalance(account: AccountBalance): AccountBalance
 }

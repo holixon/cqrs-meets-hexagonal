@@ -1,4 +1,4 @@
-package io.holixon.cqrshexagonaldemo.demoparent.transactions.architecture
+package io.holixon.cqrshexagonaldemo.demoparent.transactions.command.architecture
 
 import com.tngtech.archunit.core.importer.ImportOption.DoNotIncludeJars
 import com.tngtech.archunit.core.importer.ImportOption.DoNotIncludeTests
@@ -7,15 +7,15 @@ import com.tngtech.archunit.junit.ArchTest
 import com.tngtech.archunit.lang.ArchRule
 import com.tngtech.archunit.library.Architectures.onionArchitecture
 import com.tngtech.archunit.library.dependencies.SlicesRuleDefinition.slices
-import io.holixon.cqrshexagonaldemo.demoparent.transactions.architecture.ArchUnitTest.Companion.BASE_PACKAGE
+import io.holixon.cqrshexagonaldemo.demoparent.transactions.command.architecture.CommandModelArchUnitTest.Companion.BASE_PACKAGE
 
 @Suppress("unused") // @ArchTest properties are used by ArchUnit
 @AnalyzeClasses(
         packages = [BASE_PACKAGE], importOptions = [DoNotIncludeTests::class, DoNotIncludeJars::class])
-internal class ArchUnitTest {
+internal class CommandModelArchUnitTest {
 
     companion object {
-        const val BASE_PACKAGE = "io.holixon.cqrshexagonaldemo"
+        const val BASE_PACKAGE = "io.holixon.cqrshexagonaldemo.demoparent.transactions.command"
         const val DOMAIN_MODEL_PACKAGE = "..domain.model.."
         const val DOMAIN_SERVICE_PACKAGE = "..domain.service.."
         const val APPLICATION_PACKAGE = "..application.."
@@ -37,4 +37,6 @@ internal class ArchUnitTest {
                     .adapter("in-adapter", IN_ADAPTER_PACKAGE)
                     .adapter("out-adapter", OUT_ADAPTER_PACKAGE)
                     .withOptionalLayers(true)
+
+
 }

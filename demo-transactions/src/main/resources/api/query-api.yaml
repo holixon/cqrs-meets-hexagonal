@@ -1,0 +1,54 @@
+openapi: 3.0.3
+info:
+  title: CQRS meets hexagonal - OpenAPI 3.0
+  version: 1.0.11
+tags:
+  - name: accountBalance
+
+paths:
+  /api/v1/account/balance:
+    get:
+      tags:
+        - accountBalance
+      summary: >
+        Gets balance for account
+      description: >
+        Gets the balance for the account specified
+      operationId: getBalance
+      parameters:
+        - name: accountNumber
+          in: query
+          description: Account identifier
+          required: true
+          schema:
+            type: string
+            example: DE01123456780000000001
+      responses:
+        '200':
+          description: Balance details for account
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccountBalanceResponse'
+        '400':
+          description: Invalid parameters
+        '404':
+          description: Account not found for balance
+        '500':
+          description: Internal error with request
+
+components:
+  schemas:
+    AccountBalanceResponse:
+      type: object
+      properties:
+        accountNumber:
+          type: string
+          description: The account number
+        balance:
+          type: number
+          format: decimal
+          description: The balance of the account
+      required:
+        - accountNumber
+        - balance

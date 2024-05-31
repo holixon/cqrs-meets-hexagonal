@@ -15,4 +15,11 @@ class AccountBalanceEntityMapper {
             balance = Money(Amount(accountBalanceEntity.balance))
         )
     }
+
+    fun toEntity(accountBalance: AccountBalance) : AccountBalanceEntity {
+        return AccountBalanceEntity(
+            iban = accountBalance.iban.value,
+            balance = accountBalance.balance.amount.value
+        )
+    }
 }

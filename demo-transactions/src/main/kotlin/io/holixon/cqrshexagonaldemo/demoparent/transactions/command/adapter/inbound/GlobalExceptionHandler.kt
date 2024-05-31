@@ -1,4 +1,4 @@
-package io.holixon.cqrshexagonaldemo.demoparent.transactions.shared.infrastructure
+package io.holixon.cqrshexagonaldemo.demoparent.transactions.command.adapter.inbound
 
 import io.holixon.cqrshexagonaldemo.demoparent.transactions.command.domain.exception.AccountNotFoundException
 import io.holixon.cqrshexagonaldemo.demoparent.transactions.command.domain.exception.InvalidInputException

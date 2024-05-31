@@ -2,10 +2,10 @@ package io.holixon.cqrshexagonaldemo.demoparent.transactions.query.adapter.outbo
 
 import io.holixon.cqrshexagonaldemo.demoparent.transactions.command.domain.exception.AccountNotFoundException
 import io.holixon.cqrshexagonaldemo.demoparent.transactions.command.domain.model.account.Iban
-import io.holixon.cqrshexagonaldemo.demoparent.transactions.query.domain.model.projection.AccountBalance
-import io.holixon.cqrshexagonaldemo.demoparent.transactions.shared.framework.OutAdapter
 import io.holixon.cqrshexagonaldemo.demoparent.transactions.query.adapter.outbound.accountbalance.jpa.mapper.AccountBalanceEntityMapper
 import io.holixon.cqrshexagonaldemo.demoparent.transactions.query.application.port.outbound.accountbalance.AccountBalanceService
+import io.holixon.cqrshexagonaldemo.demoparent.transactions.query.domain.model.projection.AccountBalance
+import io.holixon.cqrshexagonaldemo.demoparent.transactions.shared.framework.OutAdapter
 
 @OutAdapter
 class AccountBalanceOutAdapter(
@@ -19,5 +19,11 @@ class AccountBalanceOutAdapter(
         }
 
         return accountBalanceEntityMapper.toDomain(entity)
+    }
+
+    override fun persistAccountBalance(account: AccountBalance): AccountBalance {
+        val entity = accountBalanceEntityMapper.toEntity(account)
+
+        return accountBalanceEntityMapper.toDomain(jpaAccountBalanceOutAdapter.save(entity))
     }
 }

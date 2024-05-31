@@ -152,15 +152,20 @@
                 <version>${openapi-generator-maven-plugin.version}</version>
                 <executions>
                     <execution>
+                        <id>generate-common-api</id>
                         <goals>
                             <goal>generate</goal>
                         </goals>
                         <configuration>
-                            <inputSpec>${project.basedir}/src/main/resources/api/api.yaml</inputSpec>
+                            <inputSpec>${project.basedir}/src/main/resources/api/common-api.yaml</inputSpec>
                             <generatorName>spring</generatorName>
                             <modelNameSuffix>Dto</modelNameSuffix>
-                            <supportingFilesToGenerate>ApiUtil.java,SpringDocConfiguration.java
+                            <supportingFilesToGenerate>
+                                ApiUtil.java,SpringDocConfiguration.java
                             </supportingFilesToGenerate>
+                            <!-- since the common-api only should define the api info (version, description, etc.) not paths are provided,
+                                    which normally isn't allowed. Therefore, the validation is skipped for the common-api file -->
+                            <skipValidateSpec>true</skipValidateSpec>
                             <typeMappings>
                                 <typeMapping>BigDecimal=java.lang.Long</typeMapping>
                                 <typeMappings>integer=Long,int=Long</typeMappings>
@@ -168,12 +173,74 @@
                             </typeMappings>
                             <configOptions>
                                 <useTags>true</useTags>
-                                <apiPackage>io.holixon.cqrshexagonaldemo.demoparent.transactions.adapter.inbound
+                                <apiPackage>io.holixon.cqrshexagonaldemo.demoparent.transactions.shared.adapter.inbound
                                 </apiPackage>
-                                <modelPackage>io.holixon.cqrshexagonaldemo.demoparent.transactions.adapter.inbound.dto
+                                <modelPackage>
+                                    io.holixon.cqrshexagonaldemo.demoparent.transactions.shared.adapter.inbound.dto
                                 </modelPackage>
                                 <configPackage>
-                                    io.holixon.cqrshexagonaldemo.demoparent.transactions.adapter.inbound.config
+                                    io.holixon.cqrshexagonaldemo.demoparent.transactions.shared.adapter.inbound.config
+                                </configPackage>
+                                <delegatePattern>true</delegatePattern>
+                                <useJakartaEe>true</useJakartaEe>
+                            </configOptions>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>generate-command-api</id>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+                        <configuration>
+                            <inputSpec>${project.basedir}/src/main/resources/api/command-api.yaml</inputSpec>
+                            <generatorName>spring</generatorName>
+                            <modelNameSuffix>Dto</modelNameSuffix>
+                            <supportingFilesToGenerate>ApiUtil.java</supportingFilesToGenerate>
+                            <typeMappings>
+                                <typeMapping>BigDecimal=java.lang.Long</typeMapping>
+                                <typeMappings>integer=Long,int=Long</typeMappings>
+                                <typeMappings>DateTime=java.time.Instant</typeMappings>
+                            </typeMappings>
+                            <configOptions>
+                                <useTags>true</useTags>
+                                <apiPackage>
+                                    io.holixon.cqrshexagonaldemo.demoparent.transactions.command.adapter.inbound
+                                </apiPackage>
+                                <modelPackage>
+                                    io.holixon.cqrshexagonaldemo.demoparent.transactions.command.adapter.inbound.dto
+                                </modelPackage>
+                                <configPackage>
+                                    io.holixon.cqrshexagonaldemo.demoparent.transactions.command.adapter.inbound.config
+                                </configPackage>
+                                <delegatePattern>true</delegatePattern>
+                                <useJakartaEe>true</useJakartaEe>
+                            </configOptions>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>generate-query-api</id>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+                        <configuration>
+                            <inputSpec>${project.basedir}/src/main/resources/api/query-api.yaml</inputSpec>
+                            <generatorName>spring</generatorName>
+                            <modelNameSuffix>Dto</modelNameSuffix>
+                            <supportingFilesToGenerate>ApiUtil.java</supportingFilesToGenerate>
+                            <typeMappings>
+                                <typeMapping>BigDecimal=java.lang.Long</typeMapping>
+                                <typeMappings>integer=Long,int=Long</typeMappings>
+                                <typeMappings>DateTime=java.time.Instant</typeMappings>
+                            </typeMappings>
+                            <configOptions>
+                                <useTags>true</useTags>
+                                <apiPackage>io.holixon.cqrshexagonaldemo.demoparent.transactions.query.adapter.inbound
+                                </apiPackage>
+                                <modelPackage>
+                                    io.holixon.cqrshexagonaldemo.demoparent.transactions.query.adapter.inbound.dto
+                                </modelPackage>
+                                <configPackage>
+                                    io.holixon.cqrshexagonaldemo.demoparent.transactions.query.adapter.inbound.config
                                 </configPackage>
                                 <delegatePattern>true</delegatePattern>
                                 <useJakartaEe>true</useJakartaEe>

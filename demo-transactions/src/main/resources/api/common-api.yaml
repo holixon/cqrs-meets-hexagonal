@@ -1,0 +1,12 @@
+#file: noinspection YAMLSchemaValidation
+# The common-api only should define the api info (version, description, etc.). Therefore, not paths are provided,
+#  which normally isn't allowed. Hence, the validation is skipped for the common-api file.
+openapi: 3.0.3
+info:
+  title: CQRS meets hexagonal - OpenAPI 3.0
+  description: |-
+  termsOfService: https://swagger.io/terms/
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0.html
+  version: 1.0.11
