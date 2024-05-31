@@ -36,6 +36,6 @@
         <springdoc.version>2.5.0</springdoc.version>
         <testcontainers.version>1.19.7</testcontainers.version>
         <validation-api.version>2.0.1.Final</validation-api.version>
-        <mockk.version>1.13.10</mockk.version>
+        <mockk.version>1.13.11</mockk.version>
     </properties>
 </project>
