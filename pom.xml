@@ -34,7 +34,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <spring-version>3.3.0</spring-version>
         <springdoc.version>2.5.0</springdoc.version>
-        <testcontainers.version>1.19.8</testcontainers.version>
+        <testcontainers.version>1.20.1</testcontainers.version>
         <validation-api.version>2.0.1.Final</validation-api.version>
         <mockk.version>1.13.11</mockk.version>
     </properties>
